@@ -1,3 +1,105 @@
 .header{
-  margin: 1rem;
+  .logo{
+    width: 100px;
+    img{
+      width: 100%;
+    }
+  }
+  .btn-hamburger.navbar-toggler{
+    border: none;
+    span.navbar-toggler-icon{
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(20, 52, 124, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+  }
+  .btn-hamburger.navbar-toggler:focus{
+    box-shadow: 0px 0px 0px 1px var(--main-bg-color);
+  }
+  .menu{
+    a{
+      text-align: center;
+      text-decoration: none;
+      color: var(--main-bg-color);
+      padding: .5rem;
+      width: 200px;
+      margin: auto;
+
+    }
+    a:hover{
+      border-bottom: 2px solid var(--main-bg-color);
+    }
+  }
+  .dropdown-user{
+    background-color: inherit;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    gap: .5rem;
+    .initialName{
+      background-color: var(--main-bg-color);
+      color: var(--white-color);
+      font-size: 16px;
+      padding: .5rem;
+      border-radius: 50%;
+    }
+    .userName{
+      text-align: start;
+      font-weight: 600;
+      font-size: 14px;
+      .name{
+        color: var(--main-bg-color);
+      }
+      .role{
+        color: var(--second-bg-color);
+      }
+    }
+  }
+  .dropdown-user:active{
+    background-color: inherit;
+  }
+  .dropdown-user:hover{
+    background-color: var(--grey-hover-color);
+  }
+  .dropdown-user-items{
+    width: 100%;
+    a:active{
+      background-color: var(--grey-hover-color);
+      color: inherit;
+    }
+  }
+  .dropdown-toggle::after{
+    content: none;
+  }
+}
+
+
+@media screen and (min-width: 768px){
+  .header{
+    .logo{
+      width: 110px;
+    }
+    .menu{
+      gap: 1rem;
+      a{
+        border: 1px solid var(--main-bg-color);
+        border-radius: var(--standard-border);
+        width: 200px;
+      }
+      a:hover{
+        background-color: var(--main-bg-color);
+        color: var(--white-color);
+      }
+    }
+    .dropdown-user{
+      gap: 1rem;
+      .initialName{
+        font-size: 20px;
+        padding: .5rem;
+      }
+      .userName{
+        font-size: 16px;
+      }
+    }
+  }
 }
