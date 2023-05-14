@@ -1,6 +1,11 @@
+import SearchBar from "../components/SearchBar/SearchBar"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <main>
+      <SearchBar />
+
+    </main>
   )
 }
 
