@@ -36,6 +36,10 @@
           border-radius:  0 5px 5px 0;
           padding: .5rem;
         }
+        input:focus-visible{
+          outline: inherit;
+          box-shadow: 3px 2px 6px 0px #354058;
+        }
       }
       .search-button{
         background-color: var(--main-bg-color);
@@ -62,7 +66,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        max-width: 1300px;
+        max-width: 1100px;
+        padding: 0 1rem;
         gap: 1rem;
         .input-form{
           width: 800px;
@@ -72,5 +77,12 @@
         }
       }
     }
+  }
+}
+
+@media screen and (min-width: 1440px){
+  .search-bar{
+    background-size: cover;
+    background-position: center -200px;
   }
 }

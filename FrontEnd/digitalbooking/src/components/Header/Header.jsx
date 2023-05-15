@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const Header = () => {
-  const header = document.querySelector('.header')
   const isLogin = localStorage.getItem('user')
- 
   !isLogin && localStorage.setItem('user', false)
-  const [user, setUser] = useState(JSON.parse(isLogin))
 
-  const closeNav = () => header.click()
+  const [user, setUser] = useState(JSON.parse(isLogin))
+  const [drodownHeaderIsOpen, setDrodownHeaderIsOpen] = useState(false);
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
   
   const handleLogin = () => {
+    setIsNavbarOpen(false)
     const userParsed = JSON.parse(localStorage.getItem('user'))
     if(!userParsed){
       localStorage.setItem('user', true)
@@ -30,13 +30,15 @@ const Header = () => {
   const initialNavBar = () =>{
     return(
       <>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" className='btn-hamburger' />
-        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-          <Nav className="menu">
-            <Link to="/crearCuenta">Crear cuenta</Link>
-            <Link to="#" onClick={handleLogin}>Iniciar sesión</Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Navbar expand="lg" expanded={isNavbarOpen} onToggle={setIsNavbarOpen}>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className='btn-hamburger' />
+          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+            <Nav className="menu">
+              <Link to="/crearCuenta" onClick={() =>{setIsNavbarOpen(false)}}>Crear cuenta</Link>
+              <Link to="#" onClick={handleLogin}>Iniciar sesión</Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
       </>
     )
   }
@@ -44,7 +46,7 @@ const Header = () => {
   const userNavBar = () =>{
     return(
       <>
-        <Dropdown>
+        <Dropdown show={drodownHeaderIsOpen} onToggle={setDrodownHeaderIsOpen}>
           <Dropdown.Toggle id="dropdown-custom-components" className='dropdown-user'>
             <div className="initialName">BR</div>
             <div className="userName">
@@ -54,20 +56,18 @@ const Header = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu className='dropdown-user-items'>
-          <Link to="" className='dropdown-item' onClick={handleLogin}>Cerrar sesión</Link>
-          <Link to="/admin" className='dropdown-item' onClick={closeNav}>Administrar página</Link>
+            <Link to="/admin" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Administrar página</Link>
+            <Link to="" className='dropdown-item' onClick={handleLogin}>Cerrar sesión</Link>
           </Dropdown.Menu>
         </Dropdown>
       </>
     )
   }
 
-  
-
   return (
     <header className="header">
       <Navbar expand="md">
-        <Container className="">
+        <Container className="align-items-start">
           <Link to="/">
             <Navbar className="logo">
               <img src={Logo} alt="" />

@@ -2,7 +2,11 @@
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: var(--white-color);
+  min-height: 78.34px;
+  .navbar{
+    justify-content: end;
+    background-color: var(--white-color);
+  }
   .logo{
     width: 100px;
     img{
@@ -20,13 +24,10 @@
   }
   .menu{
     a{
-      text-align: center;
+      text-align: end;
       text-decoration: none;
       color: var(--main-bg-color);
       padding: .5rem;
-      width: 200px;
-      margin: auto;
-
     }
     a:hover{
       border-bottom: 2px solid var(--main-bg-color);
@@ -76,6 +77,10 @@
     content: none;
   }
 }
+.header + *{
+  margin-top: 78.34px;
+}
+
 
 
 @media screen and (min-width: 768px){
@@ -86,6 +91,7 @@
     .menu{
       gap: 1rem;
       a{
+        text-align: center;
         border: 1px solid var(--main-bg-color);
         border-radius: var(--standard-border);
         width: 200px;
