@@ -1,6 +1,9 @@
 package com.pi.digitalbooking.controllers;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -42,9 +45,10 @@ public class ProductController {
         File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
         file.transferTo(tempFile);
 
+        AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(new ProfileCredentialsProvider().getCredentials());
         AmazonS3 s3client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.US_EAST_1)
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withCredentials(credentialsProvider)
                 .build();
 
         String bucketName = "dh-g8-test";
@@ -55,13 +59,15 @@ public class ProductController {
         tempFile.delete();
 
         long millis = System.currentTimeMillis();
-        String url = s3client.generatePresignedUrl(bucketName, key, new Date(millis+ + 3600000)).toString();
+        String s3Url = s3client.generatePresignedUrl(bucketName, key, new Date(millis+ + 3600000)).toString();
+        String imageUrl = s3Url.substring(0, s3Url.indexOf("?"));
 
         Product product = new Product();
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
-        product.setImageUrl(url);
+        product.setImageUrl(imageUrl);
         product.setScore(productDTO.getScore());
+        product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());
 
         return productService.SaveProduct(product);

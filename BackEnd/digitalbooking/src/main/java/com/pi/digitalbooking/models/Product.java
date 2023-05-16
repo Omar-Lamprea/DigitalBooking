@@ -22,14 +22,14 @@ public class Product {
     @Column
     private String description;
 
-    @Column
+    @Column(length = 1000)
     private String imageUrl;
 
     @Column
     private Integer score;
 
     @Column
-    private Double precio;
+    private Double price;
 
     @Column
     private String locationUrl;

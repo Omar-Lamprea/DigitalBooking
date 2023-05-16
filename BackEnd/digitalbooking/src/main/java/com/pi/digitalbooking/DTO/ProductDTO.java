@@ -18,7 +18,7 @@ public class ProductDTO {
 
     private Integer score;
 
-    private Double precio;
+    private Double price;
 
     private String locationUrl;
 }
