@@ -30,7 +30,7 @@ const Header = () => {
   const initialNavBar = () =>{
     return(
       <>
-        <Navbar expand="lg" expanded={isNavbarOpen} onToggle={setIsNavbarOpen}>
+        <Navbar className='dropdown-hamburger' expand="lg" expanded={isNavbarOpen} onToggle={setIsNavbarOpen}>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className='btn-hamburger' />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="menu">
@@ -46,7 +46,7 @@ const Header = () => {
   const userNavBar = () =>{
     return(
       <>
-        <Dropdown show={drodownHeaderIsOpen} onToggle={setDrodownHeaderIsOpen}>
+        <Dropdown className='align-self-center' show={drodownHeaderIsOpen} onToggle={setDrodownHeaderIsOpen}>
           <Dropdown.Toggle id="dropdown-custom-components" className='dropdown-user'>
             <div className="initialName">BR</div>
             <div className="userName">
@@ -68,10 +68,9 @@ const Header = () => {
     <header className="header">
       <Navbar expand="md">
         <Container className="align-items-start">
-          <Link to="/">
-            <Navbar className="logo">
-              <img src={Logo} alt="" />
-            </Navbar>
+          <Link to="/" className='logo'>
+            <img src={Logo} alt="" />
+            <span>Sentite como en tu hogar</span>
           </Link>
           {user
             ? userNavBar()
