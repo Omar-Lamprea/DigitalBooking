@@ -1,15 +1,18 @@
-import PropTypes from 'prop-types';
+import { Outlet } from 'react-router-dom';
+import Header from './Header/Header';
+import Footer from './Footer/Footer';
 
-const Layout = ({children}) => {
+const Layout = () => {
   return (
-    <div className="layout">
-      {children}
+    <div className="root-layout">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+
     </div>
   )
 }
 
 export default Layout
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
