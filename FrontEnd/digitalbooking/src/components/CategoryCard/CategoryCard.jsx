@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 
 const CategoryCard = () => {
     
-
     return (
       <>
         <Card style={{ width: '18rem' }}>
