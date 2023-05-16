@@ -23,12 +23,19 @@ unit-test-job:   # This job runs in the test stage.
 
 deploy-dev:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$CI_PEM_FILE" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - echo "Deploying application to dev..."
     - echo "$CI_PEM_FILE" > key.pem
     - chmod 400 key.pem
-    - scp -i key.pem target/digitalbooking-0.0.1-SNAPSHOT.jar ec2-user@ec2-18-218-175-122.us-east-2.compute.amazonaws.com:/home/ec2-user/app.jar
-    - ssh -i key.pem ec2-user@ec2-18-218-175-122.us-east-2.compute.amazonaws.com && java -jar app.jar
+    - scp -o StrictHostKeyChecking=no -i key.pem target/digitalbooking-0.0.1-SNAPSHOT.jar ec2-user@ec2-18-218-175-122.us-east-2.compute.amazonaws.com:/home/ec2-user/app.jar
+    - ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-18-218-175-122.us-east-2.compute.amazonaws.com && java -jar app.jar
     - echo "Application successfully deployed. Wait a few minutes while it starts on the server."
   only: 
     - dev
