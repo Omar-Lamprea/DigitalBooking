@@ -1,5 +1,5 @@
 .header{
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   min-height: 79.14px;
@@ -91,7 +91,7 @@
   }
 }
 .header + *{
-  margin-top: 79.14px;
+  // margin-top: 79.14px;
 }
 
 
