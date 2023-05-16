@@ -12,6 +12,10 @@
         @include media-query(large) {
             width: 25%;
         }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     &__wrapper {
