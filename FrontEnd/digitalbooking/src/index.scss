@@ -1,3 +1,7 @@
 /* Estilos globales */
 @import './App.scss';
-@import './styles/Header.scss';
+
+/** Estilos Componentes */
+@import './styles/components/Header.scss';
+@import './styles/components/Categories.scss';
+@import './styles/components/CategoryCard.scss';

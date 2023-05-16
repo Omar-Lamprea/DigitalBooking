@@ -1,22 +1,18 @@
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+// import '../../styles/components/CategoryCard.scss';
 
 const CategoryCard = () => {
     
     return (
-      <>
-        <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+      <div className="card__container">
+        <Card className="card__wrapper">
+          <Card.Img className="card__img" variant="top" src="./src/assets/images/category-1.png" />
+          <Card.Body className="card__body">
+            <Card.Title className="card__title">Hoteles</Card.Title>
+            <Card.Text className="card__text">807.105 hoteles</Card.Text>
           </Card.Body>
         </Card>
-      </>
+      </div>
     );
     
 };
