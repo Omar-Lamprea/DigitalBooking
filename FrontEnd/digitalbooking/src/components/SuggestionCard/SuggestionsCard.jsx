@@ -24,9 +24,18 @@ const SuggestionCard = () => {
                     <span>Bogotá</span>
                   </div>
               </div>
-              <div className="suggestion-card__location"></div>
-              <div className="suggestion-card__description"></div>
-              <button className="">Ver más</button>
+              <div className="suggestion-card__location">
+                <i className="fa-solid fa-location-dot"></i>
+                <a href="#" className="suggestion-card__location-see-map">VER EN MAPS</a>
+                <div className="suggestion-card__ammenities">
+                  <i className="fa-solid fa-wifi"></i>
+                  <i className="fa-sharp fa-solid fa-person-swimming"></i>
+                </div>
+              </div>
+              <div className="suggestion-card__description">
+                <p>En el corazón de San Telmo, disfruta de un albergue inspirado en las pasiones de Buenos Aires. con 2...</p>
+              </div>
+              <button className="button__primary">Ver más</button>
           </div>
 
       </div>
