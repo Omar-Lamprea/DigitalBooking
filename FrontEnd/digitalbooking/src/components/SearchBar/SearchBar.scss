@@ -1,9 +1,18 @@
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixin';
+
 .search-bar{
   background-image: url('../../assets/blurred-hotel-room.jpg');
-  background-position: center -100px;
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   height: 50vh;
   color: var(--white-color);
+
+  @include media-query(large) {
+    background-position: center -100px;
+  }
+
   .bg-bar{
     background-color: #14347c59;
     height: inherit;
@@ -36,6 +45,10 @@
           border-radius:  0 5px 5px 0;
           padding: .5rem;
         }
+        input:focus-visible{
+          outline: inherit;
+          box-shadow: 3px 2px 6px 0px #354058;
+        }
       }
       .search-button{
         background-color: var(--main-bg-color);
@@ -48,10 +61,6 @@
         background-color: var(--main-bg-color-hover);
       }
     }
-    .slogan{
-      font-size: 22px;
-      font-weight: 200;
-    }
   }
 }
 
@@ -62,7 +71,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        max-width: 1300px;
+        max-width: 1100px;
+        padding: 0 1rem;
         gap: 1rem;
         .input-form{
           width: 800px;
@@ -72,5 +82,12 @@
         }
       }
     }
+  }
+}
+
+@media screen and (min-width: 1440px){
+  .search-bar{
+    background-size: cover;
+    background-position: center -200px;
   }
 }

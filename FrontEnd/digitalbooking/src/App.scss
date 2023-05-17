@@ -1,12 +1,7 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 // @import '~bootstrap/scss/bootstrap';
 
-:root {
-  --main-bg-color: #14347C;
-  --main-bg-color-hover: #102962;
-  --second-bg-color: #FBC02D;
-  --white-color: #FFF;
-  --black-color: #000;
-  --grey-hover-color: #e9ecef;
-  --standard-border: 5px;
-}
+@import './styles/scss/layout';
+@import './styles/scss/global';
+@import './styles/scss/variables';
+@import './styles/scss/mixin';
