@@ -1,11 +1,13 @@
 import SearchBar from "../components/SearchBar/SearchBar"
-import Cathegories from "../components/Cathegories/Cathegories"
+import Categories from "../components/Categories/Categories"
+import Suggestions from "../components/Suggestions/Suggestions"
 
 const Home = () => {
   return (
     <main>
       <SearchBar />
-      <Cathegories />
+      <Categories />
+      <Suggestions />
     </main>
   )
 }
