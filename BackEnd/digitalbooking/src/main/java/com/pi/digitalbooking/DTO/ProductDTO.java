@@ -21,4 +21,10 @@ public class ProductDTO {
     private Double price;
 
     private String locationUrl;
+
+    private String country;
+
+    private String city;
+
+    private String category;
 }

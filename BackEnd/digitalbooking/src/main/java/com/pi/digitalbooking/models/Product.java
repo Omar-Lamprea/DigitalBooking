@@ -22,7 +22,7 @@ public class Product {
     @Column
     private String description;
 
-    @Column(length = 1000)
+    @Column(length = 250)
     private String imageUrl;
 
     @Column
@@ -33,4 +33,13 @@ public class Product {
 
     @Column
     private String locationUrl;
+
+    @Column
+    private String country;
+
+    @Column
+    private String city;
+
+    @Column
+    private String category;
 }
