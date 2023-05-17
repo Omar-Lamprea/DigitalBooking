@@ -25,7 +25,6 @@ const SearchBar = () => {
           </div>
           <button className='search-button'>Buscar</button>
         </form>
-        <p className='slogan'>Sentite como en tu hogar</p>
       </div>
     </section>
   )

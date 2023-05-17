@@ -1,0 +1,31 @@
+.admin{
+  padding: 1rem;
+  background-color: var(--backgroud-grey);
+  min-height: calc(100vh - 104px);
+  .admin-actions{
+    display: flex;
+    gap:.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+    max-width: 800px;
+    margin: auto;
+    a{
+      width: 50%;
+      button{
+        margin-top: 1rem;
+        text-align: center;
+        border: 1px solid var(--main-bg-color);
+        border-radius: var(--standard-border);
+        padding: .5rem;
+        background-color: var(--white-color);
+        color: var(--main-bg-color);
+        font-weight: 600;
+        width: 100%;
+      }
+      button.active{
+        background-color: var(--second-bg-color);
+        border: none;
+      }
+    }
+  }
+}

@@ -2,12 +2,28 @@
   position: sticky;
   width: 100%;
   top: 0;
-  background-color: var(--white-color);
-  z-index: 1000;
-  .logo{
-    width: 100px;
-    img{
-      width: 100%;
+  min-height: 79.14px;
+  z-index: 100;
+  .navbar{
+    justify-content: end;
+    background-color: var(--white-color);
+    align-items: end;
+    .logo{
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      color: #717171;
+      text-decoration: none;
+      width: fit-content;
+      img{
+        width: 100px;
+      }
+      span{
+        font-size: 14px;
+      }
+    }
+    .dropdown-hamburger{
+      align-self: center;
     }
   }
   .btn-hamburger.navbar-toggler{
@@ -21,13 +37,10 @@
   }
   .menu{
     a{
-      text-align: center;
+      text-align: end;
       text-decoration: none;
       color: var(--main-bg-color);
       padding: .5rem;
-      width: 200px;
-      margin: auto;
-
     }
     a:hover{
       border-bottom: 2px solid var(--main-bg-color);
@@ -41,6 +54,7 @@
     align-items: center;
     color: black;
     gap: .5rem;
+    padding: 0;
     .initialName{
       background-color: var(--main-bg-color);
       color: var(--white-color);
@@ -77,6 +91,10 @@
     content: none;
   }
 }
+.header + *{
+  // margin-top: 79.14px;
+}
+
 
 
 @media screen and (min-width: 768px){
@@ -87,6 +105,7 @@
     .menu{
       gap: 1rem;
       a{
+        text-align: center;
         border: 1px solid var(--main-bg-color);
         border-radius: var(--standard-border);
         width: 200px;

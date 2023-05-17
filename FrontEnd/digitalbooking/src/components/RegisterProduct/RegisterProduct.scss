@@ -1,0 +1,68 @@
+.form-register-product{
+  color: var(--main-bg-color);
+  .form-register-row{
+    width: 100%;
+    .form-row{
+      display: flex;
+      flex-direction: column;
+      margin: .5rem 0;
+      input, select, textarea{
+        background-color: var(--white-color);
+        border: none;
+        border-radius: var(--standard-border);
+        padding: .5rem;
+        box-shadow: 0px 0px 4px 0px #b7b7b7;
+      }
+    }
+    .labelProductImage{
+      text-align: center;
+      background-color: rgba(251, 192, 45, 0.5607843137);
+      margin: auto;
+      color: var(--main-bg-color);
+      height: 89px;
+      width: 90px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+    .labelProductImage:hover{
+      background-color: var(--second-bg-color)
+    }
+  }
+  button{
+    background-color: var(--main-bg-color);
+    color: var(--white-color);
+    padding: .5rem;
+    width: 100%;
+    border-radius: var(--standard-border);
+    margin-top: 1rem;
+  }
+  button:hover{
+    background-color: var(--main-bg-color-hover);
+  }
+}
+
+@media screen and (min-width: 768px){
+  .form-register-product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 800px;
+    margin: auto;
+    .form-register-row{
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      .form-row{
+        width: 100%;
+      }
+    }
+    button{
+      width: 300px;
+    }
+  }
+}
