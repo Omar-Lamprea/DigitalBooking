@@ -29,9 +29,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-
-@CrossOrigin
 @RestController
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 5, // 5MB
@@ -43,12 +40,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Product added successfully"),
             @ApiResponse(responseCode = "400", description = "Invalid request")
     })
+    @CrossOrigin
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
     public Product Add(@RequestBody(description = "Image file", required = true) @RequestPart MultipartFile file,
