@@ -13,6 +13,9 @@
         padding: .5rem;
         box-shadow: 0px 0px 4px 0px #b7b7b7;
       }
+      span{
+        color: red;
+      }
     }
     .labelProductImage{
       text-align: center;
@@ -38,10 +41,19 @@
     padding: .5rem;
     width: 100%;
     border-radius: var(--standard-border);
-    margin-top: 1rem;
   }
   button:hover{
     background-color: var(--main-bg-color-hover);
+  }
+  .responseForm{
+    p{
+      max-width: 500px;
+      margin: auto;
+      margin-top: 1rem;
+    }
+    p.errorResponse{
+      color: red;
+    }
   }
 }
 

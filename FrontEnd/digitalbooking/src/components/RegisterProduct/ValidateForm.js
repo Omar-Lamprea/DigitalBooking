@@ -7,8 +7,11 @@ export const validateForm = (formData) => {
   if (!formData.category) 
     newErrors.category = 'La categoría es requerida';
   
-  if (isNaN(formData.score) || formData.score < 0 || formData.score > 10)
+  if (formData.score.trim() === '') {
+    newErrors.score = 'La calificación es requerida';
+  } else if (isNaN(formData.score) || formData.score < 0 || formData.score > 10) {
     newErrors.score = 'La calificación debe ser un número entre 0 y 10';
+  }
 
   const price = parseFloat(formData.price);
   if (isNaN(price) || price <= 0) 
@@ -20,11 +23,17 @@ export const validateForm = (formData) => {
   if (!formData.city.trim())
     newErrors.city = 'La ciudad es requerida';
 
-  if (formData.location && !isValidUrl(formData.location))
+  if (!isValidUrl(formData.location))
     newErrors.location = 'La URL de ubicación no es válida';
 
+  if (formData.description.trim() === '')
+    newErrors.description = 'La descripción es requerida';
+
+  if (formData.productImage === null)
+    newErrors.productImage = 'Debes agregar una foto del producto a registrar';
+
   return {
-    isValid: Object.keys(newErrors).length === 0,
+    ok: Object.keys(newErrors).length === 0,
     newErrors: newErrors
   }
 }
