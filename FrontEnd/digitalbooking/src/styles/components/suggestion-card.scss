@@ -7,6 +7,12 @@
         flex-wrap: wrap;
         flex-direction: column;
         flex: 1 1 auto;
+        @include media-query(small) {
+          flex-direction: row;
+        }
+        @include media-query(large) {
+          flex: 0 0 50%;
+        }
     }
 
     &__image {
@@ -16,11 +22,18 @@
         background-size: cover;
         border-radius: 8px;
         height: 230px;
+        @include media-query(small) {
+          height: auto;
+          width: 50%;
+        }
     }
 
     &__information {
         color: var(--blue-color);
         padding: 1rem;
+        @include media-query(small) {
+          width: 50%;
+        }
     }
 
     &__rank {
