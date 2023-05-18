@@ -12,14 +12,27 @@ const Detalle = () => {
   
   useEffect(() =>{
     fetch(url)
-    .then(res => res.json())
+    .then(response => {
+      if (!response.ok) throw new Error('Error en la petición');
+      return response.json();
+    })
     .then(data => setProduct(data))
-    console.log(product);
+    .catch(error => {
+      console.error('Error:', error);
+      setProduct(null)
+    });
   }, [url])
+
+  const descriptionNomalized = () =>{
+    const text = product.description 
+      ? product.description.replaceAll('\n', "<br />") 
+      : ""
+    return { __html: text };
+  }
 
   return (
     <div className="detalle">
-      {product &&
+      {product ?
         <>
           <div className="product-header d-flex flex-column justify-content-center align-items-center">
             <h1>{product.name}</h1>
@@ -27,6 +40,7 @@ const Detalle = () => {
               <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
               <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
               <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
+              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
               <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
             </div>
             <p className="product-score">{product.score}</p>
@@ -42,9 +56,9 @@ const Detalle = () => {
               </iframe>
             </div>
             <div className="right_container">
-            <p>{product.description}</p>
+            <p className="mt-3 mt-lg-0" dangerouslySetInnerHTML={descriptionNomalized()}></p>
             <div className="container_icons d-flex flex-column">
-              <span className="d-flex flex-column align-items-center">
+              <span className="d-flex flex-column align-items-center align-items-lg-start">
                 <ul>
                   <li>
                     <FontAwesomeIcon icon={faLocationDot}/>
@@ -52,10 +66,9 @@ const Detalle = () => {
                   </li>
                   <li>
                     <FontAwesomeIcon icon={faCreditCard}/>
-                    <span>$ {product.price} por noche</span>
+                    <span>${product.price} por noche</span>
                   </li>
                 </ul>
-                
               </span>
               <button> Reserva ahora! </button>
             </div>
@@ -63,6 +76,9 @@ const Detalle = () => {
             </div>
           </section>
         </>
+        : <div className="errorProduct">
+            <h5>No encontramos ningun producto con el id {id}</h5>
+          </div>
       }
     </div>
   )
