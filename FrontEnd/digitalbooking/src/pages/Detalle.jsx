@@ -1,11 +1,6 @@
 //import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import {faWifi} from "@fortawesome/free-solid-svg-icons"
-import {faHouse} from "@fortawesome/free-solid-svg-icons"
-import {faPersonSwimming} from "@fortawesome/free-solid-svg-icons"
-// import imageHotel from '../assets/images/Rectangle47.png'
-// import imageMap from '../assets/images/Rectangle48.png'
+import { faCreditCard, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -26,14 +21,16 @@ const Detalle = () => {
     <div className="detalle">
       {product &&
         <>
-          <h1>{product.name}</h1>
-          <div className="container_stars">
-            <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-            <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-            <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-            <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
+          <div className="product-header d-flex flex-column justify-content-center align-items-center">
+            <h1>{product.name}</h1>
+            <div className="container_stars">
+              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
+              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
+              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
+              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
+            </div>
+            <p className="product-score">{product.score}</p>
           </div>
-          <p className="product-score">{product.score}</p>
           <section className="info-container"> 
             <div className="container_photos">
               <img src={product.imageUrl} alt="imagen-hotel" />
@@ -46,11 +43,19 @@ const Detalle = () => {
             </div>
             <div className="right_container">
             <p>{product.description}</p>
-            <div className="container_icons">
-              <span>
-              <FontAwesomeIcon icon={faWifi} style={{color: "#fbc02d", marginRight: "10px", fontSize: "35px"}} />
-              <FontAwesomeIcon icon={faHouse} style={{color: "#fbc02d", marginRight: "10px", fontSize: "35px"}} />
-              <FontAwesomeIcon icon={faPersonSwimming} style={{color: "#fbc02d", marginRight: "10px", fontSize: "30px"}} />
+            <div className="container_icons d-flex flex-column">
+              <span className="d-flex flex-column align-items-center">
+                <ul>
+                  <li>
+                    <FontAwesomeIcon icon={faLocationDot}/>
+                    <span>{product.city} - {product.country}</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCreditCard}/>
+                    <span>$ {product.price} por noche</span>
+                  </li>
+                </ul>
+                
               </span>
               <button> Reserva ahora! </button>
             </div>
