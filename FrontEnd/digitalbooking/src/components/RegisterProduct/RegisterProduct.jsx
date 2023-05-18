@@ -109,7 +109,7 @@ const RegisterProduct = () => {
       <div className="form-register-row">
         <div className="form-row">
           <label htmlFor="location">Url de la ubicación en google maps</label>
-          <input type="url" name="location" id="location" onChange={handleChange}/>
+          <input type="text" name="location" id="location" onChange={handleChange}/>
         </div>
       </div>
 

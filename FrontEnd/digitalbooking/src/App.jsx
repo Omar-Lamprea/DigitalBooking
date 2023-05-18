@@ -16,7 +16,7 @@ const router = createBrowserRouter(
         <Route index element={<EditProducts />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
       </Route>
-      <Route path='producto' element={<Detalle />}/>
+      <Route path='producto/:id' element={<Detalle />}/>
       <Route path='*' element={<NotFound />}/>
     </Route>
   )
