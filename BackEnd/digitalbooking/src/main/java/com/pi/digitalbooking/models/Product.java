@@ -16,13 +16,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProduct;
 
-    @Column
+    @Column(length = 250)
     private String name;
 
     @Column(length = 5000)
     private String description;
 
-    @Column(length = 250)
+    @Column(length = 500)
     private String imageUrl;
 
     @Column
@@ -31,7 +31,7 @@ public class Product {
     @Column
     private Double price;
 
-    @Column
+    @Column(length = 1000)
     private String locationUrl;
 
     @Column
