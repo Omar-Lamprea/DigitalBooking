@@ -2,43 +2,35 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 
 const ModalDeleteProduct = ({id}) => {
 
-  const url = 'http://18.218.175.122:8080/digital-booking/product/' + id
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
+  const navigate = useNavigate()
 
   const handleClose = (e) => {
-    if(e){
-      if(e.target.innerHTML === 'Eliminar'){
-        fetch(url, {method: "DELETE"})
-        .then(response => {
-          if (!response.ok) throw new Error('Error al intentar eliminar el producto');
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          setShow(false)
-          setError(false)
-          location.pathname = "/"
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          setError(true)
-        });
-      }else{
+    if(e && e.target.innerHTML === 'Eliminar'){
+      const url = `http://18.218.175.122:8080/digital-booking/product/${id}`
+      fetch(url, {method: 'DELETE'})
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al realizar la petición DELETE');
+        }
         setShow(false)
         setError(false)
-
-      }
+        navigate('/');
+      })
+      .catch(error => {
+        console.error('Error:', error)
+        setError(true)
+      })
     }else{
       setShow(false)
-        setError(false)
-
+      setError(false)
     }
-
   };
   const handleShow = () => setShow(true);
 
