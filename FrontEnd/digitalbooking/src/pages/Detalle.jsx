@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ModalDeleteProduct from "../components/Modals/ModalDeleteProduct";
 
 
 const Detalle = () => {
@@ -56,7 +57,7 @@ const Detalle = () => {
               </iframe>
             </div>
             <div className="right_container">
-            <p className="mt-3 mt-lg-0" dangerouslySetInnerHTML={descriptionNomalized()}></p>
+            <p className="mt-3 mt-lg-0 text-start w-100" dangerouslySetInnerHTML={descriptionNomalized()}></p>
             <div className="container_icons d-flex flex-column">
               <span className="d-flex flex-column align-items-center align-items-lg-start">
                 <ul>
@@ -72,7 +73,7 @@ const Detalle = () => {
               </span>
               <button> Reserva ahora! </button>
             </div>
-
+            <ModalDeleteProduct id={id}/>
             </div>
           </section>
         </>
