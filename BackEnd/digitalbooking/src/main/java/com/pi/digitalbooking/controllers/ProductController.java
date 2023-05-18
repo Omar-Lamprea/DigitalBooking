@@ -89,6 +89,7 @@ public class ProductController {
     @Operation(summary = "Get product by ID", description = "Retrieves a product by its ID.")
     @ApiResponse(responseCode = "200", description = "Product found", content = @Content(schema = @Schema(implementation = Product.class)))
     @ApiResponse(responseCode = "404", description = "Product not found")
+    @CrossOrigin
     @GetMapping("/{id}")
     @ResponseBody
     public Product GetByPathVariable(@Parameter(description = "ID of the product to retrieve", required = true) @PathVariable("id") Integer id) {
@@ -98,6 +99,7 @@ public class ProductController {
     @Operation(summary = "Get product by ID (request parameter)", description = "Retrieves a product by its ID using a request parameter.")
     @ApiResponse(responseCode = "200", description = "Product found", content = @Content(schema = @Schema(implementation = Product.class)))
     @ApiResponse(responseCode = "404", description = "Product not found")
+    @CrossOrigin
     @GetMapping("/search")
     @ResponseBody
     public Product GetByRequestParam(@Parameter(description = "ID of the product to retrieve", required = true) @RequestParam Integer id) {
@@ -105,6 +107,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Delete product by ID", description = "Deletes a product by its ID.")
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void DeleteByPathVariable(@Parameter(description = "ID of the product to delete", required = true) @PathVariable("id") Integer id) {
         productService.DeleteById(id);
@@ -112,6 +115,7 @@ public class ProductController {
 
     @Operation(summary = "Search all products", description = "Retrieves a list of all products.")
     @ApiResponse(responseCode = "200", description = "List of products", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
+    @CrossOrigin
     @GetMapping("/all")
     @ResponseBody
     public List<Product> SearchAll() {
@@ -120,6 +124,7 @@ public class ProductController {
 
     @Operation(summary = "Update a product", description = "Updates an existing product.")
     @ApiResponse(responseCode = "200", description = "Updated product")
+    @CrossOrigin
     @PutMapping()
     @ResponseBody
     public Product Update(@RequestBody Product product) {

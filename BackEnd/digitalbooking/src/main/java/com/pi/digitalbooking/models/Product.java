@@ -19,7 +19,7 @@ public class Product {
     @Column
     private String name;
 
-    @Column
+    @Column(length = 5000)
     private String description;
 
     @Column(length = 250)
