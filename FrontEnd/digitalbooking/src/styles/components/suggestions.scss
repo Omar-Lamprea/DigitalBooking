@@ -1,9 +1,13 @@
 .suggestions {
     &__container {
         background-color: #F8F8F8;
+       
+        padding: 1rem;
+    }
+
+    &__wrapper {
         display: flex;
         flex-wrap: wrap;
-        padding: 1rem;
     }
 
     &__content {
