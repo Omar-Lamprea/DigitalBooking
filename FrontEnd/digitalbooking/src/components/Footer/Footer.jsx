@@ -3,7 +3,7 @@
 const Footer = () => {
   return (
     <div className="footer">
-      <span>©2021 Digital Booking</span>
+      <span>©2023 Digital Booking</span>
       <div className="icons-header">
         <i className="fa-brands fa-facebook"></i>
         <i className="fa-brands fa-linkedin-in"></i>
