@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
 const SuggestionCard = ({suggestion}) => {
-    console.log('suggestion',suggestion);
     return(
       <div className="suggestion-card__container">
         <div className="suggestion-card__wrapper">

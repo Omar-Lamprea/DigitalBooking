@@ -8,7 +8,6 @@ const Suggestions = () => {
   const getSuggestions = async () => {
     const suggestions = await fetch('http://18.218.175.122:8080/digital-booking/product/all');
     const parsedSuggestions = await suggestions.json();
-    console.log('suggestions', parsedSuggestions);
     setData(parsedSuggestions);
   };
 
