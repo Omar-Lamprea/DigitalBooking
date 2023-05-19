@@ -1,14 +1,18 @@
 import Card from 'react-bootstrap/Card';
 
-const CategoryCard = () => {
+// eslint-disable-next-line react/prop-types
+const CategoryCard = ({category}) => {
+  console.log('categorias', category);
+
+  // const [category, serCategory] = useState();
     
     return (
       <div className="card__container">
         <Card className="card__wrapper">
           <Card.Img className="card__img" variant="top" src="./src/assets/images/category-1.png" />
           <Card.Body className="card__body">
-            <Card.Title className="card__title">Hoteles</Card.Title>
-            <Card.Text className="card__text">807.105 hoteles</Card.Text>
+            <Card.Title className="card__title">{category.name}</Card.Title>
+            <Card.Text className="card__text">807.105 {category.name}s</Card.Text>
           </Card.Body>
         </Card>
       </div>

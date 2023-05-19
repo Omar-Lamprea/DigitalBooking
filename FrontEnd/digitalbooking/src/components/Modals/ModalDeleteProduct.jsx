@@ -44,7 +44,7 @@ const ModalDeleteProduct = ({id}) => {
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Eliminar producto</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           ¿Estás seguro de eliminar el producto {id}?
