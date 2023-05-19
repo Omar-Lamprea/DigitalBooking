@@ -2,7 +2,6 @@ import Card from 'react-bootstrap/Card';
 
 // eslint-disable-next-line react/prop-types
 const CategoryCard = ({category}) => {
-  console.log('categorias', category);
 
   // const [category, serCategory] = useState();
     
