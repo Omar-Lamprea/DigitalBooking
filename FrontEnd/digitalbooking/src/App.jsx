@@ -6,6 +6,7 @@ import RegisterProduct from './components/RegisterProduct/RegisterProduct'
 import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 import EditProducts from './components/EditProducts/EditProducts'
+import Detalle from './pages/Detalle'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
         <Route index element={<EditProducts />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
       </Route>
+      <Route path='producto/:id' element={<Detalle />}/>
       <Route path='*' element={<NotFound />}/>
     </Route>
   )
