@@ -1,0 +1,93 @@
+@import '../../styles/scss/variables';
+@import '../../styles/scss/mixin';
+
+.search-bar{
+  background-image: url('../../assets/blurred-hotel-room.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 40vh;
+  color: var(--white-color);
+
+  @include media-query(large) {
+    background-position: center -100px;
+  }
+
+  .bg-bar{
+    background-color: #14347c59;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+
+    .search-form{
+      width: 100%;
+      .input-form{
+        display: flex;
+        margin: 1rem 0;
+        i{
+          color: var(--second-bg-color);
+          background-color: var(--white-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 40px;
+          font-size: 22px;
+          border-radius: 5px 0 0 5px;
+        }
+        input{
+          width: 100%;
+          border: none;
+          border-radius:  0 5px 5px 0;
+          padding: .5rem;
+        }
+        input:focus-visible{
+          outline: inherit;
+          box-shadow: 3px 2px 6px 0px #354058;
+        }
+      }
+      .search-button{
+        background-color: var(--main-bg-color);
+        width: 100%;
+        padding: .5rem;
+        color: var(--white-color);
+        border-radius: var(--standard-border);
+      }
+      .search-button:hover{
+        background-color: var(--main-bg-color-hover);
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px){
+  .search-bar{
+    .bg-bar{
+      .search-form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 1100px;
+        padding: 0 1rem;
+        gap: 1rem;
+        .input-form{
+          width: 800px;
+        }
+        .search-button{
+          width: 300px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px){
+  .search-bar{
+    background-size: cover;
+    background-position: center -200px;
+  }
+}

@@ -13,8 +13,29 @@ h1,h2,h3,h4,h5,p{
   margin: 0;
 }
 
+h3 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+a, button {
+  outline: 0;
+  cursor: pointer;
+}
+
+a{
+  text-decoration: none;
+  color: var(--blue-color);
+}
+
 button{
   border: none;
   box-shadow: none;
-  cursor: pointer;
+}
+
+p {
+  line-height: 1;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
 }

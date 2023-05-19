@@ -1,0 +1,19 @@
+.suggestions {
+    &__container {
+        background-color: #F8F8F8;
+       
+        padding: 1rem;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex: 1 1 auto;
+    }
+}
