@@ -39,7 +39,7 @@ const SuggestionCard = () => {
                     <p>En el corazón de San Telmo, disfruta de un albergue inspirado en las pasiones de Buenos Aires. con 2...</p>
                 </div>
                 {/* <button className="w-100 button button__primary"> */}
-                   <Link to={'/detail'} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
+                   <Link to={'producto/54'} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
                 {/* </button> */}
             </div>
         </div>
