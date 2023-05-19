@@ -15,6 +15,7 @@ const router = createBrowserRouter(
         <Route index element={<EditProducts />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
       </Route>
+      <Route path='/detail' element={<EditProducts />}></Route>
       <Route path='*' element={<NotFound />}/>
     </Route>
   )

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const SuggestionCard = () => {
     return(
       <div className="suggestion-card__container">
@@ -36,7 +38,9 @@ const SuggestionCard = () => {
                 <div className="suggestion-card__description">
                     <p>En el corazón de San Telmo, disfruta de un albergue inspirado en las pasiones de Buenos Aires. con 2...</p>
                 </div>
-                <button className="w-100 button button__primary">Ver más</button>
+                {/* <button className="w-100 button button__primary"> */}
+                   <Link to={'/detail'} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
+                {/* </button> */}
             </div>
         </div>
       </div>
