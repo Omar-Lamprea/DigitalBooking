@@ -42,7 +42,7 @@ const SuggestionCard = ({suggestion}) => {
                     <p>{suggestion.description}</p>
                 </div>
                 {/* <button className="w-100 button button__primary"> */}
-                   <Link to={'producto/54'} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
+                   <Link to={`producto/${suggestion.idProduct}`} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
                 {/* </button> */}
             </div>
         </div>
