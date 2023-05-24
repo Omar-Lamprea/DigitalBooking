@@ -28,7 +28,7 @@ const ContextProvider = ({ children }) => {
   const getList = useCallback(async () => {
     // console.log('callback API...');
     try {
-      const res = await fetch( GLOBAL_API + "product/all");
+      const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll);
       if (res.ok) {
         const data = await res.json();
         dispatch({ type: 'APIdata', payload: data });

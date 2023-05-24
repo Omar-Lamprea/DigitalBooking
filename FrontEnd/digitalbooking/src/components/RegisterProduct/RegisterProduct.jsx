@@ -58,7 +58,7 @@ const RegisterProduct = () => {
       formToSend.append('stringProduct',JSON.stringify(jsonBody))
 
       try {
-        const response = await fetch(state.URL_API + 'product', {
+        const response = await fetch(state.URL_API.urlBase + state.URL_API.product, {
           method: 'POST',
           body: formToSend
         });  

@@ -14,7 +14,7 @@ const ModalDeleteProduct = ({id}) => {
 
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
-      const url = `${state.URL_API}product/${id}`
+      const url = `${state.URL_API.urlBase}${state.URL_API.product}/${id}`
       fetch(url, {method: 'DELETE'})
       .then(response => {
         if (!response.ok) {
