@@ -1,10 +1,10 @@
 import './RegisterProduct.scss'
 import { useRef, useState } from 'react';
 import { validateForm } from './ValidateForm';import Loader from '../Loader/Loader';
-5
-
+import { useContextGlobal } from '../../context/global.context';
 
 const RegisterProduct = () => {
+  const {state, dispatch} = useContextGlobal()
   const formRef = useRef(null);
   const [formData, setFormData] = useState({
     productName: '',
@@ -20,8 +20,6 @@ const RegisterProduct = () => {
   const [errorsForm, setErrorsForm] = useState({})
   const [serverResponse, setServerResponse] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-
-
   
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -43,12 +41,7 @@ const RegisterProduct = () => {
     const isValid = validateForm(formData);
     
     if(isValid.ok){
-      console.log('data: ');
-      console.log(formData);
       setIsLoading(true)
-
-      console.log('sending data...');
-
       const formToSend = new FormData();
       const jsonBody = {
         name: formData.productName,
@@ -65,12 +58,10 @@ const RegisterProduct = () => {
       formToSend.append('stringProduct',JSON.stringify(jsonBody))
 
       try {
-        const response = await fetch('http://18.218.175.122:8080/digital-booking/product', {
+        const response = await fetch(state.URL_API + 'product', {
           method: 'POST',
           body: formToSend
-        });
-        // const response = await fetch('http://18.218.175.122:8080/digital-booking/product/all', {});
-  
+        });  
         if (!response.ok) {
           setServerResponse({
             text: 'Error al realizar la solicitud',
@@ -79,9 +70,8 @@ const RegisterProduct = () => {
           throw new Error('Error al realizar la solicitud');
         }
   
-        //const data = await response.json();
-        // console.log('Se han guardado los datos');
-        // console.log(data);
+        const data = await response.json();
+        dispatch({ type: 'APIdata', payload: [data]})
 
         setFormData({
           productName: '',

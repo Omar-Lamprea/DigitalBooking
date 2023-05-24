@@ -3,22 +3,24 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useContextGlobal } from '../../context/global.context';
 
 
 const ModalDeleteProduct = ({id}) => {
-
+  const {state, dispatch} = useContextGlobal()
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate()
 
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
-      const url = `http://18.218.175.122:8080/digital-booking/product/${id}`
+      const url = `${state.URL_API}product/${id}`
       fetch(url, {method: 'DELETE'})
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al realizar la petición DELETE');
         }
+        dispatch({type: "deleteLodging", payload: parseInt(id)})
         setShow(false)
         setError(false)
         navigate('/');

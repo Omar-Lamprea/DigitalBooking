@@ -1,0 +1,1 @@
+export const GLOBAL_API = 'http://18.218.175.122:8080/digital-booking/'
