@@ -4,11 +4,18 @@
   min-height: calc(100vh - 141px);
   .admin-actions{
     display: flex;
-    gap:.5rem;
     justify-content: center;
     margin-top: 1rem;
     max-width: 800px;
-    margin: auto;
+    margin: auto; 
+    gap:.5rem;
+    @include media-query(large) {
+      .row-buttons{
+        gap:.5rem;
+        display: flex;
+        flex-direction: row;
+      }
+    }
     a{
       width: 50%;
       button{
@@ -21,6 +28,7 @@
         color: var(--main-bg-color);
         font-weight: 600;
         width: 100%;
+        min-width: 150px;
       }
       button.active{
         background-color: var(--second-bg-color);
