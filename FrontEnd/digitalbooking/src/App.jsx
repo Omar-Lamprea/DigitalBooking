@@ -9,6 +9,7 @@ import EditProducts from './pages/EditProducts/EditProducts'
 import Detalle from './pages/Details/Detalle'
 import Role from './components/Role/Role'
 import RegisterCategory from './components/RegisterCategory/RegisterCategory'
+import Login from './pages/Login'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
         <Route path='editarProductos' element={<EditProducts />}/>
       </Route>
       <Route path='producto/:id' element={<Detalle />}/>
+      <Route path='login' element={<Login />}/>
       <Route path='*' element={<NotFound />}/>
     </Route>
   )

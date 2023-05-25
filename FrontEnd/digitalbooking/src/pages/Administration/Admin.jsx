@@ -4,33 +4,20 @@ const Admin = () => {
 
   const toggleActionAdmin = (e) =>{
     const btns = document.querySelectorAll('.btn-action-admin')
-    const currentBtn = e.target
     btns.forEach(btn => {
       btn.classList.remove('active')
-    });
-    currentBtn.classList.add('active')
-  }
-
-  const activeClass = () =>{
-    const btns = document.querySelectorAll('.btn-action-admin')
-    if(location.pathname === '/admin/registrar'){
-      btns.forEach(btn => {
-        btn.innerHTML === 'Editar productos' 
-          ? btn.classList.remove('active')
-          : btn.classList.add('active')
-      })
+    })
+    if(e){
+      const currentBtn = e.target
+      currentBtn.classList.add('active')
     }else{
-      btns.forEach(btn => {
-        btn.innerHTML === 'Editar productos'
-          ? btn.classList.add('active')
-          : btn.classList.remove('active')
-      })
+      const path = location.pathname.substring(7);
+      const currentBtn = Array.from(btns).filter(btn => btn.getAttribute('value') === path)[0]
+      currentBtn.classList.add('active')
     }
   }
-
-  
   useEffect(()=>{
-    activeClass()
+    toggleActionAdmin()
   }, [])
   
 
@@ -38,35 +25,37 @@ const Admin = () => {
     <section className="admin">
       <div className="admin-actions">
         <div className="row-buttons">
-          <Link to="/admin">
-            <button 
-              className="btn-action-admin" 
-              onClick={toggleActionAdmin}>
-                Roles y Usuarios
-            </button>
+          <Link 
+            to="/admin" 
+            className="btn-action-admin"
+            value=""
+            onClick={toggleActionAdmin}>
+              Roles y Usuarios
           </Link>
-          <Link to="/admin/categorias">
-            <button 
-              className="btn-action-admin" 
-              onClick={toggleActionAdmin}>
-                Categorías
-            </button>
+
+          <Link 
+            to="/admin/categorias"
+            className="btn-action-admin" 
+            value="categorias"
+            onClick={toggleActionAdmin}>
+              Categorías
           </Link>
         </div>
         <div className="row-buttons">
-          <Link to="/admin/registrar">
-            <button 
-              className="btn-action-admin" 
-              onClick={toggleActionAdmin}>
-                Crear Producto
-            </button>
+          <Link 
+            to="/admin/registrar"
+            className="btn-action-admin" 
+            value="registrar"
+            onClick={toggleActionAdmin}>
+              Crear Producto
           </Link>
-          <Link to="/admin/editarProductos">
-            <button 
-              className="btn-action-admin" 
-              onClick={toggleActionAdmin}>
-                Editar Producto
-            </button>
+
+          <Link 
+            to="/admin/editarProductos"
+            className="btn-action-admin"
+            value="editarProductos"
+            onClick={toggleActionAdmin}>
+              Editar Producto
           </Link>
         </div>
       </div>
