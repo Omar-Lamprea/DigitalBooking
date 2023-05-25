@@ -1,6 +1,7 @@
 import './RegisterProduct.scss'
 import { useRef, useState } from 'react';
-import { validateForm } from './ValidateForm';import Loader from '../Loader/Loader';
+import { validateForm } from './ValidateForm';
+import Loader from '../../components/Loader/Loader';
 import { useContextGlobal } from '../../context/global.context';
 
 const RegisterProduct = () => {
