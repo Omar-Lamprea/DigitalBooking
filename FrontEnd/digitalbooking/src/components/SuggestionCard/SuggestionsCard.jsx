@@ -52,12 +52,12 @@ const SuggestionCard = ({suggestion}) => {
 SuggestionCard.propTypes = {
     suggestion: PropTypes.shape({
       imageUrl: PropTypes.string.isRequired,
-      category: PropTypes.string,
-      score: PropTypes.number,
-      name: PropTypes.string,
-      city: PropTypes.string,
-      description: PropTypes.string,
-      idProduct: PropTypes.number
+      idProduct: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      city: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      score: PropTypes.number.isRequired,
+      category: PropTypes.string.isRequired,
     }).isRequired,
 }
 
