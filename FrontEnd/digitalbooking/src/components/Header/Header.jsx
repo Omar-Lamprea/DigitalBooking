@@ -3,17 +3,19 @@ import Logo from '../../assets/logo.svg';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 const Header = () => {
+  const path = location.pathname
   const isLogin = localStorage.getItem('user')
   !isLogin && localStorage.setItem('user', false)
 
   const [user, setUser] = useState(JSON.parse(isLogin))
   const [drodownHeaderIsOpen, setDrodownHeaderIsOpen] = useState(false);
   const [isNavbarOpen, setIsNavbarOpen] = useState(false);
-  
+  const navigate = useNavigate()
+
   const handleLogin = () => {
     setIsNavbarOpen(false)
     const userParsed = JSON.parse(localStorage.getItem('user'))
@@ -23,7 +25,7 @@ const Header = () => {
     }else{
       localStorage.removeItem('user')
       setUser(false)
-      window.location.href = '/'
+      navigate('/')
     }
   }
 
@@ -35,7 +37,7 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="menu">
               <Link to="/crearCuenta" onClick={() =>{setIsNavbarOpen(false)}}>Crear cuenta</Link>
-              <Link to="#" onClick={handleLogin}>Iniciar sesión</Link>
+              {path !== '/login' && <Link to="/login">Iniciar sesión</Link>}
             </Nav>
           </Navbar.Collapse>
         </Navbar>

@@ -26,7 +26,7 @@ const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const getList = useCallback(async () => {
-    // console.log('callback API...');
+    console.log('callback API...');
     try {
       const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll);
       if (res.ok) {
