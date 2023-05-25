@@ -41,14 +41,28 @@ const Admin = () => {
           <button 
             className="btn-action-admin" 
             onClick={toggleActionAdmin}>
-              Editar productos
+              Roles y Usuarios
+          </button>
+        </Link>
+        <Link to="/admin/categorias">
+          <button 
+            className="btn-action-admin" 
+            onClick={toggleActionAdmin}>
+              Categorías
           </button>
         </Link>
         <Link to="/admin/registrar">
           <button 
             className="btn-action-admin" 
             onClick={toggleActionAdmin}>
-              Registrar producto
+              Crear Producto
+          </button>
+        </Link>
+        <Link to="/admin/editarProductos">
+          <button 
+            className="btn-action-admin" 
+            onClick={toggleActionAdmin}>
+              Editar Producto
           </button>
         </Link>
       </div>

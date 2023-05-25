@@ -3,6 +3,8 @@ import './App.scss'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import RegisterProduct from './components/RegisterProduct/RegisterProduct'
+import RegisterCategory from './components/RegisterCategory/RegisterCategory'
+import Role from './components/Role/Role'
 import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 import EditProducts from './components/EditProducts/EditProducts'
@@ -13,8 +15,10 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />}/>
       <Route path='admin' element={<Admin />}>
-        <Route index element={<EditProducts />}/>
+        <Route index element={<Role />}/>
+        <Route path='categorias' element={<RegisterCategory />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
+        <Route path='editarProductos' element={<EditProducts />}/>
       </Route>
       <Route path='producto/:id' element={<Detalle />}/>
       <Route path='*' element={<NotFound />}/>
