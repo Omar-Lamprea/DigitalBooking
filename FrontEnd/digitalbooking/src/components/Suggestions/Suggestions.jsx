@@ -23,7 +23,6 @@ const Suggestions = () => {
           {data && data.map((suggestion, index) => (
             <SuggestionCard key={index} suggestion={suggestion} />
           ))}
-            
         </div>
       </div>
     </section>

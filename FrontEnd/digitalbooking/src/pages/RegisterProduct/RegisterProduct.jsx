@@ -1,7 +1,7 @@
 import './RegisterProduct.scss'
 import { useRef, useState } from 'react';
-import { validateForm } from './ValidateForm';import Loader from '../Loader/Loader';
-5
+import { validateForm } from './ValidateForm';
+import Loader from '../../components/Loader/Loader';
 
 
 const RegisterProduct = () => {

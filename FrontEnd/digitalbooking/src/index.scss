@@ -2,11 +2,11 @@
 @import './App.scss';
 
 /** Estilos Componentes */
-@import './styles/components/Header.scss';
-@import './styles/components/Footer.scss';
-@import './styles/components/Detalle.scss';
-@import './styles/components/categories.scss';
-@import './styles/components/category-card.scss';
-@import './styles/components/suggestions.scss';
-@import './styles/components/suggestion-card.scss';
-@import './styles/pages/Admin.scss';
+@import './components/Header/Header.scss';
+@import './components/Footer/Footer.scss';
+@import './pages/Details/Detalle.scss';
+@import './components/Categories/Categories.scss';
+@import './components/CategoryCard/category-card.scss';
+@import './components/Suggestions/suggestions.scss';
+@import './components/SuggestionCard/suggestion-card.scss';
+@import './pages/Administration/Admin.scss';

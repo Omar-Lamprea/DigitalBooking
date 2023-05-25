@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ModalDeleteProduct from "../components/Modals/ModalDeleteProduct";
+import ModalDeleteProduct from "../../components/Modals/ModalDeleteProduct";
 
 
 const Detalle = () => {
