@@ -37,22 +37,39 @@ const Admin = () => {
   return (
     <section className="admin">
       <div className="admin-actions">
-        <Link to="/admin">
-          <button 
-            className="btn-action-admin" 
-            onClick={toggleActionAdmin}>
-              Editar productos
-          </button>
-        </Link>
-        <Link to="/admin/registrar">
-          <button 
-            className="btn-action-admin" 
-            onClick={toggleActionAdmin}>
-              Registrar producto
-          </button>
-        </Link>
+        <div className="row-buttons">
+          <Link to="/admin">
+            <button 
+              className="btn-action-admin" 
+              onClick={toggleActionAdmin}>
+                Roles y Usuarios
+            </button>
+          </Link>
+          <Link to="/admin/categorias">
+            <button 
+              className="btn-action-admin" 
+              onClick={toggleActionAdmin}>
+                Categorías
+            </button>
+          </Link>
+        </div>
+        <div className="row-buttons">
+          <Link to="/admin/registrar">
+            <button 
+              className="btn-action-admin" 
+              onClick={toggleActionAdmin}>
+                Crear Producto
+            </button>
+          </Link>
+          <Link to="/admin/editarProductos">
+            <button 
+              className="btn-action-admin" 
+              onClick={toggleActionAdmin}>
+                Editar Producto
+            </button>
+          </Link>
+        </div>
       </div>
-      
       <Outlet />
 
     </section>
