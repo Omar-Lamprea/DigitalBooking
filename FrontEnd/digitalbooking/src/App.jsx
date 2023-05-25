@@ -2,11 +2,13 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements} f
 import './App.scss'
 import Layout from './components/Layout'
 import Home from './pages/Home'
-import RegisterProduct from './components/RegisterProduct/RegisterProduct'
-import Admin from './pages/Admin'
+import RegisterProduct from './pages/RegisterProduct/RegisterProduct'
+import Admin from './pages/Administration/Admin'
 import NotFound from './pages/NotFound'
-import EditProducts from './components/EditProducts/EditProducts'
-import Detalle from './pages/Detalle'
+import EditProducts from './pages/EditProducts/EditProducts'
+import Detalle from './pages/Details/Detalle'
+import Role from './components/Role/Role'
+import RegisterCategory from './components/RegisterCategory/RegisterCategory'
 import Login from './pages/Login'
 
 const router = createBrowserRouter(
@@ -14,8 +16,10 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />}/>
       <Route path='admin' element={<Admin />}>
-        <Route index element={<EditProducts />}/>
+        <Route index element={<Role />}/>
+        <Route path='categorias' element={<RegisterCategory />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
+        <Route path='editarProductos' element={<EditProducts />}/>
       </Route>
       <Route path='producto/:id' element={<Detalle />}/>
       <Route path='login' element={<Login />}/>
