@@ -29,10 +29,7 @@
         width: 100%;
         box-shadow: 0px 0px 0px 0px red;
       }
-      .error-message{
-        margin-top: .5rem;
-        color: red;
-      }
+      
       .input-pass{
         display: flex;
         align-items: center;
@@ -78,5 +75,9 @@
     a{
       color: var(--second-bg-color);
     }
+  }
+  .error-message{
+    margin-top: .5rem;
+    color: red;
   }
 }

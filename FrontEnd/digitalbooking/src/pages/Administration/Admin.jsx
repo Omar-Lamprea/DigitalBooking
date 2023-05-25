@@ -12,7 +12,7 @@ const Admin = () => {
       currentBtn.classList.add('active')
     }else{
       const path = location.pathname.substring(7);
-      const currentBtn = Array.from(btns).filter(btn => btn.value === path)[0]
+      const currentBtn = Array.from(btns).filter(btn => btn.getAttribute('value') === path)[0]
       currentBtn.classList.add('active')
     }
   }
@@ -25,39 +25,37 @@ const Admin = () => {
     <section className="admin">
       <div className="admin-actions">
         <div className="row-buttons">
-          <Link to="/admin">
-            <button 
-              className="btn-action-admin"
-              value=""
-              onClick={toggleActionAdmin}>
-                Roles y Usuarios
-            </button>
+          <Link 
+            to="/admin" 
+            className="btn-action-admin"
+            value=""
+            onClick={toggleActionAdmin}>
+              Roles y Usuarios
           </Link>
-          <Link to="/admin/categorias">
-            <button 
-              className="btn-action-admin" 
-              value="categorias"
-              onClick={toggleActionAdmin}>
-                Categorías
-            </button>
+
+          <Link 
+            to="/admin/categorias"
+            className="btn-action-admin" 
+            value="categorias"
+            onClick={toggleActionAdmin}>
+              Categorías
           </Link>
         </div>
         <div className="row-buttons">
-          <Link to="/admin/registrar">
-            <button 
-              className="btn-action-admin" 
-              value="registrar"
-              onClick={toggleActionAdmin}>
-                Crear Producto
-            </button>
+          <Link 
+            to="/admin/registrar"
+            className="btn-action-admin" 
+            value="registrar"
+            onClick={toggleActionAdmin}>
+              Crear Producto
           </Link>
-          <Link to="/admin/editarProductos">
-            <button 
-              className="btn-action-admin"
-              value="editarProductos"
-              onClick={toggleActionAdmin}>
-                Editar Producto
-            </button>
+
+          <Link 
+            to="/admin/editarProductos"
+            className="btn-action-admin"
+            value="editarProductos"
+            onClick={toggleActionAdmin}>
+              Editar Producto
           </Link>
         </div>
       </div>

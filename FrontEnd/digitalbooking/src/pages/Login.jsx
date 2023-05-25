@@ -1,31 +1,63 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Loader from "../components/Loader/Loader"
+import { useContextGlobal } from "../context/global.context"
 
+const dummyUsers = [
+  {
+    id: 1,
+    name: 'Omar',
+    apellido: 'Lamprea',
+    email: 'omar@gmail.com',
+    rol: 'Admin'
+  },
+  {
+    id: 2,
+    name: 'Camilo',
+    apellido: 'Castro',
+    email: 'camilo@gmail.com',
+    rol: 'Cliente'
+  },
+  {
+    id: 3,
+    name: 'Natalia',
+    apellido: 'Polo',
+    email: 'natalia@gmail.com',
+    rol: 'Admin'
+  }
+]
 
 const Login = () => {
   const initialState = {
     email: '',
     password: '',
   }
+  const navigate = useNavigate()
+  const {dispatch} = useContextGlobal()
   const [inputPass, setInputPass] = useState(false)
   const [formValues, setFormValues] = useState(initialState)
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false)
 
-  const sendCredentials = (e) =>{
+  const handleSubmit = (e) =>{
     e.preventDefault()
     if(validateForm()){
-      console.log('data: ');
-      console.log(formValues);
       setIsLoading(true)
 
       setTimeout(() => {
         setIsLoading(false)
-      }, 2000);
-      
+        const user = dummyUsers.find(user => user.email === formValues.email)
+        if(user){
+          dispatch({type: "setUser", payload: user})
+          setFormValues(initialState)
+          setErrors({})
+          navigate('/')
+        }else{
+          setErrors({...errors, response: "usuario no encontrado"})
+        }
+      }, 1000);
     }
   }
 
@@ -63,7 +95,7 @@ const Login = () => {
   return (
     <section className="login">
       <h4 className="login-title">Iniciar sesión</h4>
-      <form className="login-form" onSubmit={sendCredentials}>
+      <form className="login-form" onSubmit={handleSubmit}>
         <fieldset>
           <label htmlFor="email">Correo electrónico</label>
           <input 
@@ -94,11 +126,12 @@ const Login = () => {
           </div>
           {errors.password && <p className="error-message">{errors.password}</p>}
         </fieldset>
-        <div className="form-actions">
+        <div className="form-actions d-flex flex-column align-items-center">
           {!isLoading
            ? <button className="btn-login">Ingresar</button>
            : <Loader />
           }
+          {errors.response && <p className="error-message">{errors.response}</p>}
         </div>
       </form>
       <p className="create-account">¿Aún no tenes cuenta? <Link to="/">Registrate!</Link></p>

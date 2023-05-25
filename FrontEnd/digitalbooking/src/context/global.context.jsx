@@ -4,7 +4,8 @@ import { GLOBAL_API } from "../utils/constants";
 
 const initialState = {
   URL_API: GLOBAL_API,
-  APIdata: []
+  APIdata: [],
+  user: JSON.parse(localStorage.getItem('user')) || false
 }
 
 const ContextGlobal = createContext('')
@@ -15,7 +16,10 @@ const reducer = (state, action) => {
       return  {...state, APIdata: [...state.APIdata, ...action.payload]}
     case 'deleteLodging':
       return {...state, APIdata: state.APIdata.filter(lodging => lodging.idProduct !== action.payload)}
-    default:
+    case 'setUser':
+        localStorage.setItem('user', JSON.stringify(action.payload))
+        return {...state, user: action.payload}
+      default:
         throw new Error('action type error')
   }
 }
