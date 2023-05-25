@@ -2,11 +2,11 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements} f
 import './App.scss'
 import Layout from './components/Layout'
 import Home from './pages/Home'
-import RegisterProduct from './components/RegisterProduct/RegisterProduct'
-import Admin from './pages/Admin'
+import RegisterProduct from './pages/RegisterProduct/RegisterProduct'
+import Admin from './pages/Administration/Admin'
 import NotFound from './pages/NotFound'
-import EditProducts from './components/EditProducts/EditProducts'
-import Detalle from './pages/Detalle'
+import EditProducts from './pages/EditProducts/EditProducts'
+import Detalle from './pages/Details/Detalle'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
