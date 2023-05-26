@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.services;
 
+import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,18 @@ public class ProductService {
         }
     }
 
-    public void DeleteById(Integer id) {
-        productRepository.deleteById(id);
+    public boolean isProductDuplicated(String productName) {
+        Product existingProduct = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+        return existingProduct != null;
+    }
+
+    public void DeleteById(Integer productId) {
+
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product != null) {
+            product.setStatus(ProductStatus.DELETED);
+            productRepository.save(product);
+        }
     }
 
     public Product UpdateProduct(Product product) {
@@ -48,8 +59,9 @@ public class ProductService {
     }
 
     public Product SaveProduct(Product product) {
-        Product product1 = productRepository.save(product);
-        log.info("Producto " + product1.toString() + " guardado con exito.");
-        return product1;
+
+        Product productToSave = productRepository.save(product);
+        log.info("Producto " + productToSave.toString() + " guardado con exito.");
+        return productToSave;
     }
 }
