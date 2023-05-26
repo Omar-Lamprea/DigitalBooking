@@ -1,5 +1,7 @@
 package com.pi.digitalbooking.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pi.digitalbooking.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +18,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProduct;
 
+    @Column
+    private Integer codeProduct;
     @Column(length = 250)
     private String name;
 
@@ -42,4 +46,19 @@ public class Product {
 
     @Column
     private String category;
+
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JsonIgnore
+    private ProductStatus status;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    //@ManyToOne
+    //@JoinColumn(name = "category_id")
+    //private Category category;
 }

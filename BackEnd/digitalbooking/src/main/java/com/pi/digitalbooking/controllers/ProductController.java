@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.configurations.AWSService;
+import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.services.ProductService;
 
@@ -23,12 +24,16 @@ import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 @RestController
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 5, // 5MB
@@ -40,18 +45,41 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Product added successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid request")
+            @ApiResponse(responseCode = "201", description = "Product added successfully."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error."),
+            @ApiResponse(responseCode = "400", description = "Bad request - some property is empty."),
+            @ApiResponse(responseCode = "409", description = "Product duplicated.")
     })
     @CrossOrigin
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product Add(@RequestBody(description = "Image file", required = true) @RequestPart MultipartFile file,
-                              @RequestBody(description = "Product information as JSON string", required = true) @RequestPart String stringProduct) throws IOException {
+    public ResponseEntity<String> createProduct(@RequestBody(description = "Image file", required = true) @RequestPart MultipartFile file,
+                                                @RequestBody(description = "Product information as JSON string", required = true) @RequestPart String stringProduct) throws IOException {
 
-        ProductDTO productDTO = getProductDTO(stringProduct);
+        Map<String, String> response = new HashMap<>();
+        ProductDTO productDTO = new ProductDTO();
+
+        try {
+            productDTO = getProductDTO(stringProduct);
+        } catch (JsonProcessingException exception) {
+            response.put("Error Message", "Error al procesar el objeto JSON del producto");
+            response.put("Code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            return getStringResponseEntity(response);
+        }
+
+        if (validatePropertiesProduct(productDTO)) {
+            response.put("Error Message", "El producto debe tener todas las propiedades no vacías.");
+            response.put("Code", HttpStatus.BAD_REQUEST.toString());
+            return getStringResponseEntity(response);
+        }
+
+        if (productService.isProductDuplicated(productDTO.getName())) {
+            response.put("Error Message", "El nombre del producto proporcionado ya existe. Por favor, elige un nombre diferente para evitar duplicados.");
+            response.put("Code", HttpStatus.CONFLICT.toString());
+            return getStringResponseEntity(response);
+        }
 
         String fileName = file.getOriginalFilename();
         File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
@@ -66,7 +94,39 @@ public class ProductController {
         long expirationTimeMillis = 360000000L;
         String imageUrl = awsService.generatePresignedUrl(awsService.bucketName, key, expirationTimeMillis);
 
+        Product product = GetProduct(productDTO, imageUrl);
+        productService.SaveProduct(product);
+
+        response.put("Message", "Producto guardado con éxito");
+        response.put("Code", HttpStatus.CREATED.toString());
+        return getStringResponseEntity(response);
+    }
+
+    private boolean validatePropertiesProduct(ProductDTO productDTO) {
+        return productDTO.getName() == null || productDTO.getName().isEmpty()
+                || productDTO.getDescription() == null || productDTO.getDescription().isEmpty()
+                || productDTO.getPrice() == null
+                || productDTO.getScore() == null
+                || productDTO.getCountry() == null || productDTO.getCountry().isEmpty()
+                || productDTO.getCity() == null || productDTO.getCity().isEmpty()
+                || productDTO.getCategory() == null || productDTO.getCategory().isEmpty();
+    }
+
+    private ResponseEntity<String> getStringResponseEntity(Map errorResponse) {
+        String jsonBody;
+
+        try {
+            jsonBody = new ObjectMapper().writeValueAsString(errorResponse);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(jsonBody);
+    }
+
+    private Product GetProduct(ProductDTO productDTO, String imageUrl) {
         Product product = new Product();
+        product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
         product.setImageUrl(imageUrl);
@@ -76,8 +136,9 @@ public class ProductController {
         product.setCity(productDTO.getCity());
         product.setCountry(productDTO.getCountry());
         product.setCategory(productDTO.getCategory());
+        product.setStatus(ProductStatus.ACTIVE);
 
-        return productService.SaveProduct(product);
+        return product;
     }
 
     private ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
