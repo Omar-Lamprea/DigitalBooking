@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class ProductController {
     })
     @CrossOrigin
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> createProduct(@RequestBody(description = "Image file", required = true) @RequestPart MultipartFile file,
+    public ResponseEntity<String> createProduct(@RequestBody(description = "Image file", required = true) @RequestPart List<MultipartFile> images,
                                                 @RequestBody(description = "Product information as JSON string", required = true) @RequestPart String stringProduct) throws IOException {
 
         Map<String, String> response = new HashMap<>();
@@ -81,20 +82,26 @@ public class ProductController {
             return getStringResponseEntity(response);
         }
 
-        String fileName = file.getOriginalFilename();
-        File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
-        file.transferTo(tempFile);
+        List<String> imagesURLs = new ArrayList<>();
 
-        AWSService awsService = AWSService.getInstance();
+        for (MultipartFile image: images) {
+            String fileName = image.getOriginalFilename();
+            File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
+            image.transferTo(tempFile);
 
-        String key = "product-images/" + fileName;
-        awsService.uploadFile(awsService.bucketName, key, tempFile);
-        tempFile.delete();
+            AWSService awsService = AWSService.getInstance();
 
-        long expirationTimeMillis = 360000000L;
-        String imageUrl = awsService.generatePresignedUrl(awsService.bucketName, key, expirationTimeMillis);
+            String key = "product-images/" + productDTO.getName() + "/" + fileName;
+            awsService.uploadFile(awsService.bucketName, key, tempFile);
+            tempFile.delete();
 
-        Product product = GetProduct(productDTO, imageUrl);
+            long expirationTimeMillis = 360000000L;
+            String imageUrl = awsService.generatePresignedUrl(awsService.bucketName, key, expirationTimeMillis);
+
+            imagesURLs.add(imageUrl);
+        }
+
+        Product product = GetProduct(productDTO, imagesURLs);
         productService.SaveProduct(product);
 
         response.put("Message", "Producto guardado con éxito");
@@ -121,15 +128,21 @@ public class ProductController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
+        if(HttpStatus.CREATED.equals(errorResponse.get("Code"))){
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(jsonBody);
+        }
+
         return ResponseEntity.status(HttpStatus.CONFLICT).body(jsonBody);
     }
 
-    private Product GetProduct(ProductDTO productDTO, String imageUrl) {
+    private Product GetProduct(ProductDTO productDTO, List<String> imagesURLs) {
         Product product = new Product();
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
-        product.setImageUrl(imageUrl);
+        product.setImagesURLs(imagesURLs);
         product.setScore(productDTO.getScore());
         product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());
