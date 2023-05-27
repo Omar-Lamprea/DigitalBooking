@@ -3,6 +3,7 @@ package com.pi.digitalbooking.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi.digitalbooking.enums.ProductStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProduct;
 
-    @Column
+    @Column(nullable = false)
+    @NotNull
     private Integer codeProduct;
     @Column(length = 250)
     private String name;

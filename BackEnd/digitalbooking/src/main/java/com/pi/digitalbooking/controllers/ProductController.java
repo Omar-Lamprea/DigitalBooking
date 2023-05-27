@@ -70,13 +70,13 @@ public class ProductController {
         }
 
         if (validatePropertiesProduct(productDTO)) {
-            response.put("Error Message", "El producto debe tener todas las propiedades no vacías.");
+            response.put("ErrorMessage", "El producto debe tener todas las propiedades no vacías.");
             response.put("Code", HttpStatus.BAD_REQUEST.toString());
             return getStringResponseEntity(response);
         }
 
-        if (productService.isProductDuplicated(productDTO.getName())) {
-            response.put("Error Message", "El nombre del producto proporcionado ya existe. Por favor, elige un nombre diferente para evitar duplicados.");
+        if (productService.isProductDuplicatedByName(productDTO.getName()) || productService.isProductDuplicatedByCodeProduct(productDTO.getCodeProduct())) {
+            response.put("ErrorMessage", "El nombre o código del producto proporcionado ya existe. Por favor, elige un nombre o código diferente para evitar duplicados.");
             response.put("Code", HttpStatus.CONFLICT.toString());
             return getStringResponseEntity(response);
         }
@@ -180,7 +180,7 @@ public class ProductController {
     @GetMapping("/all")
     @ResponseBody
     public List<Product> SearchAll() {
-        return productService.SearchAll();
+        return productService.SearchAllByStatus();
     }
 
     @Operation(summary = "Update a product", description = "Updates an existing product.")
