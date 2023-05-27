@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @MultipartConfig(
         maxFileSize = 1024 * 1024 * 5, // 5MB
         maxRequestSize = 1024 * 1024 * 10 // 10MB
