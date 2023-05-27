@@ -5,7 +5,7 @@ import { GLOBAL_API } from "../utils/constants";
 const initialState = {
   URL_API: GLOBAL_API,
   APIdata: [],
-  user: JSON.parse(localStorage.getItem('user')) || false
+  user: JSON.parse(localStorage.getItem('user')) || true
 }
 
 const ContextGlobal = createContext('')
@@ -33,6 +33,7 @@ const ContextProvider = ({ children }) => {
     // console.log('callback API...');
     try {
       const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll);
+      console.log('state', state);
       if (res.ok) {
         const data = await res.json();
         dispatch({ type: 'APIdata', payload: data });
