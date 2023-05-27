@@ -21,6 +21,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> SearchAllByStatus() {
+        return productRepository.findAllByStatus(ProductStatus.ACTIVE);
+    }
+
     public Product SearchById(Integer id) {
 
         Optional<Product> product = productRepository.findById(id);
@@ -32,8 +36,13 @@ public class ProductService {
         }
     }
 
-    public boolean isProductDuplicated(String productName) {
+    public boolean isProductDuplicatedByName(String productName) {
         Product existingProduct = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+        return existingProduct != null;
+    }
+
+    public boolean isProductDuplicatedByCodeProduct(Integer codeProduct) {
+        Product existingProduct = productRepository.findByCodeProductAndStatus(codeProduct, ProductStatus.ACTIVE);
         return existingProduct != null;
     }
 
