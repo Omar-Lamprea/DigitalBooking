@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +31,7 @@ public class Product {
     private String description;
 
     @Column(length = 500)
-    private String imageUrl;
+    private List<String> imagesURLs;
 
     @Column
     private Integer score;
