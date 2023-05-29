@@ -8,6 +8,9 @@
         font-weight: 700;
         color: var(--black-color);
     }
+    h3{
+        color: var(--blue-color);  
+    }
     p{
         color: var(--black-color);
     }
@@ -109,5 +112,12 @@
         background-color: rgb(190, 0, 0);
         display: flex;
         align-self: end;
+    }
+    .column-list{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .column-list li{
+        flex-basis: 50%;
     }
 }
