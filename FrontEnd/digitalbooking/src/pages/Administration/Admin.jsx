@@ -55,7 +55,7 @@ const Admin = () => {
             className="btn-action-admin"
             value="editarProductos"
             onClick={toggleActionAdmin}>
-              Editar Producto
+              Editar Productos
           </Link>
         </div>
       </div>

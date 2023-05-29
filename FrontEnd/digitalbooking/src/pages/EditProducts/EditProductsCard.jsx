@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+// import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import ModalDeleteProduct from '../../components/Modals/ModalDeleteProduct';
+import { Link } from 'react-router-dom';
 
 
 
@@ -10,7 +11,9 @@ const EditProductsCard = ({data}) => {
   return (
     <section className='product'>
       <div className="product-img">
-        <img src={data.imagesURLs[0]} alt="product image" />
+        <Link to={"../../producto/" + data.idProduct}>
+          <img src={data.imagesURLs[0]} alt="product image" />
+        </Link>
       </div>
       <div className="product-data">
         <p>Nombre: <br />
@@ -27,9 +30,9 @@ const EditProductsCard = ({data}) => {
         </p>
       </div>
       <div className="product-actions">
-        <div className="edit">
+        {/* <div className="edit">
           <FontAwesomeIcon icon={faPenToSquare} />
-        </div>
+        </div> */}
         <div className="delete">
           <ModalDeleteProduct id={data.idProduct} productName={data.name}/>
         </div>
