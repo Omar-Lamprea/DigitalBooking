@@ -15,9 +15,9 @@ const ContainerImg = (data) => {
           </div>
           <div className="second-images">
             <img src={images[1] || images[0]} alt=""  className=""/>
-            <img src={images[1] || images[0]} alt=""  className=""/>
-            <img src={images[1] || images[0]} alt=""  className=""/>
-            <img src={images[1] || images[0]} alt=""  className=""/>
+            <img src={images[2] || images[0]} alt=""  className=""/>
+            <img src={images[3] || images[0]} alt=""  className=""/>
+            <img src={images[4] || images[0]} alt=""  className=""/>
             <Button 
               className="btn-modal-images" 
               onClick={() => setModalShow(true)}>

@@ -38,10 +38,15 @@
         border: none;
       }
     }
-    .modal-images{
-      img{
-        height: 300px;
-      }
+  }
+}
+
+.modal-main{
+  .modal-item-img{
+    img{
+      height: 500px;
+      width: 100%;
+      object-fit: cover;
     }
   }
 }
