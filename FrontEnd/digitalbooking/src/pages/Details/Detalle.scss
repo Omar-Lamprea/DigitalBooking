@@ -24,26 +24,11 @@
         
         justify-content: space-between;
         padding: 1rem;
-        .container_photos{
-            width: 100%;
-            img, iframe{
-                width: 100%;
-                height: 400px;
-                margin-bottom: 1rem;
-                border-radius: var(--standard-border);
-                object-fit: cover;
-                @include media-query(large){
-                    height: 300px;
-                }
-            }
-
-        }
+        
         @include media-query(large) {
             flex-direction: row;
             gap: 3rem;
-            .container_photos{
-                width: 50%;
-            }
+            
             .right_container{
                 width: 50%;
                 justify-content: start;
@@ -57,7 +42,6 @@
         padding: 8px 30px 8px 30px;
         font-size: 14px;
         font-weight: 700;
-
     }
     .container_stars{
         margin-top: 10px;

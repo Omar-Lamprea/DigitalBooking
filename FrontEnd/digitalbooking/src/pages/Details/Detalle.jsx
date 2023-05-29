@@ -1,12 +1,11 @@
 //import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
 import {faKitchenSet, faCar, faTv, faPersonSwimming, faFan, faWifi, faPaw}  from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ModalDeleteProduct from "../../components/Modals/ModalDeleteProduct";
 import { useContextGlobal } from "../../context/global.context";
-
+import DHeader from "../../components/Details/DHeader/DHeader";
+import DContainerImages from "../../components/Details/DCarousel/DContainerImages";
 
 const Detalle = () => {
   const {id} = useParams()
@@ -29,27 +28,21 @@ const Detalle = () => {
     return { __html: text };
   }
 
-
   return (
     <div className="detalle">
       {lodging ?
         <>
-          <div className="product-header d-flex flex-column justify-content-center align-items-center">
-            <h1>{lodging.name}</h1>
-            <div className="container_stars">
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-            </div>
-            <p className="product-score">{lodging.score}</p>
-          </div>
+          <DHeader data={
+            {
+              category: lodging.category, 
+              city: lodging.city,
+              name: lodging.name,
+              score: lodging.score
+            }
+          }/>
+          <DContainerImages images={lodging.imagesURLs}/>
           <section className="info-container"> 
-            <div className="container_photos">
-              <img src={lodging.imageUrl} alt="imagen-hotel" />
-              imagenes
-            </div>
+            
             <div className="description_container">
             <h3>{lodging.name} - {lodging.city}</h3>
             <hr />
