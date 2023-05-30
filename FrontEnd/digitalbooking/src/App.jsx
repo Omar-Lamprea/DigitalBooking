@@ -15,12 +15,14 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />}/>
+
       <Route path='admin' element={<Admin />}>
-        <Route index element={<Role />}/>
-        <Route path='categorias' element={<RegisterCategory />}/>
+        <Route index element={<EditProducts />}/>
         <Route path='registrar' element={<RegisterProduct />}/>
-        <Route path='editarProductos' element={<EditProducts />}/>
+        <Route path='usuarios' element={<Role />}/>
+        <Route path='categorias' element={<RegisterCategory />}/>
       </Route>
+
       <Route path='producto/:id' element={<Detalle />}/>
       <Route path='login' element={<Login />}/>
       <Route path='*' element={<NotFound />}/>
