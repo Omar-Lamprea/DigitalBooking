@@ -21,19 +21,26 @@
     .info-container{
         display: flex;
         flex-direction: column;
-        
         justify-content: space-between;
-        padding: 1rem;
+        padding: 1rem 0;
         
-   
+        hr{
+            color: var(--main-bg-color);
+            margin: 0 0 1rem 0;
+            opacity: 1;
+        }
+        
         @include media-query(large) {
-            flex-direction: row;
-            gap: 3rem;
+            max-width: 1115px;
+            margin: auto;
+            // flex-direction: row;
+            // gap: 3rem;
             
             .right_container{
                 width: 50%;
                 justify-content: start;
             }
+            
         }
     }
     .description_container{
@@ -44,8 +51,7 @@
         @include media-query(large) {
             display: flex;
             flex-direction: row;
-            gap: 10rem;  
-                    
+            gap: 1rem;
             
             .description-text{
                 width: 50%;
@@ -106,7 +112,7 @@
         }
     }
     span{
-        padding-right: 20px;
+        // padding-right: 20px;
     }
     .container_photos{
         display: flex;

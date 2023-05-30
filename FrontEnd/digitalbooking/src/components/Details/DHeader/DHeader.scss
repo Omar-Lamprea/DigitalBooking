@@ -4,6 +4,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .col-header{
+      display: flex;
+      margin: auto;
+      width: 100%;
+      max-width: 1115px;
+      justify-content: space-between;
+    }
     &.blue{
       background-color: var(--main-bg-color);
       .title{

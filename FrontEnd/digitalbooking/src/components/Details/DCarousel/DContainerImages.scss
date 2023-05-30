@@ -9,7 +9,9 @@
   .container-images{
     display: flex;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1rem 0;
+    max-width: 1115px;
+    margin: auto;
     img{
       border-radius: 15px;
       width: 100%;
