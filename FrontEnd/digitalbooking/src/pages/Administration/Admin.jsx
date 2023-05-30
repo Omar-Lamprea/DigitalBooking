@@ -20,28 +20,18 @@ const Admin = () => {
     toggleActionAdmin()
   }, [])
   
-
   return (
     <section className="admin">
       <div className="admin-actions">
         <div className="row-buttons">
           <Link 
-            to="/admin" 
+            to="/admin"
             className="btn-action-admin"
             value=""
             onClick={toggleActionAdmin}>
-              Roles y Usuarios
+              Productos
           </Link>
 
-          <Link 
-            to="/admin/categorias"
-            className="btn-action-admin" 
-            value="categorias"
-            onClick={toggleActionAdmin}>
-              Categorías
-          </Link>
-        </div>
-        <div className="row-buttons">
           <Link 
             to="/admin/registrar"
             className="btn-action-admin" 
@@ -49,13 +39,22 @@ const Admin = () => {
             onClick={toggleActionAdmin}>
               Crear Producto
           </Link>
+        </div>
+        <div className="row-buttons">
+        <Link 
+            to="/admin/categorias"
+            className="btn-action-admin" 
+            value="categorias"
+            onClick={toggleActionAdmin}>
+              Categorías
+          </Link>
 
           <Link 
-            to="/admin/editarProductos"
+            to="/admin/usuarios" 
             className="btn-action-admin"
-            value="editarProductos"
+            value="usuarios"
             onClick={toggleActionAdmin}>
-              Editar Producto
+              Roles y Usuarios
           </Link>
         </div>
       </div>
