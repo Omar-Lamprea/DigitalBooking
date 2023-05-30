@@ -9,7 +9,7 @@
         color: var(--black-color);
     }
     h3{
-        color: var(--blue-color);  
+        color: var(--blue-color);
     }
     p{
         color: var(--black-color);
@@ -29,7 +29,7 @@
             margin: 0 0 1rem 0;
             opacity: 1;
         }
-        
+
         @include media-query(large) {
             max-width: 1115px;
             margin: auto;
@@ -47,11 +47,13 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        padding: 0 1rem;
         
         @include media-query(large) {
             display: flex;
             flex-direction: row;
             gap: 1rem;
+            padding: 0;
             
             .description-text{
                 width: 50%;
