@@ -30,7 +30,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className='btn-hamburger' />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <Nav className="menu">
-              <Link to="/crearCuenta" onClick={() =>{setIsNavbarOpen(false)}}>Crear cuenta</Link>
+              <Link to="/create-account" onClick={() =>{setIsNavbarOpen(false)}}>Crear cuenta</Link>
               {path !== '/login' && <Link to="/login">Iniciar sesión</Link>}
             </Nav>
           </Navbar.Collapse>

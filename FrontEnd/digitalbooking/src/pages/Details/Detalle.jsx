@@ -1,11 +1,11 @@
 //import React from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCreditCard, faLocationDot, faStar } from "@fortawesome/free-solid-svg-icons";
+import {faKitchenSet, faCar, faTv, faPersonSwimming, faFan, faWifi, faPaw}  from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ModalDeleteProduct from "../../components/Modals/ModalDeleteProduct";
 import { useContextGlobal } from "../../context/global.context";
-
+import DHeader from "../../components/Details/DHeader/DHeader";
+import DContainerImages from "../../components/Details/DCarousel/DContainerImages";
 
 const Detalle = () => {
   const {id} = useParams()
@@ -32,45 +32,60 @@ const Detalle = () => {
     <div className="detalle">
       {lodging ?
         <>
-          <div className="product-header d-flex flex-column justify-content-center align-items-center">
-            <h1>{lodging.name}</h1>
-            <div className="container_stars">
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px" }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-              <FontAwesomeIcon icon={faStar} style={{ color: "#fbc02d", marginRight: "5px", fontSize: "20px"  }} />
-            </div>
-            <p className="product-score">{lodging.score}</p>
-          </div>
+          <DHeader data={
+            {
+              category: lodging.category, 
+              city: lodging.city,
+              name: lodging.name,
+              score: lodging.score
+            }
+          }/>
+          <DContainerImages images={lodging.imagesURLs}/>
+
           <section className="info-container"> 
-            <div className="container_photos">
-              <img src={lodging.imageUrl} alt="imagen-hotel" />
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.8943264028294!2d-74.07557231544078!3d4.612928730470008!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f992718c80c91%3A0x3c8457db43981aa5!2sHotel%20Tequendama!5e0!3m2!1ses!2sco!4v1684420537789!5m2!1ses!2sco"
-                allowFullScreen="" 
-                loading="lazy" 
-                referrerPolicy="no-referrer-when-downgrade">
-              </iframe>
-            </div>
-            <div className="right_container">
+            <div className="description_container">
+            <div className="description-text">
+            <h3>{lodging.name} - {lodging.city}</h3>
+            <hr />           
             <p className="mt-3 mt-lg-0 text-start w-100" dangerouslySetInnerHTML={descriptionNomalized()}></p>
+            </div>
             <div className="container_icons d-flex flex-column">
-              <span className="d-flex flex-column align-items-center align-items-lg-start">
-                <ul>
+              <span>
+                <h3>¿Qué ofrece este lugar?</h3>
+                <hr />
+                <ul className="column-list">
                   <li>
-                    <FontAwesomeIcon icon={faLocationDot}/>
-                    <span>{lodging.city} - {lodging.country}</span>
+                    <FontAwesomeIcon icon={faKitchenSet}/>
+                    <span>Cocina</span>
                   </li>
                   <li>
-                    <FontAwesomeIcon icon={faCreditCard}/>
-                    <span>${lodging.price} por noche</span>
+                    <FontAwesomeIcon icon={faCar}/>
+                    <span>Estacionamiento gratuito</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faTv}/>
+                    <span>Televisor</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faPersonSwimming}/>
+                    <span>Pileta</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faFan}/>
+                    <span>Aire acondicionado</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faWifi}/>
+                    <span>Wifi</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faPaw}/>
+                    <span>Apto mascotas</span>
                   </li>
                 </ul>
               </span>
               <button> Reserva ahora! </button>
             </div>
-            <ModalDeleteProduct id={id}/>
             </div>
           </section>
         </>

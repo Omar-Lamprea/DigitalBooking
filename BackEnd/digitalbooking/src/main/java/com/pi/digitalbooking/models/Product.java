@@ -1,9 +1,14 @@
 package com.pi.digitalbooking.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pi.digitalbooking.enums.ProductStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +21,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idProduct;
 
+    @Column(nullable = false)
+    @NotNull
+    private Integer codeProduct;
     @Column(length = 250)
     private String name;
 
@@ -23,7 +31,7 @@ public class Product {
     private String description;
 
     @Column(length = 500)
-    private String imageUrl;
+    private List<String> imagesURLs;
 
     @Column
     private Integer score;
@@ -42,4 +50,19 @@ public class Product {
 
     @Column
     private String category;
+
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JsonIgnore
+    private ProductStatus status;
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    //@ManyToOne
+    //@JoinColumn(name = "category_id")
+    //private Category category;
 }

@@ -1,6 +1,9 @@
 export const validateForm = (formData) => {
   const newErrors = {}
 
+  if (!formData.codeProduct) 
+    newErrors.codeProduct = 'El código de producto es requerido';
+
   if (!formData.productName.trim()) 
     newErrors.productName = 'El nombre del producto es requerido';
   

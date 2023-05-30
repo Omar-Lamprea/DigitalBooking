@@ -1,0 +1,54 @@
+.container-photos{
+  .carousel-images{
+    img{
+      height: 300px;
+      object-fit: cover;
+      width: 100%;
+    } 
+  }
+  .container-images{
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    max-width: 1115px;
+    margin: auto;
+    img{
+      border-radius: 15px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .main-image{
+      width: 50%;
+      img{
+        height: 100%;
+      }
+    }
+    .second-images{
+      width: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      gap: 1rem;
+      img{
+        width: calc(50% - 1rem);
+      }
+      .btn-modal-images{
+        position: absolute;
+        bottom: .5rem;
+        right: .5rem;
+        background-color: inherit;
+        border: none;
+      }
+    }
+  }
+}
+
+.modal-main{
+  .modal-item-img{
+    img{
+      height: 500px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+}
