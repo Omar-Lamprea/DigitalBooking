@@ -1,6 +1,11 @@
+
+import ModalDeleteProduct from "../Modals/ModalFormCategory"
+
 const RegisterCategory = () => {
   return (
-    <div>RegisterCategory</div>
+    <div>
+      <ModalDeleteProduct />
+    </div>
   )
 }
 

@@ -1,0 +1,33 @@
+.form-register-category{
+    color: var(--main-bg-color);
+    .form-register-row{
+      width: 100%;
+      .form-row{
+        display: flex;
+        flex-direction: column;
+        margin: .5rem 0;
+        input, select, textarea{
+          background-color: var(--white-color);
+          border: none;
+          border-radius: var(--standard-border);
+          padding: .5rem;
+          box-shadow: 0px 0px 4px 0px #b7b7b7;
+        }
+      }
+    }
+    .responseForm{
+      p{
+        max-width: 500px;
+        margin: auto;
+        margin-top: 1rem;
+      }
+      p.errorResponse{
+        color: red;
+      }
+    }
+  }
+.buttons{
+    background-color: var(--main-bg-color);
+    border:var(--main-bg-color)
+}
+  
