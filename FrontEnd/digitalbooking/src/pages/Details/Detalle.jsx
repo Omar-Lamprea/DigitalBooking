@@ -41,14 +41,16 @@ const Detalle = () => {
             }
           }/>
           <DContainerImages images={lodging.imagesURLs}/>
+
           <section className="info-container"> 
-            
             <div className="description_container">
+            <div className="description-text">
             <h3>{lodging.name} - {lodging.city}</h3>
-            <hr />
+            <hr />           
             <p className="mt-3 mt-lg-0 text-start w-100" dangerouslySetInnerHTML={descriptionNomalized()}></p>
+            </div>
             <div className="container_icons d-flex flex-column">
-              <span className="d-flex flex-column  align-items-lg-start">
+              <span>
                 <h3>¿Qué ofrece este lugar?</h3>
                 <hr />
                 <ul className="column-list">

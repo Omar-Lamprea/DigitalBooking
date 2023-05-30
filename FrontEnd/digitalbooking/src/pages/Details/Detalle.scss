@@ -25,6 +25,7 @@
         justify-content: space-between;
         padding: 1rem;
         
+   
         @include media-query(large) {
             flex-direction: row;
             gap: 3rem;
@@ -35,6 +36,32 @@
             }
         }
     }
+    .description_container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        
+        @include media-query(large) {
+            display: flex;
+            flex-direction: row;
+            gap: 10rem;  
+                    
+            
+            .description-text{
+                width: 50%;
+                margin: 0;
+                padding: 0;
+            }
+            .container_icons{
+                width: 50%;
+                margin: 0;
+                padding: 0;
+                
+            }
+        }
+    }
+
+
     button{
         background-color: var(--main-bg-color);
         color: #FFFFFF;
