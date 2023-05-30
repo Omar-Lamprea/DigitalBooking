@@ -1,6 +1,14 @@
+import SearchBar from "../components/SearchBar/SearchBar"
+import Categories from "../components/Categories/Categories"
+import Suggestions from "../components/Suggestions/Suggestions"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <main>
+      <SearchBar />
+      <Categories />
+      <Suggestions />
+    </main>
   )
 }
 

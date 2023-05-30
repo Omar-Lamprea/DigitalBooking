@@ -1,4 +1,12 @@
 /* Estilos globales */
 @import './App.scss';
-@import './styles/reset.scss';
-@import './styles/Header.scss';
+
+/** Estilos Componentes */
+@import './styles/components/Header.scss';
+@import './styles/components/Footer.scss';
+@import './styles/components/Detalle.scss';
+@import './styles/components/categories.scss';
+@import './styles/components/category-card.scss';
+@import './styles/components/suggestions.scss';
+@import './styles/components/suggestion-card.scss';
+@import './styles/pages/Admin.scss';
