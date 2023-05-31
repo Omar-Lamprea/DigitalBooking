@@ -2,6 +2,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowUp } from "@fortawesome/free-solid-svg-icons";
+import Default from '../../assets/images/default.png'
 import { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
 // import { useContextGlobal } from '../../context/global.context';
@@ -59,22 +60,27 @@ const ModalFormCategory = () => {
                 </div>
                 <div className="form-row">
                     <label htmlFor="description">Descripción*</label>
-                    <textarea name="description" id="description" rows="3"></textarea>
+                    <textarea name="description" id="description"></textarea>
                     {/* {errorsForm && <span>{errorsForm.description}</span>} */}
                 </div>
             </div>
             <div className="form-register-row">
                 <div className="form-row">
-                    <label htmlFor="categoryImage" className='labelProductImage'>
-                    <FontAwesomeIcon icon={faCloudArrowUp} style={{color: "#f0e919",}} />
-                    </label>
-                    <input type="file" name="productImage" id="productImage" className='d-none' accept='image/*'/>
-                
-                    {/* {errorsForm && <span className='text-center'>{errorsForm.productImage}</span>} */}
+                <img src={Default} alt="demo" />
+                <label htmlFor="categoryImage" className='labelCategoryImage'>
+                    <FontAwesomeIcon icon={faCloudArrowUp} />
+                </label>
+                <input 
+                    type="file" 
+                    name="categoryImage" 
+                    id="categoryImage" 
+                    className='d-none' 
+                    // onChange={handleChange} 
+                    accept='image/*' 
+                    multiple/>
+                {/* {errorsForm && <span className='text-center'>{errorsForm.productImage}</span>} */}
                 </div>
             </div>
-            {/* ¿Estás seguro de eliminar el producto {id}?
-            {error && <p style={{color: "red"}}>Ocurrió un error al intentar eliminar el producto</p>} */}
         </form>  
         </Modal.Body>
         <Modal.Footer>

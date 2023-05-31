@@ -25,6 +25,26 @@
         color: red;
       }
     }
+    .labelCategoryImage{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        border: 1px solid var(--main-bg-color);
+        border-radius: var(--standard-border);
+        padding: .5rem;
+        background-color: var(--white-color);
+        svg{
+          color: var(--second-bg-color);
+          font-size: 1.5rem;
+        }
+      }
+      .labelCategoryImage:hover{
+        background-color: var(--second-bg-color);
+        svg{
+          color: var(--main-bg-color);
+        }
+      }
   }
 .buttons{
     background-color: var(--main-bg-color);
