@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.security.config.jwt;
 
+import com.pi.digitalbooking.DTO.AppUserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -37,9 +38,9 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(AppUserDto userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+        return createToken(claims, userDetails.toString());
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
