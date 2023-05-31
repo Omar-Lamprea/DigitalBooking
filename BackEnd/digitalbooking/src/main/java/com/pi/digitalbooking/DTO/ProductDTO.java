@@ -32,7 +32,5 @@ public class ProductDTO {
 
     private String city;
 
-    private String category;
-
-    //private Category category;
+    private Integer category;
 }

@@ -1,7 +1,6 @@
 package com.pi.digitalbooking.models;
 
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;
@@ -49,13 +48,8 @@ public class Product {
     @Column
     private String city;
 
-    @Column
-    private String category;
-
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private ProductStatus status;
 
     @Column
@@ -67,7 +61,7 @@ public class Product {
         return name;
     }
 
-    //@ManyToOne
-    //@JoinColumn(name = "category_id")
-    //private Category category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
