@@ -2,34 +2,12 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import Loader from "../components/Loader/Loader"
-import { useContextGlobal } from "../context/global.context"
-
-const dummyUsers = [
-  {
-    id: 1,
-    name: 'Omar',
-    apellido: 'Lamprea',
-    email: 'omar@gmail.com',
-    rol: 'Admin'
-  },
-  {
-    id: 2,
-    name: 'Camilo',
-    apellido: 'Castro',
-    email: 'camilo@gmail.com',
-    rol: 'Cliente'
-  },
-  {
-    id: 3,
-    name: 'Natalia',
-    apellido: 'Polo',
-    email: 'natalia@gmail.com',
-    rol: 'Admin'
-  }
-]
+import Loader from "../../components/Loader/Loader"
+import { useContextGlobal } from "../../context/global.context"
+import parseJwt from "../../utils/decodeJWT"
 
 const Login = () => {
+  const {state} = useContextGlobal();
   const initialState = {
     email: '',
     password: '',
@@ -41,23 +19,44 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async (e) =>{
     e.preventDefault()
     if(validateForm()){
       setIsLoading(true)
-
-      setTimeout(() => {
-        setIsLoading(false)
-        const user = dummyUsers.find(user => user.email === formValues.email)
-        if(user){
+      
+      try{
+        const res = await fetch(state.URL_API.urlBase + state.URL_API.login,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: formValues.email,
+            password: formValues.password
+          })
+        })
+        const data = await res.json()
+        if(res.ok){
+          const user = {
+            data: JSON.parse(parseJwt(data.jwt).sub),
+            token: data.jwt
+          }
           dispatch({type: "setUser", payload: user})
           setFormValues(initialState)
           setErrors({})
           navigate('/')
+          setIsLoading(false)
         }else{
-          setErrors({...errors, response: "usuario no encontrado"})
+          console.log('error:');
+          console.log(data);
+          setErrors({...errors, response: "Usuario o contraseña invalida"})
+          setIsLoading(false)
         }
-      }, 1000);
+      }catch(err){
+        console.error('error en la peticion:', err);
+        setIsLoading(false)
+
+      }
     }
   }
 
@@ -134,7 +133,7 @@ const Login = () => {
           {errors.response && <p className="error-message">{errors.response}</p>}
         </div>
       </form>
-      <p className="create-account">¿Aún no tenes cuenta? <Link to="/">Registrate!</Link></p>
+      <p className="create-account">¿Aún no tenes cuenta? <Link to="../create-account">Registrate!</Link></p>
     </section>
   )
 }

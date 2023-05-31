@@ -5,7 +5,10 @@ import { GLOBAL_API } from "../utils/constants";
 const initialState = {
   URL_API: GLOBAL_API,
   APIdata: [],
-  user: JSON.parse(localStorage.getItem('user')) || false
+  user: {
+    data: JSON.parse(localStorage.getItem('user'))?.data || false,
+    token: JSON.parse(localStorage.getItem('user'))?.token || false,
+  }
 }
 
 const ContextGlobal = createContext('')
@@ -32,15 +35,20 @@ const ContextProvider = ({ children }) => {
   const getList = useCallback(async () => {
     // console.log('callback API...');
     try {
-      const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll);
+      const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll,{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const data = await res.json()
       if (res.ok) {
-        const data = await res.json();
-        dispatch({ type: 'APIdata', payload: data });
+        dispatch({ type: 'APIdata', payload: data })
       } else {
-        dispatch({ type: 'APIdata', payload: res });
+        console.log('Error: ', data)
+        dispatch({ type: 'APIdata', payload: res })
       }
     } catch (error) {
-      console.log('Context error:', error);
+      console.log('Context error:', error)
     }
   }, []);
 
