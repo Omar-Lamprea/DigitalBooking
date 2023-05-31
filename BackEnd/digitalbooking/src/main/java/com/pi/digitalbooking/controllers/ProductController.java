@@ -11,6 +11,7 @@ import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Amenity;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.AmenityRepository;
+import com.pi.digitalbooking.services.ProductImageService;
 import com.pi.digitalbooking.services.ProductService;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -46,7 +47,8 @@ import java.util.*;
 @Tag(name = "Product", description = "Everything about your Products")
 public class ProductController {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ProductImageService productImageService;
     @Autowired
     private ProductService productService;
     @Autowired
@@ -114,8 +116,9 @@ public class ProductController {
             imagesURLs.add(imageUrl);
         }
 
-        Product product = GetProduct(productDTO, imagesURLs);
-        productService.SaveProduct(product);
+        Product product = GetProduct(productDTO);
+        Product newProduct = productService.SaveProduct(product);
+        productImageService.addImagesToProduct(newProduct, imagesURLs);
 
         for (Amenity amenity : amenities) {
             amenity.setProduct(product);
@@ -177,12 +180,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
     }
 
-    private Product GetProduct(ProductDTO productDTO, List<String> imagesURLs) {
+    private Product GetProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
-        product.setImages(imagesURLs.stream().map(url -> mapper.convertValue(new ProductImage(url), ProductImageEntity.class)).toList());
         product.setScore(productDTO.getScore());
         product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());

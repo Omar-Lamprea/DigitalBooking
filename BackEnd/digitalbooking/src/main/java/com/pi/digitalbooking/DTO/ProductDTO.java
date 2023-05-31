@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.models.Amenity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
