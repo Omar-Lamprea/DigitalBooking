@@ -16,7 +16,7 @@ build-backend-job:       # This job runs in the build stage, which runs first.
 
 build-frontend-job:
   stage: build
-  image: node:14
+  image: node:18
   script:
     - cd FrontEnd/digitalbooking/
     - npm ci
