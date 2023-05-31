@@ -1,8 +1,9 @@
 .button {
+    background-color: transparent;
     border-radius: 5px;
-    color: var(--white-color);
     padding: 0.5rem 1rem;
     &__primary {
         background-color: var(--main-bg-color);
+        color: var(--white-color);
     }
 }
