@@ -48,13 +48,8 @@ public class Product {
     @Column
     private String city;
 
-    @Column
-    private String category;
-
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private ProductStatus status;
 
     @Column
@@ -66,7 +61,7 @@ public class Product {
         return name;
     }
 
-    //@ManyToOne
-    //@JoinColumn(name = "category_id")
-    //private Category category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
