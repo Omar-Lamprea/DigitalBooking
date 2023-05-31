@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.security.config.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.AppUserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,6 +15,8 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     private final String SECRET_KEY = "ThisSecretDiesWithUs";
 
@@ -31,8 +34,14 @@ public class JwtUtil {
     }
 
     public String extractClaimUsername(String token){
+        AppUserDto userDto = null;
         Claims claims = extractAllClaims(token);
-        return claims.getSubject();
+        try {
+            userDto = mapper.readValue(claims.getSubject(), AppUserDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userDto.getEmail();
     }
     private Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
