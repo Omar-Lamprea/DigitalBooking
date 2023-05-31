@@ -9,7 +9,7 @@ import EditProducts from './pages/EditProducts/EditProducts'
 import Detalle from './pages/Details/Detalle'
 import Role from './components/Role/Role'
 import RegisterCategory from './components/RegisterCategory/RegisterCategory'
-import Login from './pages/Login'
+import Login from './pages/Login/Login'
 import CreateAccount from './pages/CreateAccount/CreateAccount'
 
 const router = createBrowserRouter(
