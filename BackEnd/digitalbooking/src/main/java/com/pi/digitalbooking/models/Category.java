@@ -1,10 +1,13 @@
 package com.pi.digitalbooking.models;
 
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pi.digitalbooking.enums.CategoryStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +28,9 @@ public class Category {
 
     @Column(length = 500)
     private String imageUrl;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JsonIgnore
+    private CategoryStatus status;
 }

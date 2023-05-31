@@ -1,9 +1,9 @@
 package com.pi.digitalbooking.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 import com.pi.digitalbooking.enums.ProductStatus;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import com.pi.digitalbooking.entities.ProductImageEntity;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,8 +30,8 @@ public class Product {
     @Column(length = 5000)
     private String description;
 
-    @Column(length = 500)
-    private List<String> imagesURLs;
+    @OneToMany(mappedBy="product")
+    private List<ProductImageEntity> images;
 
     @Column
     private Integer score;
@@ -48,13 +48,8 @@ public class Product {
     @Column
     private String city;
 
-    @Column
-    private String category;
-
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @JsonIgnore
     private ProductStatus status;
 
     @Column
@@ -66,7 +61,7 @@ public class Product {
         return name;
     }
 
-    //@ManyToOne
-    //@JoinColumn(name = "category_id")
-    //private Category category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
