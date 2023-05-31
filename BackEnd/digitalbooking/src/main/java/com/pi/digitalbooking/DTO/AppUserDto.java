@@ -16,4 +16,14 @@ public class AppUserDto {
     private String name;
     private String lastName;
     private AppUserRole role;
+
+    @Override
+    public String toString() {
+        return "{\"email\":\""+email+"\"," +
+                "\"name\":\""+name+"\"," +
+                "\"lastName\":\""+lastName+"\"," +
+                "\"role\":\""+role+"\"}";
+
+
+    }
 }
