@@ -34,10 +34,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**")
+                .antMatchers(
+                        "/auth/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/product/all",
+                        "/category/all"
+                )
                 .permitAll()
-                .antMatchers(HttpMethod.POST, "/users")
-                .permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/product", "/category").permitAll()
+                .antMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
