@@ -3,6 +3,7 @@ package com.pi.digitalbooking.models;
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,8 +31,8 @@ public class Product {
     @Column(length = 5000)
     private String description;
 
-    @Column(length = 500)
-    private List<String> imagesURLs;
+    @OneToMany(mappedBy="product")
+    private List<ProductImageEntity> images;
 
     @Column
     private Integer score;

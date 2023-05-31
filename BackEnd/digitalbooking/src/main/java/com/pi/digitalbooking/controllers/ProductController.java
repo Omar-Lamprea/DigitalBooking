@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.configurations.AWSService;
+import com.pi.digitalbooking.entities.ProductImageEntity;
+import com.pi.digitalbooking.models.ProductImage;
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.services.ProductService;
@@ -45,6 +47,7 @@ import java.util.Map;
 @Tag(name = "Product", description = "Everything about your Products")
 public class ProductController {
 
+    private final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private ProductService productService;
 
@@ -143,7 +146,7 @@ public class ProductController {
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
         product.setDescription(productDTO.getDescription());
-        product.setImagesURLs(imagesURLs);
+        product.setImages(imagesURLs.stream().map(url -> mapper.convertValue(new ProductImage(url), ProductImageEntity.class)).toList());
         product.setScore(productDTO.getScore());
         product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());
