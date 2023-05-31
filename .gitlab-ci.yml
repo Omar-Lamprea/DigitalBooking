@@ -24,7 +24,7 @@ build-frontend-job:
     - echo "Frontend build complete."
   artifacts:
     paths:
-      - FrontEnd/digitalbooking/build/
+      - FrontEnd/digitalbooking/dist/
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -61,7 +61,7 @@ deploy-frontend-job:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_REGION
-    - aws s3 sync FrontEnd/digitalbooking/build/ s3://dh-g8-front
+    - aws s3 sync FrontEnd/digitalbooking/dist/ s3://dh-g8-front
     - echo "Frontend application successfully deployed to S3."
   only:
     - dev
