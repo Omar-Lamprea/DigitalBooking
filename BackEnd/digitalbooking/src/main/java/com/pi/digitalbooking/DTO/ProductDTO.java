@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.models.Amenity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductDTO {
 
     private Integer codeProduct;
@@ -30,7 +32,5 @@ public class ProductDTO {
 
     private String city;
 
-    private String category;
-
-    //private Category category;
+    private Integer category;
 }

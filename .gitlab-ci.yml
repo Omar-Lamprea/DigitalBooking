@@ -3,7 +3,7 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+build-backend-job:       # This job runs in the build stage, which runs first.
   stage: build
   image: maven:3.8.4-openjdk-17
   script:
@@ -14,13 +14,25 @@ build-job:       # This job runs in the build stage, which runs first.
     paths:
       - BackEnd/digitalbooking/target/digitalbooking-0.0.1-SNAPSHOT.jar
 
+build-frontend-job:
+  stage: build
+  image: node:18
+  script:
+    - cd FrontEnd/digitalbooking/
+    - npm ci
+    - npm run build
+    - echo "Frontend build complete."
+  artifacts:
+    paths:
+      - FrontEnd/digitalbooking/dist/
+
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
     - echo "Running unit tests... This will take about 0 seconds."
     - echo "Code coverage is 90%"
 
-deploy-dev:      # This job runs in the deploy stage.
+deploy-backend-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   image: docker:latest
   services:
@@ -40,4 +52,16 @@ deploy-dev:      # This job runs in the deploy stage.
     - ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-18-218-175-122.us-east-2.compute.amazonaws.com "chmod +x deploy.sh && ./deploy.sh"
     - echo "Application successfully deployed. Wait a few minutes while it starts on the server."
   only: 
+    - dev
+deploy-frontend-job:
+  stage: deploy
+  image: python:3
+  script:
+    - pip install awscli
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_REGION
+    - aws s3 sync FrontEnd/digitalbooking/dist/ s3://dh-g8-front
+    - echo "Frontend application successfully deployed to S3."
+  only:
     - dev

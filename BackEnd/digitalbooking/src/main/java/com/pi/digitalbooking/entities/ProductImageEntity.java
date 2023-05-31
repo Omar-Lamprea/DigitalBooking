@@ -1,30 +1,26 @@
-package com.pi.digitalbooking.models;
+package com.pi.digitalbooking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pi.digitalbooking.models.Product;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "amenities")
-public class Amenity {
-
+@Table(name = "poduct_image")
+public class ProductImageEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer amenityId;
-
-    private String name;
-
-    private boolean available;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    private Integer id;
+    
+    private String url;
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="id_product", nullable = false)
     private Product product;
 }
