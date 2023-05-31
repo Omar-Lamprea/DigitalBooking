@@ -1,9 +1,7 @@
 package com.pi.digitalbooking.services;
 
 import com.pi.digitalbooking.enums.CategoryStatus;
-import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Category;
-import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +52,9 @@ public class CategoryService {
     public boolean isCategoryDuplicatedByName(String categoryName) {
         Category existingCategory = categoryRepository.findByNameAndStatus(categoryName, CategoryStatus.ACTIVE);
         return existingCategory != null;
+    }
+
+    public List<Category> SearchAllByStatus() {
+        return categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
     }
 }
