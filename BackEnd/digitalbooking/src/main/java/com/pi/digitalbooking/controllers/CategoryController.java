@@ -154,4 +154,18 @@ public class CategoryController {
     public List<Category> SearchAll() {
         return categoryService.SearchAllByStatus();
     }
+
+    @Operation(summary = "Search all categories", description = "Retrieves a list of categories by id.")
+    @ApiResponse(responseCode = "200", description = "List of categories by id", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Category.class))))
+    @CrossOrigin
+    @GetMapping("/categoryId")
+    @ResponseBody
+    public List<Category> getCategoryById(@RequestParam("id") int categoryId) {
+        return categoryService.getCategoryById(categoryId);
+    }
+
+
+
+
+
 }
