@@ -11,13 +11,14 @@ const ContainerImg = (data) => {
       {images &&
         <section className="container-images">
           <div className="main-image">
-            <img src={images[0]} alt="" />
+            <img src={images[0].url} alt="" />
           </div>
           <div className="second-images">
-            <img src={images[1] || images[0]} alt=""  className=""/>
-            <img src={images[2] || images[0]} alt=""  className=""/>
-            <img src={images[3] || images[0]} alt=""  className=""/>
-            <img src={images[4] || images[0]} alt=""  className=""/>
+            <img src={images[1] ? images[1].url : images[0].url} alt=""  className=""/>
+            <img src={images[2] ? images[2].url : images[0].url} alt=""  className=""/>
+            <img src={images[3] ? images[3].url : images[0].url} alt=""  className=""/>
+            <img src={images[4] ? images[4].url : images[0].url} alt=""  className=""/>
+            
             <Button 
               className="btn-modal-images" 
               onClick={() => setModalShow(true)}>

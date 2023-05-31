@@ -25,7 +25,7 @@ const DHeader = ({data}) => {
             <p>{data.category}</p>
             <h3>{data.name}</h3>
           </div>
-          <div className="back" onClick={() => navigate('/')}>
+          <div className="back" onClick={() => navigate(-1)}>
             <FontAwesomeIcon icon={faAngleLeft} />
           </div>
         </div>
