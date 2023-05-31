@@ -55,9 +55,10 @@ const RegisterProduct = () => {
         ...formData,
         [name]: fieldValue,
       };
+      
     }
   
-    setFormData(updatedFormData)
+    console.log(updatedFormData)
   
     if (typeof fieldValue === 'object') {
       console.log(files)
