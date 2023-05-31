@@ -1,6 +1,6 @@
 package com.pi.digitalbooking.models;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,19 +10,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categories")
-public class Category {
+@Table(name = "amenities")
+public class Amenity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer categoryId;
+    private Integer amenityId;
 
-    @Column(length = 250)
     private String name;
 
-    @Column(length = 5000)
-    private String description;
+    private boolean available;
 
-    @Column(length = 500)
-    private String imageUrl;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @JsonIgnore
+    private Product product;
 }
