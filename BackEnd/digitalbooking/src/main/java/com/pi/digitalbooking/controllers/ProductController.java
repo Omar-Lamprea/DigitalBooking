@@ -8,7 +8,9 @@ import com.pi.digitalbooking.configurations.AWSService;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import com.pi.digitalbooking.models.ProductImage;
 import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.models.Amenity;
 import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.repository.AmenityRepository;
 import com.pi.digitalbooking.services.ProductService;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -32,10 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -50,6 +49,8 @@ public class ProductController {
     private final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AmenityRepository amenityRepository;
 
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
@@ -70,25 +71,33 @@ public class ProductController {
             productDTO = getProductDTO(stringProduct);
         } catch (JsonProcessingException exception) {
             response.put("Error Message", "Error al procesar el objeto JSON del producto");
-            response.put("Code", HttpStatus.INTERNAL_SERVER_ERROR.toString());
+            response.put("HttpStatusCode", String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
             return getStringResponseEntity(response);
         }
 
         if (validatePropertiesProduct(productDTO)) {
             response.put("ErrorMessage", "El producto debe tener todas las propiedades no vacías.");
-            response.put("Code", HttpStatus.BAD_REQUEST.toString());
+            response.put("HttpStatusCode", String.valueOf(HttpStatus.BAD_REQUEST.value()));
             return getStringResponseEntity(response);
         }
 
         if (productService.isProductDuplicatedByName(productDTO.getName()) || productService.isProductDuplicatedByCodeProduct(productDTO.getCodeProduct())) {
             response.put("ErrorMessage", "El nombre o código del producto proporcionado ya existe. Por favor, elige un nombre o código diferente para evitar duplicados.");
-            response.put("Code", HttpStatus.CONFLICT.toString());
+            response.put("HttpStatusCode", String.valueOf(HttpStatus.CONFLICT.toString()));
+            return getStringResponseEntity(response);
+        }
+
+        List<Amenity> amenities = productDTO.getAmenities();
+
+        if (hasAmenitiesDuplicates(amenities)) {
+            response.put("ErrorMessage", "La lista de caracteristicas del producto contiene duplicados.");
+            response.put("HttpStatusCode", String.valueOf(HttpStatus.CONFLICT.toString()));
             return getStringResponseEntity(response);
         }
 
         List<String> imagesURLs = new ArrayList<>();
 
-        for (MultipartFile image: images) {
+        for (MultipartFile image : images) {
             String fileName = image.getOriginalFilename();
             File tempFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
             image.transferTo(tempFile);
@@ -108,9 +117,30 @@ public class ProductController {
         Product product = GetProduct(productDTO, imagesURLs);
         productService.SaveProduct(product);
 
+        for (Amenity amenity : amenities) {
+            amenity.setProduct(product);
+            amenityRepository.save(amenity);
+        }
+
         response.put("Message", "Producto guardado con éxito");
-        response.put("Code", HttpStatus.CREATED.toString());
+        response.put("HttpStatusCode", String.valueOf(HttpStatus.CREATED.value()));
         return getStringResponseEntity(response);
+    }
+
+    public boolean hasAmenitiesDuplicates(List<Amenity> amenities) {
+        Set<String> names = new HashSet<>();
+
+        for (Amenity amenity : amenities) {
+            String name = amenity.getName();
+
+            if (names.contains(name)) {
+                // Se encontró un duplicado
+                return true;
+            }
+            names.add(name);
+        }
+        // No se encontraron duplicados
+        return false;
     }
 
     private boolean validatePropertiesProduct(ProductDTO productDTO) {
@@ -123,22 +153,28 @@ public class ProductController {
                 || productDTO.getCategory() == null || productDTO.getCategory().isEmpty();
     }
 
-    private ResponseEntity<String> getStringResponseEntity(Map errorResponse) {
+    private ResponseEntity<String> getStringResponseEntity(Map response) {
         String jsonBody;
 
         try {
-            jsonBody = new ObjectMapper().writeValueAsString(errorResponse);
+            jsonBody = new ObjectMapper().writeValueAsString(response);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-        if(HttpStatus.CREATED.equals(errorResponse.get("Code"))){
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(jsonBody);
+        switch (response.get("HttpStatusCode").toString()) {
+            case "201":
+                return ResponseEntity.status(HttpStatus.CREATED).body(jsonBody);
+            case "209":
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(jsonBody);
+            case "500":
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
+            case "400":
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonBody);
         }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(jsonBody);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
     }
 
     private Product GetProduct(ProductDTO productDTO, List<String> imagesURLs) {

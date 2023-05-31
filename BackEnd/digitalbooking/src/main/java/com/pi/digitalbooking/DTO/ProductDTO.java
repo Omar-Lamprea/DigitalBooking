@@ -1,11 +1,6 @@
 package com.pi.digitalbooking.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.pi.digitalbooking.enums.ProductStatus;
-import com.pi.digitalbooking.models.Category;
-import javax.persistence.Column;
-
-import com.pi.digitalbooking.models.ProductImage;
+import com.pi.digitalbooking.models.Amenity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +24,8 @@ public class ProductDTO {
     private Double price;
 
     private String locationUrl;
+
+    private List<Amenity> amenities;
 
     private String country;
 

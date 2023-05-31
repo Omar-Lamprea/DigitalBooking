@@ -20,7 +20,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idProduct;
+    private Integer productId;
 
     @Column(nullable = false)
     @NotNull
@@ -57,6 +57,10 @@ public class Product {
     @Enumerated(EnumType.STRING)
     @JsonIgnore
     private ProductStatus status;
+
+    @Column
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Amenity> amenities; // Lista de objetos para indicar las comodidades
 
     @Override
     public String toString() {
