@@ -42,7 +42,7 @@ const SuggestionCard = ({suggestion}) => {
                 <div className="suggestion-card__description">
                     <p>{suggestion.description}</p>
                 </div>
-                <Link to={`producto/${suggestion.idProduct}`} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
+                <Link to={`producto/${suggestion.productId}`} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
             </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ const SuggestionCard = ({suggestion}) => {
 SuggestionCard.propTypes = {
     suggestion: PropTypes.shape({
         imagesURLs: PropTypes.array.isRequired,
-        idProduct: PropTypes.number.isRequired,
+        productId: PropTypes.number.isRequired,
         description: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,

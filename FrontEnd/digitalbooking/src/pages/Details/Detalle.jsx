@@ -15,7 +15,7 @@ const Detalle = () => {
   useEffect(() =>{
     let lodgingFiltered;
     state.APIdata 
-      ? lodgingFiltered = state.APIdata.filter(lodgingId => lodgingId.idProduct === parseInt(id))
+      ? lodgingFiltered = state.APIdata.filter(lodgingId => lodgingId.productId === parseInt(id))
       : lodgingFiltered = null
     setLodging(lodgingFiltered[0])
   }, [state, id])
