@@ -1,11 +1,11 @@
 package com.pi.digitalbooking.DTO;
 
-import com.pi.digitalbooking.enums.ProductStatus;
-import com.pi.digitalbooking.models.Category;
-import jakarta.persistence.Column;
+import com.pi.digitalbooking.models.Amenity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,13 +18,13 @@ public class ProductDTO {
 
     private String description;
 
-    private String imageUrl;
-
     private Integer score;
 
     private Double price;
 
     private String locationUrl;
+
+    private List<Amenity> amenities;
 
     private String country;
 
