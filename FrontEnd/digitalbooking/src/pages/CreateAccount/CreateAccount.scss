@@ -1,26 +1,75 @@
 .form-createAccount {
-    &__conatiner {
+    &__container {
         background-color: var(--backgroud-grey);
         display: flex;
         flex-direction: column;
+        justify-content: center;;
         align-items: center;
-        min-height: calc(100vh - 198px);    
-        padding: 1rem;    
+        min-height: calc(100vh - 141.14px);
+        padding: 4rem 1rem;    
     }
 
     &__title {
-        width: 100%;
+        color: var(--blue-color);
+    }
+
+    &__form {
+        max-width: 600px;
+    }
+
+    &__wapper-field {
+        display: block;
+        @include media-query('medium') {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     &__field {
         display: flex;
         flex-direction: column;
+        margin-top: 0.25rem;
+        padding: 0.5rem;
         width: 100%;
-        @include media-query('')
+    }
+    
+    &__input {
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
     }
 
     &__field-label {
-        font-size: 0.75rem;
         font-weight: 500;
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 3rem;
+        width: 100%;
+    }
+
+    &__btn {
+        width: 50%;
+        max-width: 300px;
+        margin-bottom: 1rem;
+    }
+
+    &__redirect {
+        a {
+            color: var(--yellow-color);
+        }
+    }
+
+    &__field.password-field {
+        position: relative;
+    }
+
+    &__toggle-icon {
+        background-color: transparent;
+        position: absolute;
+        top: 40px;
+        right: 15px;
     }
 }

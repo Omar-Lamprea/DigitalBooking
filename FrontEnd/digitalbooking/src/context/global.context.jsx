@@ -5,7 +5,7 @@ import { GLOBAL_API } from "../utils/constants";
 const initialState = {
   URL_API: GLOBAL_API,
   APIdata: [],
-  user: JSON.parse(localStorage.getItem('user')) || true
+  user: JSON.parse(localStorage.getItem('user')) || false
 }
 
 const ContextGlobal = createContext('')

@@ -57,12 +57,12 @@ public class ProductService {
 
     public Product UpdateProduct(Product product) {
 
-        Optional<Product> product1 = productRepository.findById(product.getIdProduct());
+        Optional<Product> product1 = productRepository.findById(product.getProductId());
 
         if (product1.isPresent()) {
             return productRepository.save(product);
         } else {
-            log.error("No existe producto con id: " + product.getIdProduct());
+            log.error("No existe producto con id: " + product.getProductId());
             return null;
         }
     }
