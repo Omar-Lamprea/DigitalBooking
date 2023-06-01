@@ -10,7 +10,7 @@ import { useContextGlobal } from '../../context/global.context';
 const Header = () => {
   const path = location.pathname
 
-  const {state} = useContextGlobal()
+  const {state,dispatch} = useContextGlobal()
 
   const [user, setUser] = useState(state.user)
   const [drodownHeaderIsOpen, setDrodownHeaderIsOpen] = useState(false);
@@ -19,8 +19,11 @@ const Header = () => {
 
   const handleLogOut = () => {
     setDrodownHeaderIsOpen(false)
+    dispatch({type:'logout'})
     navigate('/')
     //lógica para cerrar sesión....
+    
+
   }
 
   const initialNavBar = () =>{
