@@ -11,7 +11,7 @@ const CategoryCard = ({category}) => {
           <Card.Img className="card__img" variant="top" src="./src/assets/images/category-1.png" />
           <Card.Body className="card__body">
             <Card.Title className="card__title">{category.name}</Card.Title>
-            <Card.Text className="card__text">807.105 {category.name}s</Card.Text>
+            <Card.Text className="card__text">807.105 {category.name}</Card.Text>
           </Card.Body>
         </Card>
       </div>

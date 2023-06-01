@@ -3,25 +3,30 @@ import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { useContextGlobal } from '../../context/global.context';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
-
-const ModalDeleteProduct = ({id}) => {
-
+const ModalDeleteProduct = ({id, productName}) => {
+  const {state, dispatch} = useContextGlobal()
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate()
 
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
-      const url = `http://18.218.175.122:8080/digital-booking/product/${id}`
+      const url = `${state.URL_API.urlBase}${state.URL_API.product}/${id}`
       fetch(url, {method: 'DELETE'})
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al realizar la petición DELETE');
         }
+        dispatch({type: "deleteLodging", payload: parseInt(id)})
         setShow(false)
         setError(false)
-        navigate('/');
+        location.pathname !== "/admin/editarProductos"
+          ? navigate('/')
+          : false
       })
       .catch(error => {
         console.error('Error:', error)
@@ -39,15 +44,15 @@ const ModalDeleteProduct = ({id}) => {
   return (
     <>
       <button className="delete-product" onClick={handleShow}>
-        Eliminar
+        <FontAwesomeIcon icon={faTrashCan} />
       </button>
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Eliminar producto</Modal.Title>
+          <Modal.Title>Eliminar Alojamiento</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Estás seguro de eliminar el producto {id}?
+          ¿Estás seguro de eliminar el alojamiento: {productName}?
           {error && <p style={{color: "red"}}>Ocurrió un error al intentar eliminar el producto</p>}
           </Modal.Body>
         <Modal.Footer>
@@ -63,8 +68,9 @@ const ModalDeleteProduct = ({id}) => {
   );
 }
 
-ModalDeleteProduct.propTypes = {
-  id: PropTypes.string.isRequired,
-};
-
 export default ModalDeleteProduct
+
+ModalDeleteProduct.propTypes = {
+  id: PropTypes.number.isRequired,
+  productName: PropTypes.string.isRequired,
+};

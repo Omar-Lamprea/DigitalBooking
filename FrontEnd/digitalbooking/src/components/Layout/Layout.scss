@@ -1,0 +1,6 @@
+.main-container {
+    min-height: calc(100vh - 197.14px);
+    @include media-query('large') {
+        min-height: calc(100vh - 141.14px);
+    }
+}
