@@ -48,13 +48,13 @@ const Header = () => {
               {state.user?.data?.name.substring(0,1) + state.user?.data?.lastName.substring(0,1)}
             </div>
             <div className="userName">
-              <p className='name'>{user.data.name} {user.data.lastName}</p>
-              <p className='role'>{user.data.role === "ROLE_USER" ? 'Cliente' : 'Admin'}</p>
+              <p className='name'>{user?.data?.name} {user?.data?.lastName}</p>
+              <p className='role'>{user?.data?.role === "ROLE_USER" ? 'Cliente' : 'Admin'}</p>
             </div>
           </Dropdown.Toggle>
 
           <Dropdown.Menu className='dropdown-user-items'>
-            {user.data.role === "ROLE_ADMIN" && 
+            {user?.data?.role === "ROLE_ADMIN" && 
               <Link to="/admin" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Administrar página</Link>
             }
             {/* <Link to="/cuenta" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Administrar cuenta</Link> */}
@@ -77,7 +77,7 @@ const Header = () => {
             <img src={Logo} alt="" />
             <span>Sentite como en tu hogar</span>
           </Link>
-          {user.data
+          {state.user.data
             ? userNavBar()
             :initialNavBar()
           }
