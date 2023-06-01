@@ -58,4 +58,5 @@ deploy-frontend-job:
   only:
     - dev
 
+
 # bajar imagen de python, instlar cli de aws con pip, conectarse a S3, usar sync y mandar los artefactos a S3
