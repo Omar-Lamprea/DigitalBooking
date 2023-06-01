@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/product/all",
                         "/category/all",
                         "/category/categoryId/**"
+
                 )
                 .permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()

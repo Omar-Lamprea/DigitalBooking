@@ -160,8 +160,8 @@ public class CategoryController {
     @CrossOrigin
     @GetMapping("/categoryId/{id}")
     @ResponseBody
-    public List<Category> getCategoryById( @PathVariable("id") Integer id) {
-        return categoryService.getCategoryById(id);
+    public List<Category> getCategoryById( @PathVariable("id") Integer categoryId) {
+        return categoryService.getCategoryById(categoryId);
     }
 
 
