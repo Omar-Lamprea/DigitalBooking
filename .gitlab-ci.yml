@@ -14,6 +14,17 @@ build-backend-job:       # This job runs in the build stage, which runs first.
     paths:
       - BackEnd/digitalbooking/target/digitalbooking-0.0.1-SNAPSHOT.jar
 
+build-frontend-job:
+  stage: build
+  image: node:18
+  script:
+    - cd FrontEnd/digitalbooking/
+    - npm ci && npm build
+    - echo "Build finished"
+  artifacts:
+    paths: 
+      - FrontEnd/digitalbooking/dist/**
+      
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   script:
@@ -41,3 +52,5 @@ deploy-backend-job:      # This job runs in the deploy stage.
     - echo "Application successfully deployed. Wait a few minutes while it starts on the server."
   only: 
     - dev
+
+# bajar imagen de python, instlar cli de aws con pip, conectarse a S3, usar sync y mandar los artefactos a S3
