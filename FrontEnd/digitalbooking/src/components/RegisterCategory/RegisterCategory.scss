@@ -1,4 +1,7 @@
 .form-register-category{
+  .errorResponse {
+    color: red;
+  }
     color: var(--main-bg-color);
     .form-register-row{
       width: 100%;
@@ -76,3 +79,5 @@
   background-color: var(--main-bg-color-hover);
 }
   
+
+

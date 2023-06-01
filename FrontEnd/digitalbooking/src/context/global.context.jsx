@@ -21,10 +21,12 @@ const reducer = (state, action) => {
     case 'deleteLodging':
       return {...state, APIdata: state.APIdata.filter(lodging => lodging.productId !== action.payload)}
     case 'setUser':
-        localStorage.setItem('user', JSON.stringify(action.payload))
-        return {...state, user: action.payload}
+      localStorage.setItem('user', JSON.stringify(action.payload))
+      return {...state, user: action.payload}
     case 'categories':
-          return  {...state, categories: [...state.categories, ...action.payload]}
+      return  {...state, categories: [...state.categories, ...action.payload]}
+    case 'setCategories':
+      return {...state, categories: []}
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}
@@ -71,7 +73,6 @@ const ContextProvider = ({ children }) => {
     });
     const data = await res.json();
     if (res.ok) {
-      console.log('categories', data);
       dispatch({ type: 'categories', payload: data})
     } else {
       console.log('Error');
