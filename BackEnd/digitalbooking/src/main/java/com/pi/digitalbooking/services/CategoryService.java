@@ -58,10 +58,5 @@ public class CategoryService {
         return categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
     }
 
-    public List<Category> getCategoryById(int id){
-        return categoryRepository.getByCategoryId(id);
-    }
-
-
 
 }

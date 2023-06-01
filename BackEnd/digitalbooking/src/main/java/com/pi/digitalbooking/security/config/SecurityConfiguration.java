@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/v3/api-docs/**",
                         "/product/all",
                         "/category/all",
-                        "/category/categoryId/**"
+                        "/product/productByCategory/**"
 
                 )
                 .permitAll()
