@@ -79,7 +79,6 @@ public class ProductService {
 
 
     public List<Product> getByCategory(int id) {
-
         return productRepository.findByCategoryCategoryId(id).stream()
                 .filter(product -> product.getStatus()
                         .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
