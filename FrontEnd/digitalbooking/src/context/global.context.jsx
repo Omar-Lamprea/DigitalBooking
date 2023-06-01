@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case 'APIdata':
       return  {...state, APIdata: [...state.APIdata, ...action.payload]}
     case 'deleteLodging':
-      return {...state, APIdata: state.APIdata.filter(lodging => lodging.idProduct !== action.payload)}
+      return {...state, APIdata: state.APIdata.filter(lodging => lodging.productId !== action.payload)}
     case 'setUser':
         localStorage.setItem('user', JSON.stringify(action.payload))
         return {...state, user: action.payload}
@@ -28,6 +28,9 @@ const reducer = (state, action) => {
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}
+    case 'setProducts':
+      return {...state, APIdata: []}
+      
     default:
         throw new Error('action type error')
   }
