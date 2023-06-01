@@ -1,12 +1,23 @@
 import Card from 'react-bootstrap/Card';
+import { useContextGlobal } from '../../context/global.context';
 
 // eslint-disable-next-line react/prop-types
 const CategoryCard = ({category}) => {
+  const {dispatch} = useContextGlobal()
 
   // const [category, serCategory] = useState();
-  const handleCardClick = () => {
-    console.log('click card');
-  };
+  const handleCardClick = async () => {
+    try {
+      const response = await fetch('http://18.218.175.122:8080/digital-booking/product/productByCategory/' + category.categoryId)
+      const data = await response.json()
+      if(response.ok){
+        dispatch({type: "setProducts"})
+        dispatch({type: "APIdata", payload: data})
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
 
 
     return (
