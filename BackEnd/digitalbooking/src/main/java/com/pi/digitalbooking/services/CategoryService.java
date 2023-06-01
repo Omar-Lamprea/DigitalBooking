@@ -57,4 +57,6 @@ public class CategoryService {
     public List<Category> SearchAllByStatus() {
         return categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
     }
+
+
 }

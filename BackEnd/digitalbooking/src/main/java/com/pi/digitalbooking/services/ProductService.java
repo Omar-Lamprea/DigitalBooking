@@ -2,6 +2,7 @@ package com.pi.digitalbooking.services;
 
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.repository.CategoryRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,5 +73,11 @@ public class ProductService {
         Product productToSave = productRepository.save(product);
         log.info("Producto " + productToSave.toString() + " guardado con exito.");
         return productToSave;
+    }
+
+
+    public List<Product> getByCategory(int id) {
+
+        return productRepository.findByCategoryCategoryId(id);
     }
 }

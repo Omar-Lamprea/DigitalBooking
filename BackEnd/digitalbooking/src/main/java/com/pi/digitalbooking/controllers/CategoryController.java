@@ -154,4 +154,5 @@ public class CategoryController {
     public List<Category> SearchAll() {
         return categoryService.SearchAllByStatus();
     }
+
 }

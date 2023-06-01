@@ -274,4 +274,15 @@ public class ProductController {
 
         return productService.UpdateProduct(product);
     }
+
+
+    @Operation(summary = "Search all products by category", description = "Retrieves a list of all products by category.")
+    @ApiResponse(responseCode = "200", description = "List of products by category", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
+    @CrossOrigin
+    @GetMapping("/productByCategory/{id}")
+    @ResponseBody
+    public List<Product> findByCategory( @PathVariable("id") Integer id) {
+        return productService.getByCategory(id);
+    }
+
 }
