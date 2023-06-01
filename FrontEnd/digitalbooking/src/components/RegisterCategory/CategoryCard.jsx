@@ -14,7 +14,7 @@ const CategoryCard = ({data}) => {
           <span>{data.name}</span>
         </p>
         <p>Descripción: <br />
-          <span>{data.description} / {data.country}</span>
+          <span>{data.description}</span>
         </p>
       </div>
       <div className="category-actions">

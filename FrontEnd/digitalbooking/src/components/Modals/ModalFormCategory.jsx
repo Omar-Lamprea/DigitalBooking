@@ -6,15 +6,15 @@ import Default from '../../assets/images/default.png'
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
 import { useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useContextGlobal } from '../../context/global.context';
+// import { useNavigate } from 'react-router-dom';
 
 
 const ModalFormCategory = () => {
     const initialTemplate = {
         nameCategory: '',
         description: '',
-        categoryImage: "null",
+        categoryImage: null,
     }
     const {state,dispatch} = useContextGlobal()
     const formRef = useRef(null);
@@ -24,7 +24,7 @@ const ModalFormCategory = () => {
     const [serverResponse, setServerResponse] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(false);
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
@@ -74,7 +74,8 @@ const ModalFormCategory = () => {
                 if (!response.ok) {
                 console.log('Response: ', [response, data])
                 let text = 'Petición fallida'
-                    if(response.status >= 400 && response.status <= 410)
+                    if(response.status >= 400 && response.status <= 500)
+                        setShow(true)
                         text = data.ErrorMessage || data.Message
                     setServerResponse({
                         text: text + ' Status: ' + response.status,
@@ -97,6 +98,7 @@ const ModalFormCategory = () => {
             }
             catch (error) {
                 console.log('Error en el envio:');
+                setShow(true)
                 console.error(error);
                 setIsLoading(false)
                 setServerResponse({
@@ -114,13 +116,13 @@ const ModalFormCategory = () => {
     const validateForm = (formData) => {
         const newErrors = {}
         if (!formData.nameCategory.trim()) 
-            newErrors.nameCategory = 'El nombre de la categoria es requerida';
+            newErrors.nameCategory = 'El nombre de la categoria es requerida.';
 
         if (formData.description.trim() === '')
             newErrors.description = 'La descripción de la categoria es requerida.';
     
         if (formData.categoryImage === null)
-            newErrors.categoryImage = 'Debes agregar una foto de la categoria a guardar';
+            newErrors.categoryImage = 'Debes agregar una foto de la categoria a guardar.';
     
         return {
             ok: Object.keys(newErrors).length === 0,
@@ -129,13 +131,15 @@ const ModalFormCategory = () => {
     };
 
     const handleClose = (e) => {
-        if(e && e.target.innerHTML === 'Registrar'){
+
+        if(e && e.target.innerHTML === 'Guardar'){
             setShow(false)
             setError(false)
-            navigate('/');
+            // navigate('/admin/categorias')
         }else{
         setShow(false)
         setError(false)
+        // navigate('/admin/categorias')
         }
     };
 
@@ -182,29 +186,14 @@ const ModalFormCategory = () => {
                     </div>
                 </div>
                 {!isLoading
-          ? <button>Registrar</button>
-          : <Loader />
-        }
-        {serverResponse && 
-          <p className={serverResponse.className + " text-center"}>
-            {serverResponse.text}
-          </p>
-        }
-            {/* <Modal.Footer>
-            <Button onClick={handleClose} variant="secondary">
-                Cancelar
-            </Button>
-            
-            {!isLoading
-            ? <Button className='buttons'>Guardar</Button>
-            : <Loader />
-            }
-            {serverResponse && 
-            <p className={serverResponse.className + "text-center"}>
-                {serverResponse.text}
-            </p>
-            }
-            </Modal.Footer> */}
+                    ? <div className="container-button"><button className="add-category" onClick={handleClose}>Guardar</button>
+                    </div>: <Loader />
+                }
+                {serverResponse && 
+                <p className={serverResponse.className + " text-center"}>
+                    {serverResponse.text}
+                </p>
+                }
             </form>  
             </Modal.Body>
         </Modal>

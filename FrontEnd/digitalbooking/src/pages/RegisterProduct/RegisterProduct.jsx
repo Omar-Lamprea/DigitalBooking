@@ -125,7 +125,7 @@ const RegisterProduct = () => {
           setIsLoading(false)
           formRef.current.reset();
           setServerResponse({
-            text: 'Se ha registrado el producto con éxito!',
+            text: 'Se ha registrado la categoria con éxito!',
             className: ''
           })
         }

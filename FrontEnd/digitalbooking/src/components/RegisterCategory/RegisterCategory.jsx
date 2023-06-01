@@ -23,16 +23,18 @@ const RegisterCategory = () => {
         console.error("Error en la solicitud:", error);
       }
     };
-
     fetchData();
   }, []);
   return (
     <div>
       <div className="container-categories my-5">
-        {data && data.map((category, i) =>
-           <CategoryCards data={category} key={data.categoryId + '-' + i}/>
-          )
-        }
+        {data.length > 0 ? (
+            data.map((category, i) => (
+              <CategoryCards data={category} key={data.categoryId + '-' + i} />
+            ))
+          ) : (
+            <p>No existen categorías aún</p>
+          )}
       </div>
       <ModalFormCategory />
     </div>

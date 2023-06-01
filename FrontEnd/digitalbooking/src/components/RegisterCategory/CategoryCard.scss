@@ -25,6 +25,7 @@
           object-position: center;
           @include media-query(medium){
             height: 130px;
+            width: 200px;
           }
           @include media-query(large){
             width: 200px;
