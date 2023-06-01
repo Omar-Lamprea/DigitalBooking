@@ -27,36 +27,24 @@ const ModalFormCategory = () => {
     const navigate = useNavigate()
 
     const handleChange = (e) => {
-        const { name, value, type, files, checked } = e.target;
+        const { name, value, type, files } = e.target;
         const fieldValue = type === 'file' ? files : value;
         let updatedFormData;
-        if (type === 'checkbox') {
         updatedFormData = {
             ...formData,
-            titles: {
-            ...formData.titles,
-            [name]: checked,
-            },
-        };
-        } else {
-            updatedFormData = {
-            ...formData,
             [name]: fieldValue,
-            };
-        }
-        console.log(updatedFormData)
+        };
+
         if (typeof fieldValue === 'object') {
-            console.log(files)
             const file = e.target.files[0]
             const reader = new FileReader()
             const img = e.target.previousElementSibling.previousElementSibling;
             reader.onload = (e) => {
-            img.src = e.target.result
+                img.src = e.target.result
             }
-        
             reader.readAsDataURL(file);
         }
-    
+        setFormData(updatedFormData);
         setErrorsForm({ ...errorsForm, [name]: "" });
     };
 
@@ -64,21 +52,22 @@ const ModalFormCategory = () => {
     const hanbleSubmit = async (e) =>{
         e.preventDefault()
         const isValid = validateForm(formData);
-        console.log(isValid)
         if(isValid.ok){
-        const formToSend = new FormData();
-        const jsonBody = {
-            nameCategory: formData.nameCategory,
-            description: formData.description,
-        }
-        formToSend.append('stringCategory',JSON.stringify(jsonBody))
-        Array.from(formData.categoryImage)
-        formToSend.append("image", formData.categoryImage[0])
+            console.log('data ok');
+            const formToSend = new FormData();
+            const jsonBody = {
+                name: formData.nameCategory,
+                description: formData.description,
+            }
+            formToSend.append("image", formData.categoryImage[0])
+            formToSend.append('stringCategory',JSON.stringify(jsonBody))
 
         try {
                 const response = await fetch('http://18.218.175.122:8080/digital-booking/category', {
                     method: "POST",
-                    Authorization : `Bearer ${state.user.token}`,
+                    headers: {
+                        Authorization : `Bearer ${state.user.token}`,
+                    },
                     body: formToSend
                 })
                 const data = await response.json()
@@ -115,8 +104,8 @@ const ModalFormCategory = () => {
                 className: "errorResponse"
                 })
             }
-            }else{
-        setErrorsForm(isValid.newErrors)
+        }else{
+            setErrorsForm(isValid.newErrors)
         }
     }
 
@@ -124,19 +113,18 @@ const ModalFormCategory = () => {
 
     const validateForm = (formData) => {
         const newErrors = {}
-    
         if (!formData.nameCategory.trim()) 
-        newErrors.nameCategory = 'El nombre de la categoria es requerida';
+            newErrors.nameCategory = 'El nombre de la categoria es requerida';
 
         if (formData.description.trim() === '')
-        newErrors.description = 'La descripción de la categoria es requerida.';
+            newErrors.description = 'La descripción de la categoria es requerida.';
     
         if (formData.categoryImage === null)
-        newErrors.categoryImage = 'Debes agregar una foto de la categoria a guardar';
+            newErrors.categoryImage = 'Debes agregar una foto de la categoria a guardar';
     
         return {
-        ok: Object.keys(newErrors).length === 0,
-        newErrors: newErrors
+            ok: Object.keys(newErrors).length === 0,
+            newErrors: newErrors
         }
     };
 
