@@ -16,14 +16,8 @@ build-backend-job:       # This job runs in the build stage, which runs first.
 
 build-frontend-job:
   stage: build
-  image: node:18
   script:
-    - cd FrontEnd/digitalbooking/
-    - npm ci && npm run build
     - echo "Build finished"
-  artifacts:
-    paths: 
-      - FrontEnd/digitalbooking/dist/**
       
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -52,5 +46,15 @@ deploy-backend-job:      # This job runs in the deploy stage.
     - echo "Application successfully deployed. Wait a few minutes while it starts on the server."
   only: 
     - dev
+
+deploy-frontend-job:
+  stage: deploy
+  image: amazon/aws-cli:latest
+  script:
+    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+    - aws configure set default.region $AWS_DEFAULT_REGION
+    - aws s3 sync FrontEnd/digitalbooking/dist s3://dh-g8-front
+
 
 # bajar imagen de python, instlar cli de aws con pip, conectarse a S3, usar sync y mandar los artefactos a S3
