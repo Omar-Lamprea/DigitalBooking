@@ -9,7 +9,8 @@ const initialState = {
     data: JSON.parse(localStorage.getItem('user'))?.data || false,
     token: JSON.parse(localStorage.getItem('user'))?.token || false,
   }, 
-  categories: []
+  categories: [], 
+  users: []
 }
 
 const ContextGlobal = createContext('')
@@ -32,6 +33,8 @@ const reducer = (state, action) => {
       return {...state, user: false}
     case 'setProducts':
       return {...state, APIdata: []}
+    case 'users':
+      return {...state, users: [...state.users, ...action.payload]}
       
     default:
         throw new Error('action type error')
@@ -78,6 +81,19 @@ const ContextProvider = ({ children }) => {
       console.log('Error');
     }
   }, []);
+
+
+  // Get all users
+  // const getUsersList = useCallback(async () => {
+  //   const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.users, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${state.user.token}`
+  //     }
+  //   });
+  //   const users = await res.json();
+  //   if (res.ok) console.log('users', users);
+  // }, []);
 
 
   useEffect(() =>{

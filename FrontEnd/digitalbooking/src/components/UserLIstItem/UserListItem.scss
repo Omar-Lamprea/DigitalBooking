@@ -1,0 +1,83 @@
+.user-list-item {
+    &__container {
+        background-color: var(--white-color);
+        border-radius: 5px;
+        min-height: 80px;
+        margin-bottom: 1.5rem;
+        padding: 1.5rem 2rem 2rem;
+        @include media-query('large') {
+            padding: 1rem 2rem 1rem;
+        }
+    }
+
+    &__wrapper {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+        @include media-query('large') {
+            flex-direction: row;
+            margin-bottom: 0;
+        }
+    }
+
+    &__label {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+    
+    &__text {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    &__initials-name {
+        align-items: center;
+        background-color: var(--main-bg-color);
+        border-radius: 50%;
+        color: var(--white-color);
+        display: flex;
+        font-size: 2rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        padding: 0.75rem;
+        width: 70px;
+        height: 70px;
+        @include media-query('large') {
+            margin-bottom: 0;
+        }
+    }
+
+    &__name-data, &__email-role {
+        display: flex;
+        flex: 0 0 auto;
+        margin-bottom: 1.5rem;
+        width: 100%;
+    }
+
+    &__name-data {
+        justify-content: space-between;
+        @include media-query('large') {
+            margin-bottom: 0;
+            width: 25%;
+        }
+    }
+
+    &__email {
+        margin-bottom: 1.5rem;
+        width: 100%;
+        @include media-query('large') {
+            margin-bottom: 0;
+            width: auto;
+        }
+    }
+
+    &__role {
+        width: 100%;
+        @include media-query('large') {
+            width: auto;
+        }
+    }
+}
