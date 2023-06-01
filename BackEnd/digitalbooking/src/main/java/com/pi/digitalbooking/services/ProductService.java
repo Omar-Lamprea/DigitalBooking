@@ -8,8 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -78,6 +80,9 @@ public class ProductService {
 
     public List<Product> getByCategory(int id) {
 
-        return productRepository.findByCategoryCategoryId(id);
+        return productRepository.findByCategoryCategoryId(id).stream()
+                .filter(product -> product.getStatus()
+                        .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
+
     }
 }
