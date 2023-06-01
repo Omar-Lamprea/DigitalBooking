@@ -9,7 +9,6 @@ import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { initialTemplate } from './initialForm';
 
 
-
 const RegisterProduct = () => {
   const [category, setCategory] = useState('')
 
@@ -109,7 +108,7 @@ const RegisterProduct = () => {
           setIsLoading(false)
           formRef.current.reset();
           setServerResponse({
-            text: 'Se ha registrado el producto con éxito!',
+            text: 'Se ha registrado la categoria con éxito!',
             className: ''
           })
         }
