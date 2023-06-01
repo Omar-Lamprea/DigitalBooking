@@ -6,16 +6,16 @@ const SuggestionCard = ({suggestion}) => {
     return(
       <div className="suggestion-card__container">
         <div className="suggestion-card__wrapper">
-            {suggestion && suggestion.imagesURLs.map((img, index) => {
+            {suggestion && suggestion.images.map((img, index) => {
                 if (index === 0) {
-                    return (<div className="suggestion-card__image" key={index} style={{backgroundImage: `url(${img})`}}></div>)
+                    return (<div className="suggestion-card__image" key={index} style={{backgroundImage: `url(${img.url})`}}></div>)
                 }}
             )}
             <div className="suggestion-card__information">
                 <div className="suggestion-card__title-rank">
                     <div className="suggestion-card__rank">
                         <div>
-                            <span className="suggestion-card__rank-title">{suggestion.category}</span>
+                            <span className="suggestion-card__rank-title">{suggestion.category.name}</span>
                             <span className="suggestion-card__rank-icons">
                                 <i className="fa-sharp fa-solid fa-star"></i>
                                 <i className="fa-sharp fa-solid fa-star"></i>
@@ -51,13 +51,13 @@ const SuggestionCard = ({suggestion}) => {
 
 SuggestionCard.propTypes = {
     suggestion: PropTypes.shape({
-        imagesURLs: PropTypes.array.isRequired,
+        images: PropTypes.array.isRequired,
         productId: PropTypes.number.isRequired,
         description: PropTypes.string.isRequired,
         city: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         score: PropTypes.number.isRequired,
-        category: PropTypes.string.isRequired,
+        category: PropTypes.array.isRequired,
     }).isRequired,
 }
 

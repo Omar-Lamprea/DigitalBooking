@@ -1,6 +1,6 @@
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from 'react-router-dom'
 import './App.scss'
-import Layout from './components/Layout'
+import Layout from './components/Layout/Layout'
 import Home from './pages/Home'
 import RegisterProduct from './pages/RegisterProduct/RegisterProduct'
 import Admin from './pages/Administration/Admin'
