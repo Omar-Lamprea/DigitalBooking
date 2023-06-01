@@ -10,7 +10,8 @@ const initialState = {
     token: JSON.parse(localStorage.getItem('user'))?.token || false,
   }, 
   categories: [], 
-  users: []
+  users: [],
+  titleProducts: "Alojamientos recomendados"
 }
 
 const ContextGlobal = createContext('')
@@ -35,6 +36,8 @@ const reducer = (state, action) => {
       return {...state, APIdata: []}
     case 'users':
       return {...state, users: [...state.users, ...action.payload]}
+    case 'titleProducts':
+      return {...state, titleProducts: action.payload}
       
     default:
         throw new Error('action type error')
