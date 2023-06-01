@@ -12,7 +12,11 @@
 @import './components/Suggestions/suggestions.scss';
 @import './components/SuggestionCard/suggestion-card.scss';
 @import './components/RegisterCategory/CategoryCard.scss';
+@import './components/Carousel/carousel.scss';
+@import './components/UsersList/UserList.scss';
+@import './components/UserLIstItem/UserListItem.scss';
+
+/** Estilos Paginas */
 @import './pages/Administration/Admin.scss';
 @import './pages/Login/Login.scss';
 @import './pages/CreateAccount/CreateAccount.scss';
-@import './components/Carousel/carousel.scss';

@@ -69,10 +69,10 @@ const Carousel = (props) => {
   )
 };
 
-// Carousel.propTypes = {
-//   children: PropTypes.shape({
-//     length: PropTypes.number.isRequired
-//   }).isRequired,
-// }
-
 export default Carousel;
+
+Carousel.propTypes = {
+  children: PropTypes.array.isRequired,
+  length: PropTypes.number,
+  show: PropTypes.number.isRequired
+}

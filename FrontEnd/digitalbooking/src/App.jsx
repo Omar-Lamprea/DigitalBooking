@@ -7,12 +7,12 @@ import Admin from './pages/Administration/Admin'
 import NotFound from './pages/NotFound'
 import EditProducts from './pages/EditProducts/EditProducts'
 import Detalle from './pages/Details/Detalle'
-import Role from './components/Role/Role'
 import RegisterCategory from './components/RegisterCategory/RegisterCategory'
 import Login from './pages/Login/Login'
 import CreateAccount from './pages/CreateAccount/CreateAccount'
 import { useContextGlobal } from './context/global.context'
 import { useEffect } from 'react'
+import UserList from './components/UsersList/UserList'
 
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
       }>
         <Route index element={<EditProducts />} />
         <Route path='registrar' element={<RegisterProduct />} />
-        <Route path='usuarios' element={<Role />} />
+        <Route path='usuarios' element={<UserList />} />
         <Route path='categorias' element={<RegisterCategory />} />
       </Route>
 
