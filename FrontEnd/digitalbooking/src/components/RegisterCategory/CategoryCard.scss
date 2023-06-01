@@ -1,0 +1,97 @@
+.container-categories{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+	overflow-y: scroll;
+    height: 450px;
+    @include media-query(large){
+      max-width: 1100px;
+      gap: .5rem;
+      margin: auto;
+    }
+    .category{
+      background-color: var(--white-color);
+      padding: 1rem;
+      border-radius: var(--standard-border);
+      @include media-query(medium) {
+        display: flex;
+      }
+      .category-img{
+        img{
+          width: 100%;
+          object-fit: cover;
+          height: 250px;
+          border-radius: var(--standard-border);
+          object-position: center;
+          @include media-query(medium){
+            height: 130px;
+          }
+          @include media-query(large){
+            width: 200px;
+            height: 200px;
+          }
+        }
+      }
+      .category-data{
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem .5rem;
+        gap: 1rem 0;
+        @include media-query(medium){
+          min-width: 500px;
+        }
+        @include media-query(large){
+            min-width: 700px;
+            flex-wrap: nowrap;
+            // gap: 1rem 4rem;
+            align-items: center;
+        }
+        p{
+          font-size: 1rem;
+          line-height: 20px;
+          font-weight: 600;
+          margin: 0;
+          @include media-query(medium){
+            // text-align: ;
+          }
+          @include media-query(large){
+            width:300px;
+          }
+          span{
+            font-weight: 500;
+          }
+        }
+      }
+      
+      .category-actions{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        svg{
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+        .edit svg{
+          color: var(--second-bg-color);
+        }
+        .edit svg:hover{
+          color: #ffb600;
+        }
+        .delete {
+          button{
+            background-color: inherit;
+          }
+          svg{
+            color: rgb(225, 33, 33);
+          }
+        }
+        .delete svg:hover{
+          color: rgb(198, 30, 30);
+        }
+      }
+    }
+    .category:hover{
+      background-color: #e0e0e0;
+    }
+  }

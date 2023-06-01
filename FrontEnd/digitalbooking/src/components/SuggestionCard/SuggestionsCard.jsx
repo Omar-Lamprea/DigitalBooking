@@ -6,14 +6,16 @@ const SuggestionCard = ({suggestion}) => {
     return(
       <div className="suggestion-card__container">
         <div className="suggestion-card__wrapper">
-            <div className="suggestion-card__image" style={{backgroundImage: `url(${suggestion.imageUrl})`}}>
-                {/* <img src="./src/assets/images/suggestion-1.png" alt="Suggestion-image" /> */}
-            </div>
+            {suggestion && suggestion.images.map((img, index) => {
+                if (index === 0) {
+                    return (<div className="suggestion-card__image" key={index} style={{backgroundImage: `url(${img.url})`}}></div>)
+                }}
+            )}
             <div className="suggestion-card__information">
                 <div className="suggestion-card__title-rank">
                     <div className="suggestion-card__rank">
                         <div>
-                            <span className="suggestion-card__rank-title">{suggestion.category}</span>
+                            <span className="suggestion-card__rank-title">{suggestion.category.name}</span>
                             <span className="suggestion-card__rank-icons">
                                 <i className="fa-sharp fa-solid fa-star"></i>
                                 <i className="fa-sharp fa-solid fa-star"></i>
@@ -40,9 +42,7 @@ const SuggestionCard = ({suggestion}) => {
                 <div className="suggestion-card__description">
                     <p>{suggestion.description}</p>
                 </div>
-                {/* <button className="w-100 button button__primary"> */}
-                   <Link to={`producto/${suggestion.idProduct}`} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
-                {/* </button> */}
+                <Link to={`producto/${suggestion.productId}`} className="w-100 button button__primary suggestion-card__link">Ver más</Link>
             </div>
         </div>
       </div>
@@ -51,7 +51,13 @@ const SuggestionCard = ({suggestion}) => {
 
 SuggestionCard.propTypes = {
     suggestion: PropTypes.shape({
-      imageUrl: PropTypes.string.isRequired,
+        images: PropTypes.array.isRequired,
+        productId: PropTypes.number.isRequired,
+        description: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        score: PropTypes.number.isRequired,
+        category: PropTypes.array.isRequired,
     }).isRequired,
 }
 

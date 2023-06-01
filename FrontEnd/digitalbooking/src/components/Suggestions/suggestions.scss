@@ -1,0 +1,23 @@
+.suggestions {
+    &__container {
+        background-color: #F8F8F8;
+        padding: 1rem;
+        min-height: 300px;
+    }
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        flex: 1 1 auto;
+        width: 100%;
+        @include media-query('large') {
+            justify-content: flex-start;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import CategoryCard from "../CategoryCard/CategoryCard";
-import categories from "../../constants/categories.constants"; 
+import categories from "../../utils/categories.constants"; 
 
 const Categories = () => {
   return (
