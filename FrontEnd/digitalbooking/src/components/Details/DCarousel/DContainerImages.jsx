@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 
 const DContainerImages = (data) => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 1024);
-
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 1024);

@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-	overflow-y: scroll;
+	  overflow-y: scroll;
     height: 450px;
     @include media-query(large){
       max-width: 1100px;
@@ -25,6 +25,7 @@
           object-position: center;
           @include media-query(medium){
             height: 130px;
+            width: 200px;
           }
           @include media-query(large){
             width: 200px;
@@ -38,7 +39,6 @@
         padding: 1rem .5rem;
         gap: 1rem 0;
         @include media-query(medium){
-          min-width: 500px;
         }
         @include media-query(large){
             min-width: 700px;
@@ -94,4 +94,5 @@
     .category:hover{
       background-color: #e0e0e0;
     }
+
   }

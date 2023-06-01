@@ -10,7 +10,7 @@ const CarouselImg = (data) => {
             <Carousel.Item key={i}>
               <img
                 className="d-block w-100"
-                src={image}
+                src={image.url}
                 alt="product-image"/>
             </Carousel.Item>)
           }

@@ -18,7 +18,7 @@ const ModalShowProductImages = (props) => {
                 <Carousel.Item key={i} className='modal-item-img'>
                   <img
                     className="d-block w-100"
-                    src={image}
+                    src={image.url}
                     alt="product-image"/>
                     
                 </Carousel.Item>)
@@ -34,5 +34,5 @@ const ModalShowProductImages = (props) => {
 export default ModalShowProductImages
 
 ModalShowProductImages.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string),
+  images: PropTypes.array.isRequired,
 };
