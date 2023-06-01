@@ -86,7 +86,7 @@ const RegisterProduct = () => {
         if (!response.ok) {
           console.log('Response: ', [response, data])
           let text = 'Petición fallida'
-          if(response.status >= 400 && response.status <= 410){
+          if(data.HttpStatusCode){
             text = data.ErrorMessage || data.Message
             if(response.status === 403){
               text = "Permisos insuficientes"
@@ -94,23 +94,24 @@ const RegisterProduct = () => {
           }
 
           setServerResponse({
-            text: text + ' Status: ' + response.status,
+            text: text + ' Status: ' + data.HttpStatusCode || response.status,
             className: 'errorResponse'
           })
           setIsLoading(false)
           // throw new Error('Error al realizar la solicitud');
         
         }else{
-          console.log('todo bien');
+          console.log('producto registrado con éxito');
           dispatch({ type: 'APIdata', payload: [data]})
           setFormData(initialTemplate)
           setErrorsForm({})
           setIsLoading(false)
           formRef.current.reset();
           setServerResponse({
-            text: 'Se ha registrado la categoria con éxito!',
+            text: 'Alojamiento registrado con éxito!',
             className: ''
           })
+          setList()
         }
   
       } catch (error) {
@@ -124,6 +125,26 @@ const RegisterProduct = () => {
       }
     }else{
       setErrorsForm(isValid.newErrors)
+    }
+  }
+
+  const setList = async()=>{
+    dispatch({type: "setProducts"})
+    try {
+      const res = await fetch(state.URL_API.urlBase + state.URL_API.productsAll,{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = await res.json()
+      if (res.ok) {
+        dispatch({ type: 'APIdata', payload: data })
+      } else {
+        console.log('Error: ', data)
+        dispatch({ type: 'APIdata', payload: res })
+      }
+    } catch (error) {
+      console.log('Context error:', error)
     }
   }
 
@@ -297,12 +318,12 @@ const RegisterProduct = () => {
         </div>
       </div>
      
-      <div className="responseForm mt-3">
+      <div className="responseForm mt-3 text-center">
         {!isLoading
           ? <button>Registrar</button>
           : <Loader />
         }
-        {serverResponse && 
+        {serverResponse !== null && 
           <p className={serverResponse.className + " text-center"}>
             {serverResponse.text}
           </p>
