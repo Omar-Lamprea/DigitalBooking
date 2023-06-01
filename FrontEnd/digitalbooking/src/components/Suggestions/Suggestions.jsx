@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import SuggestionCard from '../SuggestionCard/SuggestionsCard';
+import { useContextGlobal } from '../../context/global.context';
 
 const Suggestions = () => {
 
   const [data, setData] = useState();
-
-  const getSuggestions = async () => {
-    const suggestions = await fetch('http://18.218.175.122:8080/digital-booking/product/all');
-    const parsedSuggestions = await suggestions.json();
-    setData(parsedSuggestions);
-  };
+  const {state} = useContextGlobal()
 
   useEffect(() => {
-    getSuggestions();
-  }, []);
+    setData(state.APIdata)
+  },[state]);
 
   return (
     <section className="suggestions__container">
@@ -23,11 +19,10 @@ const Suggestions = () => {
           {data && data.map((suggestion, index) => (
             <SuggestionCard key={index} suggestion={suggestion} />
           ))}
-            
         </div>
       </div>
     </section>
   )
-};
+}
 
 export default Suggestions;
