@@ -8,7 +8,8 @@ const initialState = {
   user: {
     data: JSON.parse(localStorage.getItem('user'))?.data || false,
     token: JSON.parse(localStorage.getItem('user'))?.token || false,
-  }
+  }, 
+  categories: []
 }
 
 const ContextGlobal = createContext('')
@@ -22,10 +23,12 @@ const reducer = (state, action) => {
     case 'setUser':
         localStorage.setItem('user', JSON.stringify(action.payload))
         return {...state, user: action.payload}
+    case 'categories':
+          return  {...state, categories: [...state.categories, ...action.payload]}
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}
-      default:
+    default:
         throw new Error('action type error')
   }
 }
@@ -56,9 +59,27 @@ const ContextProvider = ({ children }) => {
   }, []);
 
 
+  // Get all categories
+  const getCatetoryList = useCallback(async () => {
+    const res =  await fetch(GLOBAL_API.urlBase + GLOBAL_API.categoryAll, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    if (res.ok) {
+      console.log('categories', data);
+      dispatch({ type: 'categories', payload: data})
+    } else {
+      console.log('Error');
+    }
+  }, []);
+
+
   useEffect(() =>{
-    getList()
-  },[getList, dispatch])
+    getList();
+    getCatetoryList();
+  },[getList, getCatetoryList, dispatch])
   
   
   return (
