@@ -22,6 +22,9 @@ const reducer = (state, action) => {
     case 'setUser':
         localStorage.setItem('user', JSON.stringify(action.payload))
         return {...state, user: action.payload}
+    case 'logout':
+      localStorage.removeItem('user')
+      return {...state, user: false}
       default:
         throw new Error('action type error')
   }
