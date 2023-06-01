@@ -55,6 +55,8 @@ deploy-frontend-job:
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
     - aws s3 sync FrontEnd/digitalbooking/dist s3://dh-g8-front
+  only:
+    - dev
 
 
 # bajar imagen de python, instlar cli de aws con pip, conectarse a S3, usar sync y mandar los artefactos a S3
