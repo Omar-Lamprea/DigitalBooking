@@ -17,5 +17,25 @@
 
     &__content {
         flex-wrap: wrap;
+        &-mobile {
+            @include media-query('small') {
+                display: none;
+            }
+        }
+        &-tablet {
+            display: none;
+            @include media-query('small') {
+                display: flex;
+            }
+            @include media-query('large') {
+                display: none;
+            }
+        }
+        &-desktop {
+            display: none;
+            @include media-query('large') {
+                display: flex;
+            }
+        }
     }
 }

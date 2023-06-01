@@ -4,14 +4,18 @@ import Card from 'react-bootstrap/Card';
 const CategoryCard = ({category}) => {
 
   // const [category, serCategory] = useState();
-    
+  const handleCardClick = () => {
+    console.log('click card');
+  };
+
+
     return (
       <div className="card__container">
-        <Card className="card__wrapper">
-          <Card.Img className="card__img" variant="top" src="./src/assets/images/category-1.png" />
+        <Card className="card__wrapper" onClick={handleCardClick}>
+          <Card.Img className="card__img" variant="top" src={category.imageUrl} />
           <Card.Body className="card__body">
             <Card.Title className="card__title">{category.name}</Card.Title>
-            <Card.Text className="card__text">807.105 {category.name}</Card.Text>
+            {/* <Card.Text className="card__text">{category.name}</Card.Text> */}
           </Card.Body>
         </Card>
       </div>
