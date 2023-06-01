@@ -1,4 +1,5 @@
 import Card from 'react-bootstrap/Card';
+import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prop-types
 const CategoryCard = ({category}) => {
@@ -24,3 +25,11 @@ const CategoryCard = ({category}) => {
 };
 
 export default CategoryCard;
+
+
+CategoryCard.propTypes = {
+  category: PropTypes.shape({
+    imageUrl: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+  }).isRequired,
+};
