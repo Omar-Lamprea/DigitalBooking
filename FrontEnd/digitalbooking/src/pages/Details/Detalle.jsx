@@ -84,7 +84,9 @@ const Detalle = () => {
                   </li>
                 </ul>
               </span>
-              <button> Reserva ahora! </button>
+              {state?.user?.data &&
+                <button> Reserva ahora! </button>
+              }
             </div>
             </div>
           </section>

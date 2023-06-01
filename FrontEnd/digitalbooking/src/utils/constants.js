@@ -8,5 +8,6 @@ export const GLOBAL_API = {
   categoryAll: '/category/all',
 
   //auth
-  login: "/auth"
+  login: "/auth",
+  users: "/users"
 }
