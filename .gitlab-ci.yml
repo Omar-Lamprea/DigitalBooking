@@ -19,7 +19,7 @@ build-frontend-job:
   image: node:18
   script:
     - cd FrontEnd/digitalbooking/
-    - npm ci && npm build
+    - npm ci && npm run build
     - echo "Build finished"
   artifacts:
     paths: 
