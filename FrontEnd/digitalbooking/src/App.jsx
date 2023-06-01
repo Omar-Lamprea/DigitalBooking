@@ -1,4 +1,4 @@
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from 'react-router-dom'
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, useNavigate} from 'react-router-dom'
 import './App.scss'
 import Layout from './components/Layout/Layout'
 import Home from './pages/Home'
@@ -11,28 +11,46 @@ import Role from './components/Role/Role'
 import RegisterCategory from './components/RegisterCategory/RegisterCategory'
 import Login from './pages/Login/Login'
 import CreateAccount from './pages/CreateAccount/CreateAccount'
+import { useContextGlobal } from './context/global.context'
+import { useEffect } from 'react'
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<Layout />}>
-      <Route index element={<Home />}/>
-
-      <Route path='admin' element={<Admin />}>
-        <Route index element={<EditProducts />}/>
-        <Route path='registrar' element={<RegisterProduct />}/>
-        <Route path='usuarios' element={<Role />}/>
-        <Route path='categorias' element={<RegisterCategory />}/>
-      </Route>
-
-      <Route path='producto/:id' element={<Detalle />}/>
-      <Route path='create-account' element={<CreateAccount />}></Route>
-      <Route path='login' element={<Login />}/>
-      <Route path='*' element={<NotFound />}/>
-    </Route>
-  )
-)
 
 function App() {
+  const {state} = useContextGlobal()
+  function Guard({ children, condition, redirect }) {
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      if (!condition) {
+        navigate(redirect);
+      }
+    }, [condition, navigate, redirect]);
+    return children;
+  }
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<Layout />}>
+      <Route index element={<Home />} />
+
+      <Route path='admin' element={
+        <Guard condition={state.user?.data?.role === "ROLE_ADMIN"} redirect='/'>
+          <Admin />
+        </Guard>
+      }>
+        <Route index element={<EditProducts />} />
+        <Route path='registrar' element={<RegisterProduct />} />
+        <Route path='usuarios' element={<Role />} />
+        <Route path='categorias' element={<RegisterCategory />} />
+      </Route>
+
+      <Route path='producto/:id' element={<Detalle />} />
+      <Route path='create-account' element={<CreateAccount />} />
+      <Route path='login' element={<Login />} />
+      <Route path='*' element={<NotFound />} />
+    </Route>
+    )
+  )
   return (
       <RouterProvider router={router} />
   );
