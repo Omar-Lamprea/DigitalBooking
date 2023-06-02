@@ -9,6 +9,9 @@
       gap: .5rem;
       margin: auto;
     }
+    @include media-query(xlarge){
+      height: 580px;
+    }
     .category{
       background-color: var(--white-color);
       padding: 1rem;

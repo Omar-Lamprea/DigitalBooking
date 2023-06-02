@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 const Carousel = (props) => {
-  if (props) console.log('props carousel', props.children.length);
+  // if (props) console.log('props carousel', props.children.length);
   const {children, show} = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [length, setLength] = useState(children.length);
@@ -13,14 +13,14 @@ const Carousel = (props) => {
 
   // Handler for Next and previous button
   const next = () => {
-    console.log('next');
+    // console.log('next');
     if (currentIndex < (length)) {
       setCurrentIndex(prevState => prevState + 1);
     }
   };
 
   const prev = () => {
-    console.log('prev');
+    // console.log('prev');
     if (currentIndex > 0) {
       setCurrentIndex(prevState => prevState - 1);
     }
@@ -69,10 +69,10 @@ const Carousel = (props) => {
   )
 };
 
-// Carousel.propTypes = {
-//   children: PropTypes.shape({
-//     length: PropTypes.number.isRequired
-//   }).isRequired,
-// }
-
 export default Carousel;
+
+Carousel.propTypes = {
+  children: PropTypes.array.isRequired,
+  length: PropTypes.number,
+  show: PropTypes.number.isRequired
+}

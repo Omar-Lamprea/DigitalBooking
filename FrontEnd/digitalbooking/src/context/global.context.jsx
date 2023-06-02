@@ -9,7 +9,9 @@ const initialState = {
     data: JSON.parse(localStorage.getItem('user'))?.data || false,
     token: JSON.parse(localStorage.getItem('user'))?.token || false,
   }, 
-  categories: []
+  categories: [], 
+  users: [],
+  titleProducts: "Alojamientos recomendados"
 }
 
 const ContextGlobal = createContext('')
@@ -21,15 +23,21 @@ const reducer = (state, action) => {
     case 'deleteLodging':
       return {...state, APIdata: state.APIdata.filter(lodging => lodging.productId !== action.payload)}
     case 'setUser':
-        localStorage.setItem('user', JSON.stringify(action.payload))
-        return {...state, user: action.payload}
+      localStorage.setItem('user', JSON.stringify(action.payload))
+      return {...state, user: action.payload}
     case 'categories':
-          return  {...state, categories: [...state.categories, ...action.payload]}
+      return  {...state, categories: [...state.categories, ...action.payload]}
+    case 'setCategories':
+      return {...state, categories: []}
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}
     case 'setProducts':
       return {...state, APIdata: []}
+    case 'users':
+      return {...state, users: [...state.users, ...action.payload]}
+    case 'titleProducts':
+      return {...state, titleProducts: action.payload}
       
     default:
         throw new Error('action type error')
@@ -71,12 +79,24 @@ const ContextProvider = ({ children }) => {
     });
     const data = await res.json();
     if (res.ok) {
-      console.log('categories', data);
       dispatch({ type: 'categories', payload: data})
     } else {
       console.log('Error');
     }
   }, []);
+
+
+  // Get all users
+  // const getUsersList = useCallback(async () => {
+  //   const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.users, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${state.user.token}`
+  //     }
+  //   });
+  //   const users = await res.json();
+  //   if (res.ok) console.log('users', users);
+  // }, []);
 
 
   useEffect(() =>{

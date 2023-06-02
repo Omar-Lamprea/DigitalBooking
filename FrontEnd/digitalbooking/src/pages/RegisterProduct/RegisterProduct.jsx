@@ -149,15 +149,10 @@ const RegisterProduct = () => {
   }
 
   useEffect(()=>{
-    const getCategory = (async() =>{
-      const res = await fetch('http://18.218.175.122:8080/digital-booking/category/all')
-      const data = await res.json()
-      if(res.ok){
-        setCategory(data)
-      }
-    })
-    getCategory()
-  },[])
+    if(state.categories){
+      setCategory(state.categories)
+    }
+  },[state.categories])
 
   return (
     <form className="form-register-product my-5" onSubmit={hanbleSubmit} ref={formRef}>

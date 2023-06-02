@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ModalDeleteProduct from '../../components/Modals/ModalDeleteProduct';
 import { Link } from 'react-router-dom';
 const EditProductsCard = ({data}) => {
-  console.log(data);
   const priceFormated = parseFloat(data.price).toLocaleString({ minimumFractionDigits: 0 })
   return (
     <section className='product'>

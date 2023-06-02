@@ -13,8 +13,6 @@ const ModalDeleteProduct = ({id, productName}) => {
   const [error, setError] = useState(false);
   const navigate = useNavigate()
 
-  console.log(id, state.APIdata[0].productId)
-
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
       const url = `${state.URL_API.urlBase}${state.URL_API.product}/${id}`

@@ -1,12 +1,24 @@
 import Card from 'react-bootstrap/Card';
+import { useContextGlobal } from '../../context/global.context';
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
 const CategoryCard = ({category}) => {
+  const {dispatch} = useContextGlobal()
 
   // const [category, serCategory] = useState();
-  const handleCardClick = () => {
-    console.log('click card');
-  };
+  const handleCardClick = async () => {
+    try {
+      const response = await fetch('http://18.218.175.122:8080/digital-booking/product/productByCategory/' + category.categoryId)
+      const data = await response.json()
+      if(response.ok){
+        dispatch({type: "titleProducts", payload: category.name})
+        dispatch({type: "setProducts"})
+        dispatch({type: "APIdata", payload: data})
+      }
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  }
 
 
     return (
@@ -24,3 +36,12 @@ const CategoryCard = ({category}) => {
 };
 
 export default CategoryCard;
+
+
+CategoryCard.propTypes = {
+  category: PropTypes.shape({
+    imageUrl: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    categoryId: PropTypes.number.isRequired
+  }).isRequired,
+};
