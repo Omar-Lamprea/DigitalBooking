@@ -47,6 +47,7 @@
         height: 70px;
         @include media-query('large') {
             margin-bottom: 0;
+            margin-right: 25px;
         }
     }
 
@@ -62,6 +63,8 @@
         @include media-query('large') {
             margin-bottom: 0;
             width: 25%;
+            margin-left: 25px;
+            margin-right: 25px;
         }
     }
 
@@ -70,14 +73,18 @@
         width: 100%;
         @include media-query('large') {
             margin-bottom: 0;
-            width: auto;
+            width: 25%;
+            margin-left: 25px;
+            margin-right: 25px;
         }
     }
 
     &__role {
         width: 100%;
         @include media-query('large') {
-            width: auto;
+            width: 25%;
+            margin-left: 25px;
+            margin-right: 25px;
         }
     }
 }
