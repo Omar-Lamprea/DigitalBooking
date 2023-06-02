@@ -1,0 +1,22 @@
+/* Estilos globales */
+@import './App.scss';
+
+/** Estilos Componentes */
+@import './components/Layout/Layout.scss';
+@import './components/Header/Header.scss';
+@import './components/Footer/Footer.scss';
+@import './pages/Details/Detalle.scss';
+@import './components/Categories/Categories.scss';
+@import './components/CategoryCard/category-card.scss';
+@import './components/RegisterCategory/RegisterCategory.scss';
+@import './components/Suggestions/suggestions.scss';
+@import './components/SuggestionCard/suggestion-card.scss';
+@import './components/RegisterCategory/CategoryCard.scss';
+@import './components/Carousel/carousel.scss';
+@import './components/UsersList/UserList.scss';
+@import './components/UserLIstItem/UserListItem.scss';
+
+/** Estilos Paginas */
+@import './pages/Administration/Admin.scss';
+@import './pages/Login/Login.scss';
+@import './pages/CreateAccount/CreateAccount.scss';

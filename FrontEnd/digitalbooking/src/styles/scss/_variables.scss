@@ -1,0 +1,25 @@
+:root {
+    --main-bg-color: #14347C;
+    --main-bg-color-hover: #102962;
+    --second-bg-color: #FBC02D;
+    --white-color: #FFF;
+    --black-color: #000;
+    --blue-color: #14347C;
+    --yellow-color: #FBC02D;
+    --grey-color: #8999BD;
+    --grey-hover-color: #e9ecef;
+    --standard-border: 5px;
+    --backgroud-grey: #f8f8f8;
+    --error-message-color: #ff0000;
+    --success-message-color: #0cba33;
+}
+
+// Variables para breakpoints
+$breakpoint-xsmall: 400px;
+$breakpoint-small: 576px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
+$breakpoint-xlarge: 1380px;
+$breakpoint-xxlarge: 1600px;
+ 
+
