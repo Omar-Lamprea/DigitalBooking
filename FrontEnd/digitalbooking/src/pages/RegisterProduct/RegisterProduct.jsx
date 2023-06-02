@@ -1,35 +1,16 @@
 import './RegisterProduct.scss'
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { validateForm } from './ValidateForm';
 import Loader from '../../components/Loader/Loader';
 import { useContextGlobal } from '../../context/global.context';
 import Default from '../../assets/images/default.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
-
+import { initialTemplate } from './initialForm';
 
 
 const RegisterProduct = () => {
-  const initialTemplate = {
-    codeProduct: '',
-    productName: '',
-    category: '',
-    score: '',
-    price: '',
-    country: '',
-    city: '',
-    location: '',
-    description: '',
-    productImage: null,
-    titles: {
-      wifi: false,
-      kitchen: false,
-      airConditioning: false,
-      pet: false,
-      tv: false,
-      parkingLot: false,
-    }
-  }
+  const [category, setCategory] = useState('')
 
   const {state, dispatch} = useContextGlobal()
   const formRef = useRef(null);
@@ -37,47 +18,46 @@ const RegisterProduct = () => {
   const [errorsForm, setErrorsForm] = useState({})
   const [serverResponse, setServerResponse] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-  
+
+
   const handleChange = (e) => {
     const { name, value, type, files, checked } = e.target;
     const fieldValue = type === 'file' ? files : value;
-    let updatedFormData;
+
+    // let updatedFormData;
     if (type === 'checkbox') {
-      updatedFormData = {
-        ...formData,
-        titles: {
-          ...formData.titles,
-          [name]: checked,
-        },
-      };
+      const updatedAmenities = formData.amenities.map((amenity) => {
+        if (amenity.name === name) {
+          return {
+            ...amenity,
+            available: checked,
+          };
+        }
+        return amenity;
+      })
+      const updatedFormData = { ...formData, amenities: updatedAmenities}
+      setFormData(updatedFormData);
+
     } else {
-      updatedFormData = {
-        ...formData,
-        [name]: fieldValue,
-      };
+      const updatedFormData = {...formData, [name]: fieldValue}
+      setFormData(updatedFormData);
     }
   
-    setFormData(updatedFormData)
-  
     if (typeof fieldValue === 'object') {
-      console.log(files)
       const file = e.target.files[0]
       const reader = new FileReader()
       const img = e.target.previousElementSibling.previousElementSibling;
-      reader.onload = (e) => {
-        img.src = e.target.result
-      }
-  
+      reader.onload = (e) => img.src = e.target.result
       reader.readAsDataURL(file);
     }
-  
     setErrorsForm({ ...errorsForm, [name]: "" });
-  };
+  }
 
   const hanbleSubmit = async (e) =>{
     e.preventDefault()
-    const isValid = validateForm(formData);
+    const isValid = validateForm(formData)
     if(isValid.ok){
+      setIsLoading(true)
       const formToSend = new FormData();
       const jsonBody = {
         codeProduct: parseInt(formData.codeProduct),
@@ -88,45 +68,50 @@ const RegisterProduct = () => {
         locationUrl: formData.location,
         country: formData.country,
         city: formData.city,
-        category: formData.category,
-        //titles: formData.titles
+        category: parseInt(formData.category),
+        amenities: formData.amenities
       }
-
       Array.from(formData.productImage).forEach(file => 
         formToSend.append('images', file))
-      
       formToSend.append('stringProduct',JSON.stringify(jsonBody))
-
       try {
         const response = await fetch(state.URL_API.urlBase + state.URL_API.product, {
           method: 'POST',
+          headers: {
+            Authorization : `Bearer ${state.user.token}`
+          },
           body: formToSend
         })
         const data = await response.json()
         if (!response.ok) {
           console.log('Response: ', [response, data])
           let text = 'Petición fallida'
-          if(response.status >= 400 && response.status <= 410)
+          if(data.HttpStatusCode){
             text = data.ErrorMessage || data.Message
+            if(response.status === 403){
+              text = "Permisos insuficientes"
+            }
+          }
 
           setServerResponse({
-            text: text + ' Status: ' + response.status,
+            text: text + ' Status: ' + data.HttpStatusCode || response.status,
             className: 'errorResponse'
           })
           setIsLoading(false)
-
           // throw new Error('Error al realizar la solicitud');
+        
         }else{
-          console.log('todo bien');
+          console.log('producto registrado con éxito');
           dispatch({ type: 'APIdata', payload: [data]})
           setFormData(initialTemplate)
           setErrorsForm({})
           setIsLoading(false)
           formRef.current.reset();
           setServerResponse({
-            text: 'Se ha registrado el producto con éxito!',
+            text: 'Alojamiento registrado con éxito!',
             className: ''
           })
+          setList()
         }
   
       } catch (error) {
@@ -143,7 +128,31 @@ const RegisterProduct = () => {
     }
   }
 
-  
+  const setList = async()=>{
+    dispatch({type: "setProducts"})
+    try {
+      const res = await fetch(state.URL_API.urlBase + state.URL_API.productsAll,{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      })
+      const data = await res.json()
+      if (res.ok) {
+        dispatch({ type: 'APIdata', payload: data })
+      } else {
+        console.log('Error: ', data)
+        dispatch({ type: 'APIdata', payload: res })
+      }
+    } catch (error) {
+      console.log('Context error:', error)
+    }
+  }
+
+  useEffect(()=>{
+    if(state.categories){
+      setCategory(state.categories)
+    }
+  },[state.categories])
 
   return (
     <form className="form-register-product my-5" onSubmit={hanbleSubmit} ref={formRef}>
@@ -168,10 +177,9 @@ const RegisterProduct = () => {
               <label htmlFor="category">Categoría*</label>
               <select name="category" id="category" onChange={handleChange}>
                 <option value=""></option>
-                <option value="hotel">Hotel</option>
-                <option value="hotel">Departamento</option>
-                <option value="hotel">Cabaña</option>
-                <option value="hotel">Carpa</option>
+                {category &&
+                  category.map((el) => <option key={el.categoryId} value={el.categoryId}>{el.name}</option>)
+                }
               </select>
               {errorsForm && <span>{errorsForm.category}</span>}
             </div>
@@ -231,7 +239,7 @@ const RegisterProduct = () => {
                       type="checkbox" 
                       name="wifi" 
                       id="wifi" 
-                      defaultChecked={formData.titles.wifi}
+                      
                       onChange={handleChange}/>
                     <label htmlFor="wifi">Wifi</label>
                   </div>
@@ -240,7 +248,7 @@ const RegisterProduct = () => {
                       type="checkbox" 
                       name="kitchen" 
                       id="kitchen" 
-                      defaultChecked={formData.titles.kitchen}
+                      
                       onChange={handleChange}/>
                     <label htmlFor="kitchen">Cocina</label>
                   </div>
@@ -249,7 +257,7 @@ const RegisterProduct = () => {
                       type="checkbox" 
                       name="airConditioning" 
                       id="airConditioning" 
-                      defaultChecked={formData.titles.airConditioning}
+                      
                       onChange={handleChange}/>
                     <label htmlFor="airConditioning">Aire Acondicionado</label>
                   </div>
@@ -258,7 +266,7 @@ const RegisterProduct = () => {
                       type="checkbox" 
                       name="pet" 
                       id="pet" 
-                      defaultChecked={formData.titles.pet}
+                      
                       onChange={handleChange}/>
                     <label htmlFor="pet">Pet fliendly</label>
                   </div>
@@ -267,18 +275,18 @@ const RegisterProduct = () => {
                       type="checkbox" 
                       name="tv" 
                       id="tv" 
-                      defaultChecked={formData.titles.tv}
+                      
                       onChange={handleChange}/>
                     <label htmlFor="tv">Televisor</label>
                   </div>
                   <div className="item">
                     <input 
                       type="checkbox" 
-                      name="parking-lot" 
-                      id="parking-lot" 
-                      defaultChecked={formData.titles.preventDefault}
+                      name="parkingLot" 
+                      id="parkingLot" 
+                      
                       onChange={handleChange}/>
-                    <label htmlFor="parking-lot">Estacionamiento</label>
+                    <label htmlFor="parkingLot">Estacionamiento</label>
                   </div>
                 </div>
               </fieldset>
@@ -305,12 +313,12 @@ const RegisterProduct = () => {
         </div>
       </div>
      
-      <div className="responseForm mt-3">
+      <div className="responseForm mt-3 text-center">
         {!isLoading
           ? <button>Registrar</button>
           : <Loader />
         }
-        {serverResponse && 
+        {serverResponse !== null && 
           <p className={serverResponse.className + " text-center"}>
             {serverResponse.text}
           </p>

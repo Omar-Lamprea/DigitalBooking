@@ -1,4 +1,7 @@
 .form-register-category{
+  .errorResponse {
+    color: red;
+  }
     color: var(--main-bg-color);
     .form-register-row{
       width: 100%;
@@ -13,8 +16,12 @@
           padding: .5rem;
           box-shadow: 0px 0px 4px 0px #b7b7b7;
         }
+        span{
+          color: red;
+        }
       }
     }
+
     .responseForm{
       p{
         max-width: 500px;
@@ -50,4 +57,27 @@
     background-color: var(--main-bg-color);
     border:var(--main-bg-color)
 }
+.container-button{
+  display: flex;
+  justify-content: center;
+}
+.add-category{
+  background-color: var(--main-bg-color);
+  color: var(--white-color);
+  padding: .5rem;
+  width: 100%;
+  border-radius: var(--standard-border);
+  @include media-query(large){
+    width:20%;
+  }
+  @include media-query(medium){
+    width:20%;
+  }
+
+}
+.add-category:hover{
+  background-color: var(--main-bg-color-hover);
+}
   
+
+

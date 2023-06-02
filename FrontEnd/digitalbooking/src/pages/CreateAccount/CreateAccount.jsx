@@ -1,10 +1,14 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContextGlobal } from "../../context/global.context";
+import Loader from "../../components/Loader/Loader";
 
 const CreateAccount = () => {
-
+  const navigate = useNavigate()
+  const {state} = useContextGlobal()
+  const [isLoading, setIsLoading] = useState(false)
   const [formValuesState, setFormValuesState] = useState({
     firstname: '',
     lastname: '',
@@ -12,11 +16,15 @@ const CreateAccount = () => {
     password: '',
     confirmPassword: ''
   });
+  const [responseForm, setResponseForm] = useState({
+    ok: false,
+    text: "Usuario creado con éxito",
+    class: "alert alert-success"
+  });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  // const [validaForm, setValidForm] = useState(false);
 
   // Handler for show password
   const toggleShowPassword = (evt) => {
@@ -33,25 +41,78 @@ const CreateAccount = () => {
   // General Handler for all fields
   const handleFormChange = (evt) => {
     console.log('Fields change values', evt.target.name);
-    const currentFormState = {...formValuesState};
-    console.log('currentState', currentFormState);
     const {name, value} = evt.target;
     setFormValuesState({
       ...formValuesState,
       [name]: value
     });
+    setFormErrors({ ...formErrors, [evt.target.name]: "" });
   };
   
   // Handle submit form create account
-  const handlerCreateAccountSubmit = (evt) => {
+  const handlerCreateAccountSubmit = async (evt) => {
     evt.preventDefault();
-    console.log('Submit form', formValuesState);
-
-    console.log('validation', validateCreateForm());
     const isValidForm = validateCreateForm();
     if (isValidForm) {
+      setIsLoading(true)
+      const jsonBody = {
+        name: formValuesState.firstname,
+        lastName: formValuesState.lastname,
+        email: formValuesState.email,
+        password: formValuesState.confirmPassword,
+        role: "ROLE_USER",
+        username: ""
+      }
       console.log('Form valido');
-      // setValidForm(true);
+      console.log(jsonBody);
+
+
+      try {
+        const response = await fetch(state.URL_API.urlBase + state.URL_API.users, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(jsonBody)
+        })
+        const data = await response.json()
+        
+        if(response.ok){
+          console.log('user: ', data);
+          setIsLoading(false)
+          setFormValuesState({
+            firstname: '',
+            lastname: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
+          })
+          setResponseForm({...responseForm, ok: true})
+          setTimeout(() => {
+            navigate('../login')
+          }, 3000)
+
+        }else{
+          console.log('Error en la petición: ');
+          console.log(response, data);
+          setIsLoading(false)
+          setResponseForm({
+            ok: true,
+            text: "Error al crear el usuario, status:" + response.status,
+            class: "alert alert-danger"
+          })
+
+        }
+      } catch (error) {
+        console.log('Error conectando al servidor');
+        console.log(error);
+        setIsLoading(false)
+        setResponseForm({
+          ok: true,
+          text: "Error conectando al servidor",
+          class: "alert alert-danger"
+        })
+      }
     }
     else {
       if(formErrors) console.log('formErrors', formErrors);
@@ -60,13 +121,12 @@ const CreateAccount = () => {
 
   // Handler onBlur form fields validations
   const handlerCreateAccountOnBlur = () => {
-    validateCreateForm();
+    // validateCreateForm();
   };
 
   // Form field validations
   const validateCreateForm = () => {
     const errors = {};
-    console.log('nombre', formValuesState.firstname);
 
     //Firstname Validation
     if (formValuesState.firstname === '') {
@@ -123,7 +183,7 @@ const CreateAccount = () => {
                 id="firstname" 
                 type="text"
                 name="firstname"
-                value={formValuesState.firstName}
+                value={formValuesState.firstname}
                 onChange={handleFormChange}
                 className="form-createAccount__input"
               />
@@ -185,14 +245,16 @@ const CreateAccount = () => {
               {formErrors && formErrors.confirmPassword && <span className="error-message">{formErrors.confirmPassword}</span>}
           </fieldset>
           <div className="form-createAccount__actions">
-            <button type="submit" className="button button__primary form-createAccount__btn">Crear cuenta</button>
+            {!isLoading
+              ? <button type="submit" className="button button__primary form-createAccount__btn">Crear cuenta</button>
+              : <Loader />
+            }
             <p className="form-createAccount__redirect">¿Ya tienes una cuenta? <Link to="/login">Iniciar sesión</Link></p>
           </div>
       </form>
-      {/* {validaForm ? 
-        <div className="alert alert-success" role="alert">¡El formulario es valido!</div> 
-        : <div className="alert alert-danger" role="alert">Formulario invalido</div>
-      } */}
+      {responseForm.ok &&
+        <div className={responseForm.class} role="alert">{responseForm.text}</div> 
+      }
     </section>
   );
 }

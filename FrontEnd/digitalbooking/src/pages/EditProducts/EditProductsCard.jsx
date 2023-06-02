@@ -8,8 +8,8 @@ const EditProductsCard = ({data}) => {
   return (
     <section className='product'>
       <div className="product-img">
-        <Link to={"../../producto/" + data.idProduct}>
-          <img src={data.imagesURLs[0]} alt="product image" />
+        <Link to={"../../producto/" + data.productId}>
+          <img src={data?.images[0].url} alt="product image" />
         </Link>
       </div>
       <div className="product-data">
@@ -23,7 +23,7 @@ const EditProductsCard = ({data}) => {
           <span>${priceFormated}</span>
         </p>
         <p>Categoría: <br />
-          <span>{data.category}</span>
+          <span>{data.category.name}</span>
         </p>
       </div>
       <div className="product-actions">
@@ -31,7 +31,7 @@ const EditProductsCard = ({data}) => {
           <FontAwesomeIcon icon={faPenToSquare} />
         </div> */}
         <div className="delete">
-          <ModalDeleteProduct id={data.idProduct} productName={data.name}/>
+          <ModalDeleteProduct id={data.productId} productName={data.name}/>
         </div>
       </div>
     </section>

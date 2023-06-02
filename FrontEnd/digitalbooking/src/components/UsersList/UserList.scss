@@ -1,0 +1,15 @@
+.users-list {
+    &__container {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.user-list {
+    &__wrapper {
+        max-width: 1140px;
+        width: 100%;
+    }
+}

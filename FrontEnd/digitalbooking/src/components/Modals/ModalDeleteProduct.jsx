@@ -16,7 +16,12 @@ const ModalDeleteProduct = ({id, productName}) => {
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
       const url = `${state.URL_API.urlBase}${state.URL_API.product}/${id}`
-      fetch(url, {method: 'DELETE'})
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${state.user.token}`
+        }
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al realizar la petición DELETE');
@@ -24,7 +29,7 @@ const ModalDeleteProduct = ({id, productName}) => {
         dispatch({type: "deleteLodging", payload: parseInt(id)})
         setShow(false)
         setError(false)
-        location.pathname !== "/admin/editarProductos"
+        location.pathname !== "/admin"
           ? navigate('/')
           : false
       })
