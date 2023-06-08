@@ -13,6 +13,7 @@
     }
     p{
         color: var(--black-color);
+        line-height: 18px;
     }
     .product-score{
         color: #fbc02d;
@@ -96,6 +97,8 @@
             ul{
                 list-style: none;
                 padding: 0;
+                gap: 2rem 0;
+                margin: 0;
                 li{
                     display: flex;
                     align-items: center;
