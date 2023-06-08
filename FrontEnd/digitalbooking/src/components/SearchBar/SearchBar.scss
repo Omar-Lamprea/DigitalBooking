@@ -25,22 +25,28 @@
       .input-form{
         display: flex;
         margin: 1rem 0;
-        i{
+        align-items: end;
+        svg{
           color: var(--second-bg-color);
           background-color: var(--white-color);
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 30px;
-          height: 40px;
-          font-size: 22px;
+          height: 25px;
+          font-size: 3px;
           border-radius: 5px 0 0 5px;
+          padding: 0.5rem;
+        }
+        .rmdp-container {
+          width: 100%;
         }
         input{
           width: 100%;
           border: none;
-          border-radius:  0 5px 5px 0;
-          padding: .5rem;
+          border-radius: 0 5px 5px 0;
+          padding: 0.51rem;
+          height: inherit;
+          margin: 0;
         }
         input:focus-visible{
           outline: inherit;
@@ -74,9 +80,15 @@
         .input-form{
           width: 800px;
         }
-        .search-button{
-          width: 300px;
-        }
+        // .actions{
+          .search-button{
+            min-width: 170px;
+            max-width: 170px;
+          }
+          .loader{
+            margin-right: 122px;
+          }
+        // }
       }
     }
   }
