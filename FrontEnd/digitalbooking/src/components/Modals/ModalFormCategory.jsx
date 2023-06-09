@@ -62,9 +62,7 @@ const ModalFormCategory = () => {
       formToSend.append("stringCategory", JSON.stringify(jsonBody));
 
       try {
-        const response = await fetch(
-          "http://18.218.175.122:8080/digital-booking/category",
-          {
+        const response = await fetch(state.URL_API.urlBase + state.URL_API.category,{
             method: "POST",
             headers: {
               Authorization: `Bearer ${state.user.token}`,
