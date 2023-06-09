@@ -20,15 +20,15 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> SearchAll() {
+    public List<Product> searchAll() {
         return productRepository.findAll();
     }
 
-    public List<Product> SearchAllByStatus() {
+    public List<Product> searchAllByStatus() {
         return productRepository.findAllByStatus(ProductStatus.ACTIVE);
     }
 
-    public Product SearchById(Integer id) {
+    public Product searchById(Integer id) {
 
         Optional<Product> product = productRepository.findById(id);
 
@@ -49,7 +49,7 @@ public class ProductService {
         return existingProduct != null;
     }
 
-    public void DeleteById(Integer productId) {
+    public void deleteById(Integer productId) {
 
         Product product = productRepository.findById(productId).orElse(null);
         if (product != null) {
@@ -58,7 +58,7 @@ public class ProductService {
         }
     }
 
-    public Product UpdateProduct(Product product) {
+    public Product updateProduct(Product product) {
 
         Optional<Product> product1 = productRepository.findById(product.getProductId());
 
@@ -70,7 +70,7 @@ public class ProductService {
         }
     }
 
-    public Product SaveProduct(Product product) {
+    public Product saveProduct(Product product) {
 
         Product productToSave = productRepository.save(product);
         log.info("Producto " + productToSave.toString() + " guardado con exito.");

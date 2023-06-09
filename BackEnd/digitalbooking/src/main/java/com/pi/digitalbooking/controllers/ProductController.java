@@ -121,8 +121,8 @@ public class ProductController {
             imagesURLs.add(imageUrl);
         }
 
-        Product product = GetProduct(productDTO);
-        Product newProduct = productService.SaveProduct(product);
+        Product product = getProduct(productDTO);
+        Product newProduct = productService.saveProduct(product);
         productImageService.addImagesToProduct(newProduct, imagesURLs);
 
         for (Amenity amenity : amenities) {
@@ -185,7 +185,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
     }
 
-    private Product GetProduct(ProductDTO productDTO) {
+    private Product getProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
@@ -215,8 +215,8 @@ public class ProductController {
     @CrossOrigin
     @GetMapping("/{id}")
     @ResponseBody
-    public Product GetByPathVariable(@Parameter(description = "ID of the product to retrieve", required = true) @PathVariable("id") Integer id) throws ProductNotFoundException {
-        Product productToGet = productService.SearchById(id);
+    public Product getByPathVariable(@Parameter(description = "ID of the product to retrieve", required = true) @PathVariable("id") Integer id) throws ProductNotFoundException {
+        Product productToGet = productService.searchById(id);
 
         if (productToGet == null) {
             throw new ProductNotFoundException("El producto no existe.");
@@ -231,9 +231,9 @@ public class ProductController {
     @CrossOrigin
     @GetMapping("/search")
     @ResponseBody
-    public Product GetByRequestParam(@Parameter(description = "ID of the product to retrieve", required = true) @RequestParam Integer id) throws ProductNotFoundException {
+    public Product getByRequestParam(@Parameter(description = "ID of the product to retrieve", required = true) @RequestParam Integer id) throws ProductNotFoundException {
 
-        Product productToGet = productService.SearchById(id);
+        Product productToGet = productService.searchById(id);
 
         if (productToGet == null) {
             throw new ProductNotFoundException("El producto no existe.");
@@ -245,15 +245,15 @@ public class ProductController {
     @Operation(summary = "Delete product by ID", description = "Deletes a product by its ID.")
     @CrossOrigin
     @DeleteMapping("/{id}")
-    public void DeleteByPathVariable(@Parameter(description = "ID of the product to delete", required = true) @PathVariable("id") Integer id) {
+    public void deleteByPathVariable(@Parameter(description = "ID of the product to delete", required = true) @PathVariable("id") Integer id) {
 
-        Product productToGet = productService.SearchById(id);
+        Product productToGet = productService.searchById(id);
 
         if (productToGet == null || productToGet.getStatus().equals(ProductStatus.DELETED)) {
             throw new ProductNotFoundException("El producto no existe o ya fue elimnado.");
         }
 
-        productService.DeleteById(id);
+        productService.deleteById(id);
     }
 
     @Operation(summary = "Search all products", description = "Retrieves a list of all products.")
@@ -261,8 +261,8 @@ public class ProductController {
     @CrossOrigin
     @GetMapping("/all")
     @ResponseBody
-    public List<Product> SearchAll() {
-        return productService.SearchAllByStatus();
+    public List<Product> searchAll() {
+        return productService.searchAllByStatus();
     }
 
     @Operation(summary = "Update a product", description = "Updates an existing product.")
@@ -270,9 +270,9 @@ public class ProductController {
     @CrossOrigin
     @PutMapping()
     @ResponseBody
-    public Product Update(@RequestBody Product product) {
+    public Product update(@RequestBody Product product) {
 
-        return productService.UpdateProduct(product);
+        return productService.updateProduct(product);
     }
 
 
