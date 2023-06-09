@@ -6,6 +6,7 @@ import { useContextGlobal } from "../../context/global.context";
 import DHeader from "../../components/Details/DHeader/DHeader";
 import DContainerImages from "../../components/Details/DCarousel/DContainerImages";
 import DDescription from "../../components/Details/DDescription/DDescription";
+import DBookings from "../../components/Details/DBookings/DBookings";
 
 const Detalle = () => {
   const {id} = useParams()
@@ -45,6 +46,9 @@ const Detalle = () => {
               amenities: lodging.amenities
             }
           }/>
+
+          <DBookings />
+
         </>
         : <div className="errorProduct">
             <h5>No encontramos ningun producto con el id {id}</h5>

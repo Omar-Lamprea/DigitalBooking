@@ -7,6 +7,7 @@ export const GLOBAL_API = {
 
   // Categories
   categoryAll: '/category/all',
+  category: '/category',
 
   //auth
   login: "/auth",
