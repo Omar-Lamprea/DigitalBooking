@@ -17,7 +17,7 @@ const ContainerImg = (data) => {
             <img src={images[1] ? images[1].url : images[0].url} alt=""  className=""/>
             <img src={images[2] ? images[2].url : images[0].url} alt=""  className=""/>
             <img src={images[3] ? images[3].url : images[0].url} alt=""  className=""/>
-            <img src={images[4] ? images[4].url : images[0].url} alt=""  className=""/>
+            <img src={images[4] ? images[4].url : images[0].url} alt=""  className="img-shadow"/>
             
             <Button 
               className="btn-modal-images" 
