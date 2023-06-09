@@ -180,7 +180,7 @@ const RegisterProduct = () => {
           <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="codeProduct">Código de producto</label>
-              <input type="text" name="codeProduct" id="codeProduct" onChange={handleChange}/>
+              <input type="number" name="codeProduct" id="codeProduct" onChange={handleChange}/>
               {errorsForm && <span>{errorsForm.codeProduct}</span>}
             </div>
             
