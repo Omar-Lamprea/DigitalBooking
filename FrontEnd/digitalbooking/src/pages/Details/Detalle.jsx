@@ -9,7 +9,7 @@ import DContainerImages from "../../components/Details/DCarousel/DContainerImage
 
 const Detalle = () => {
   const {id} = useParams()
-  const [lodging, setLodging] = useState({})
+  const [lodging, setLodging] = useState(null)
   const {state} = useContextGlobal()
 
   useEffect(() =>{
@@ -25,7 +25,7 @@ const Detalle = () => {
     const text = lodging.description 
       ? lodging.description.replaceAll('\n', "<br />") 
       : ""
-    return { __html: text };
+    return { __html: text }
   }
 
   return (
@@ -34,13 +34,13 @@ const Detalle = () => {
         <>
           <DHeader data={
             {
-              category: lodging.category, 
+              category: lodging.category.name, 
               city: lodging.city,
               name: lodging.name,
               score: lodging.score
             }
           }/>
-          <DContainerImages images={lodging.imagesURLs}/>
+          <DContainerImages images={lodging.images}/>
 
           <section className="info-container"> 
             <div className="description_container">
@@ -84,7 +84,9 @@ const Detalle = () => {
                   </li>
                 </ul>
               </span>
-              <button> Reserva ahora! </button>
+              {state?.user?.data &&
+                <button> Reserva ahora! </button>
+              }
             </div>
             </div>
           </section>

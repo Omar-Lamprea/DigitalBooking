@@ -14,7 +14,7 @@ const Suggestions = () => {
   return (
     <section className="suggestions__container">
       <div className="suggestions__wrapper container">
-        <h3>Buscar por tipo de alojamiento</h3>
+        <h3>{state.titleProducts}</h3>
         <div className="suggestions__content">
           {data && data.map((suggestion, index) => (
             <SuggestionCard key={index} suggestion={suggestion} />

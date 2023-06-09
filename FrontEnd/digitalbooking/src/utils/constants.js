@@ -4,6 +4,10 @@ export const GLOBAL_API = {
   productsAll: "/product/all",
   product: "/product",
 
+  // Categories
+  categoryAll: '/category/all',
+
   //auth
-  login: "/auth"
+  login: "/auth",
+  users: "/users"
 }

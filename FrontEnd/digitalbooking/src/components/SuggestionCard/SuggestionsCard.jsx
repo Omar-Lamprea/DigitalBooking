@@ -57,7 +57,7 @@ SuggestionCard.propTypes = {
         city: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         score: PropTypes.number.isRequired,
-        category: PropTypes.array.isRequired,
+        category: PropTypes.object.isRequired,
     }).isRequired,
 }
 
