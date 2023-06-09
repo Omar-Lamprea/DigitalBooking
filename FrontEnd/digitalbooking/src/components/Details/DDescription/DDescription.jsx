@@ -1,12 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWifi, faTv, faCar, faUtensils, faPaw, faWind } from '@fortawesome/free-solid-svg-icons';
-
-import { useContextGlobal } from "../../../context/global.context";
 import PropTypes from 'prop-types';
 
 const DDescription = ({lodging}) => {
 
-  const {state} = useContextGlobal
   const amenityMappings = {
     wifi: {
       icon: faWifi,
@@ -76,9 +73,6 @@ const DDescription = ({lodging}) => {
             ))}
             </ul>
           </span>
-          {state?.user?.data && 
-            <button>Reserva ahora! </button>
-          }
         </div>
       </div>
     </section>
