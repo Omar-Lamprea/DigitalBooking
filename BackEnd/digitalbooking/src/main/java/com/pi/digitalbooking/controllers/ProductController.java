@@ -8,13 +8,9 @@ import com.pi.digitalbooking.configurations.AWSService;
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 
-import com.pi.digitalbooking.models.Amenity;
-import com.pi.digitalbooking.models.Category;
-import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.models.*;
 import com.pi.digitalbooking.repository.AmenityRepository;
-import com.pi.digitalbooking.services.CategoryService;
-import com.pi.digitalbooking.services.ProductImageService;
-import com.pi.digitalbooking.services.ProductService;
+import com.pi.digitalbooking.services.*;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -58,6 +54,12 @@ public class ProductController {
     private AmenityRepository amenityRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private PoliticService politicService;
+    @Autowired
+    private HomeRuleService homeRuleService;
+    @Autowired
+    private HealthAndSecurityService healthAndSecurityService;
 
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
@@ -130,7 +132,7 @@ public class ProductController {
             amenityRepository.save(amenity);
         }
 
-        response.put("Message", "Producto guardado con éxito");
+        response.put("Message", "Producto '" + product.getProductId().toString() + "' guardado con éxito");
         response.put(HTTP_STATUS_CODE, String.valueOf(HttpStatus.CREATED.value()));
         return getStringResponseEntity(response);
     }
@@ -196,11 +198,41 @@ public class ProductController {
         product.setCity(productDTO.getCity());
         product.setCountry(productDTO.getCountry());
 
+        Politic politicSaved = getPolitic(productDTO);
+        product.setPolitic(politicSaved);
+
         Category category = categoryService.SearchById(productDTO.getCategory());
 
         product.setCategory(category);
         product.setStatus(ProductStatus.ACTIVE);
         return product;
+    }
+
+    private Politic getPolitic(ProductDTO productDTO) {
+        Politic politic = productDTO.getPolitic();
+        List<HomeRule> homeRules = productDTO.getPolitic().getHomeRules();
+        List<HealthAndSecurityRule> healthAndSecurityRules = productDTO.getPolitic().getHealthAndSecurityRules();
+
+        List<HomeRule> homeRulesEmpty = new ArrayList<>();
+        List<HealthAndSecurityRule> healthAndSecurityRulesEmpty = new ArrayList<>();
+        politic.setHomeRules(homeRulesEmpty);
+        politic.setHealthAndSecurityRules(healthAndSecurityRulesEmpty);
+        Politic politicSaved = politicService.SavePolitic(politic);
+
+        for (HomeRule homeRule : homeRules) {
+            HomeRule homeRuleToSave = new HomeRule();
+            homeRuleToSave.setPolitic(politicSaved);
+            homeRuleToSave.setHomeRuleDescription(homeRule.getHomeRuleDescription());
+            homeRuleService.SaveHomeRule(homeRuleToSave);
+        }
+
+        for (HealthAndSecurityRule healthAndSecurityRule : healthAndSecurityRules) {
+            HealthAndSecurityRule healthAndSecurityRuleToSave = new HealthAndSecurityRule();
+            healthAndSecurityRuleToSave.setPolitic(politicSaved);
+            healthAndSecurityRuleToSave.setHealthAndSecurityRuleDescription(healthAndSecurityRule.getHealthAndSecurityRuleDescription());
+            healthAndSecurityService.SaveHealthAndSecurityRule(healthAndSecurityRuleToSave);
+        }
+        return politicSaved;
     }
 
     private ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
@@ -281,7 +313,7 @@ public class ProductController {
     @CrossOrigin
     @GetMapping("/productByCategory/{id}")
     @ResponseBody
-    public List<Product> findByCategory( @PathVariable("id") Integer id) {
+    public List<Product> findByCategory(@PathVariable("id") Integer id) {
         return productService.getByCategory(id);
     }
 
