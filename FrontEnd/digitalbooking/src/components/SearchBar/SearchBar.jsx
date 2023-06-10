@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './SearchBar.scss'
 import DatePicker from "react-multi-date-picker"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,7 +6,7 @@ import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons
 
 
 const SearchBar = () => {
-
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
   const [searchProduct, setSearchProduct] = useState({
     city: "",
     date: []
@@ -44,6 +44,17 @@ const SearchBar = () => {
     return template
   }
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 620);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [isSmallScreen]);
+
   return (
     <section className="search-bar">
       <div className="bg-bar">
@@ -71,7 +82,7 @@ const SearchBar = () => {
               name='date'
               range 
               dateSeparator=" - "
-              numberOfMonths={2}
+              numberOfMonths={isSmallScreen ? 1 : 2}
               onChange={dates => setSearchProduct({...searchProduct, date: dates})}
             />
           </div>

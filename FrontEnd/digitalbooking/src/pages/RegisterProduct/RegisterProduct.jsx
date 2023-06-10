@@ -11,7 +11,6 @@ import { initialTemplate } from './initialForm';
 
 const RegisterProduct = () => {
   const [category, setCategory] = useState('')
-
   const {state, dispatch} = useContextGlobal()
   const formRef = useRef(null);
   const [formData, setFormData] = useState(initialTemplate)
@@ -56,9 +55,12 @@ const RegisterProduct = () => {
   const hanbleSubmit = async (e) =>{
     e.preventDefault()
     const isValid = validateForm(formData)
+
     if(isValid.ok){
       setIsLoading(true)
       const formToSend = new FormData();
+      const homeRulesArray = formData.homeRules.split(",").map((rule) => rule.trim())
+      const healthPoliticArray = formData.healthPolitic.split(",").map((rule) => rule.trim())
       const jsonBody = {
         codeProduct: parseInt(formData.codeProduct),
         name: formData.productName,
@@ -69,8 +71,14 @@ const RegisterProduct = () => {
         country: formData.country,
         city: formData.city,
         category: parseInt(formData.category),
-        amenities: formData.amenities
+        amenities: formData.amenities,
+        // politic: {
+        //   homeRules: homeRulesArray,
+        //   healthPolitic: healthPoliticArray,
+        //   cancelationPolitic: formData.cancelationPolitic
+        // }
       }
+      console.log(jsonBody, formData.productImage);
       Array.from(formData.productImage).forEach(file => 
         formToSend.append('images', file))
       formToSend.append('stringProduct',JSON.stringify(jsonBody))
@@ -156,8 +164,11 @@ const RegisterProduct = () => {
 
   return (
     <form className="form-register-product my-5" onSubmit={hanbleSubmit} ref={formRef}>
+      
       <div className="form-column">
+
         <div className="form-row-container">
+          
           <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="productName">Nombre del producto*</label>
@@ -165,11 +176,11 @@ const RegisterProduct = () => {
               {errorsForm && <span>{errorsForm.productName}</span>}
             </div>
           </div>
-          <div className="form-register-row">
 
+          <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="codeProduct">Código de producto</label>
-              <input type="text" name="codeProduct" id="codeProduct" onChange={handleChange}/>
+              <input type="number" name="codeProduct" id="codeProduct" onChange={handleChange}/>
               {errorsForm && <span>{errorsForm.codeProduct}</span>}
             </div>
             
@@ -312,6 +323,67 @@ const RegisterProduct = () => {
           </div>
         </div>
       </div>
+
+
+      <div className="form-column mt-3">
+        <div className="form-row-container">
+          <h2 className='fs-5'>Ubicación del alojamiento</h2>
+          <div className="form-register-row">
+            <div className="form-row">
+              Map
+            </div>
+          </div>
+
+        </div>
+
+        <div className="form-row-container">
+          <h2 className='fs-5'>Políticas de uso:</h2>
+          <div className="form-register-row">
+            <div className="form-row">
+              <label htmlFor="homeRules">Normas de la casa</label>
+              <input 
+                type="text" 
+                name="homeRules" 
+                id="homeRules" 
+                placeholder="Ej: no fumar, no fiestas..."
+                onChange={handleChange}
+              />
+              {errorsForm && <span>{errorsForm.homeRules}</span>}
+            </div>
+          </div>
+
+          <div className="form-register-row">
+            <div className="form-row">
+              <label htmlFor="healthPolitic">Salud y seguridad</label>
+              <input 
+                type="text" 
+                name="healthPolitic" 
+                id="healthPolitic" 
+                placeholder="Ej: Detector de humo, depósito de seguridad"
+                onChange={handleChange}
+              />
+              {errorsForm && <span>{errorsForm.healthPolitic}</span>}
+            </div>
+          </div>
+
+          <div className="form-register-row">
+            <div className="form-row">
+              <label htmlFor="cancelationPolitic">Política de Cancelación</label>
+              <textarea 
+                name="cancelationPolitic" 
+                id="cancelationPolitic" 
+                cols="3" 
+                rows="10"
+                onChange={handleChange}>
+              </textarea>
+              {errorsForm && <span>{errorsForm.cancelationPolitic}</span>}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
      
       <div className="responseForm mt-3 text-center">
         {!isLoading
