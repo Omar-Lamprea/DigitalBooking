@@ -7,6 +7,7 @@ import DHeader from "../../components/Details/DHeader/DHeader";
 import DContainerImages from "../../components/Details/DCarousel/DContainerImages";
 import DDescription from "../../components/Details/DDescription/DDescription";
 import DBookings from "../../components/Details/DBookings/DBookings";
+import DPolitic from "../../components/Details/DPolitic/DPolitic";
 
 const Detalle = () => {
   const {id} = useParams()
@@ -16,9 +17,9 @@ const Detalle = () => {
   useEffect(() =>{
     let lodgingFiltered;
     state.APIdata 
-      ? lodgingFiltered = state.APIdata.filter(lodgingId => lodgingId.productId === parseInt(id))
+      ? lodgingFiltered = state.APIdata.find(lodgingId => lodgingId.productId === parseInt(id))
       : lodgingFiltered = null
-    setLodging(lodgingFiltered[0])
+    setLodging(lodgingFiltered)
   }, [state, id])
 
 
@@ -48,6 +49,8 @@ const Detalle = () => {
           }/>
 
           <DBookings />
+
+          <DPolitic politic={lodging.politic}/>
 
         </>
         : <div className="errorProduct">
