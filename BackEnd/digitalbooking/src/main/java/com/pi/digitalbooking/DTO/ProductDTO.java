@@ -33,5 +33,9 @@ public class ProductDTO {
 
     private Integer city;
 
+    private double latitude;
+
+    private double longitude;
+
     private Integer category;
 }
