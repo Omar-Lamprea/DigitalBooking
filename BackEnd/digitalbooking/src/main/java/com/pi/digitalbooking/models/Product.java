@@ -51,6 +51,12 @@ public class Product {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @Column
+    private double latitude;
+
+    @Column
+    private double longitude;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
