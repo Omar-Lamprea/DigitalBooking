@@ -4,6 +4,7 @@ export const GLOBAL_API = {
   // urlBase: 'http://localhost:8080/digital-booking',
   productsAll: "/product/all",
   product: "/product",
+  productByCategory: '/productByCategory/',
 
   // Categories
   categoryAll: '/category/all',
