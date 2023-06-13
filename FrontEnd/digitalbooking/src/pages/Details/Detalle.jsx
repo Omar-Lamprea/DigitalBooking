@@ -50,7 +50,7 @@ const Detalle = () => {
 
           <DBookings />
 
-          <DPolitic politic={lodging.politic}/>
+          <DPolitic politic={lodging.politic || {}}/>
 
         </>
         : <div className="errorProduct">

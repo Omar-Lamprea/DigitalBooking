@@ -20,10 +20,10 @@ export const validateForm = (formData) => {
   if (isNaN(price) || price <= 0) 
     newErrors.price = 'El precio debe ser un número mayor a 0';
 
-  if (!formData.country.trim())
+  if (!formData.country)
     newErrors.country = 'El país es requerido';
 
-  if (!formData.city.trim())
+  if (!formData.city)
     newErrors.city = 'La ciudad es requerida';
 
   if (!isValidUrl(formData.location))

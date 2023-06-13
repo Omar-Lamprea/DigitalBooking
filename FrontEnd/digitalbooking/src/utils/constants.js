@@ -11,5 +11,12 @@ export const GLOBAL_API = {
 
   //auth
   login: "/auth",
-  users: "/users"
+  users: "/users",
+
+  //cities
+  citiesAll: "/city/all",
+  cityByCountry: "/city/searchbycountry?nameCountry=",
+
+  //Countries
+  countriesAll: "/country/all"
 }
