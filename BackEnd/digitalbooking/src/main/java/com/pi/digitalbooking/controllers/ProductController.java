@@ -285,4 +285,15 @@ public class ProductController {
         return productService.getByCategory(id);
     }
 
+
+    @Operation(summary = "Search all products by city filtered", description = "Retrieves a list of all products  by city filtered.")
+    @ApiResponse(responseCode = "200", description = "List of products by city filtered", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
+    @CrossOrigin
+    @GetMapping("/productByCityFilter/{city}")
+    @ResponseBody
+    public List<Product> findByCityFiltered( @PathVariable("city") String city,@RequestParam("date") String date) {
+        return productService.getByCityFiltered(city,date);
+    }
+
+
 }

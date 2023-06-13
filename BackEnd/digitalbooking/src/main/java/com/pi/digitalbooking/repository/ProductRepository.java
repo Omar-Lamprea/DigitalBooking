@@ -13,5 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByStatus(ProductStatus status);
     Product findByCodeProductAndStatus(Integer codeProduct, ProductStatus status);
     List<Product> findByCategoryCategoryId (int id);
+    List<Product> findByCityStartingWith(String city);
 
 }
