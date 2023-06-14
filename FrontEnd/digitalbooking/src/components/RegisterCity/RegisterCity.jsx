@@ -9,11 +9,6 @@ const RegisterCity = () => {
     const {state} = useContextGlobal();
     const [cities, setCities] = useState([]);
     const [countries, setCountries] =useState(false)
-    const formRef = useRef(null);
-    const [formData, setFormData] = useState(initialTemplate);
-    const [errorsForm, setErrorsForm] = useState({});
-    const [serverResponse, setServerResponse] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
 
     const getCityList = useCallback(async() => {
         try {
@@ -43,7 +38,14 @@ const RegisterCity = () => {
         city: "",
         country: ""
       };
-
+    //   const {dispatch} = useContextGlobal();
+      const formRef = useRef(null);
+      const [formData, setFormData] = useState(initialTemplate);
+      const [errorsForm, setErrorsForm] = useState({});
+      const [serverResponse, setServerResponse] = useState(null);
+      const [isLoading, setIsLoading] = useState(false);
+      // const navigate = useNavigate()
+    
       const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         const fieldValue = type === "file" ? files : value;
@@ -89,7 +91,7 @@ const RegisterCity = () => {
                   className: "errorResponse",
                 });
                 setIsLoading(false);
-                throw new Error('Error al realizar la solicitud');
+                // throw new Error('Error al realizar la solicitud');
               }
             } else {
               setServerResponse({
@@ -120,6 +122,9 @@ const RegisterCity = () => {
         const newErrors = {};
         if (!formData.country)
           newErrors.country = 'El país es requerido';
+    
+        // if (formData.description.trim() === "")
+        //   newErrors.country = "La descripción de la categoria es requerida.";
     
         return {
           ok: Object.keys(newErrors).length === 0,
