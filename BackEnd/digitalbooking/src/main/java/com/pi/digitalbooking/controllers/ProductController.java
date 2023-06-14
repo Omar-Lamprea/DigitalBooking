@@ -339,6 +339,7 @@ public class ProductController {
         try {
             List<Product> products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
             response = ResponseEntity.ok(products);
+            if (products.isEmpty()) response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
