@@ -17,6 +17,7 @@ public class ProductImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    //
     
     private String url;
     @JsonIgnore
