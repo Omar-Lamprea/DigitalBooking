@@ -3,10 +3,12 @@ package com.pi.digitalbooking.models;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pi.digitalbooking.entities.BookingEntity;
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "products")
 public class Product {
 
@@ -48,6 +51,12 @@ public class Product {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @Column
+    private double latitude;
+
+    @Column
+    private double longitude;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
@@ -69,4 +78,7 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<BookingEntity> bookings;
 }

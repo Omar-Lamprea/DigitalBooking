@@ -4,8 +4,11 @@ import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -15,4 +18,22 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findByCodeProductAndStatus(Integer codeProduct, ProductStatus status);
     List<Product> findByCategoryCategoryId (int id);
     List<Product> findByCityAndStatus(City city, ProductStatus status);
+
+    String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) *" +
+            " cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
+
+    @Query("SELECT p FROM Product p WHERE p.city.name = :city AND " + HAVERSINE_FORMULA + " < :distance " +
+            "AND p.status = :status AND p NOT IN " +
+            "(SELECT b.product FROM BookingEntity b WHERE b.checkInDate <= :checkOutDate " +
+            "AND b.checkOutDate >= :checkInDate AND b.status = :status) ORDER BY "+ HAVERSINE_FORMULA + "DESC")
+    List<Product> findActiveProductsWithoutBookingAndWithInDistance(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("distance") double distanceWithInKM,
+            @Param("city") String cityName,
+            @Param("checkInDate") LocalDate checkInDate,
+            @Param("checkOutDate") LocalDate checkOutDate,
+            @Param("status") ProductStatus status);
+
+    Product getProductByCodeProductAndStatus(Integer code, ProductStatus status);
 }

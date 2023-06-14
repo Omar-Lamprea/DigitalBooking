@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Setter
 @Getter
@@ -28,6 +30,8 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole role;
+    @OneToMany(mappedBy = "user")
+    private List<BookingEntity> bookings;
 
 
     @Override
