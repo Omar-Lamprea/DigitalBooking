@@ -13,6 +13,7 @@ import CreateAccount from './pages/CreateAccount/CreateAccount'
 import { useContextGlobal } from './context/global.context'
 import { useEffect } from 'react'
 import UserList from './components/UsersList/UserList'
+import RegisterCity from './components/RegisterCity/RegisterCity'
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path='registrar' element={<RegisterProduct />} />
         <Route path='usuarios' element={<UserList />} />
         <Route path='categorias' element={<RegisterCategory />} />
+        <Route path='ciudades' element={<RegisterCity />} />
       </Route>
 
       <Route path='producto/:id' element={<Detalle />} />
