@@ -1,6 +1,7 @@
 package com.pi.digitalbooking.controllers;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.pi.digitalbooking.DTO.BookingCreateDto;
 import com.pi.digitalbooking.DTO.BookingDto;
 import com.pi.digitalbooking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,13 +43,13 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<BookingDto> createBooking(@RequestBody BookingDto bookingDto) {
+    public ResponseEntity<BookingDto> createBooking(@RequestBody BookingCreateDto bookingDto) {
         BookingDto createdBooking = bookingService.createBooking(bookingDto);
         return new ResponseEntity<>(createdBooking, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookingDto> updateBooking(@PathVariable Long id, @RequestBody BookingDto bookingDto) throws JsonMappingException {
+    public ResponseEntity<BookingDto> updateBooking(@PathVariable Long id, @RequestBody BookingCreateDto bookingDto) throws JsonMappingException {
         BookingDto updatedBooking = bookingService.updateBooking(id, bookingDto);
         if (updatedBooking != null) {
             return new ResponseEntity<>(updatedBooking, HttpStatus.OK);

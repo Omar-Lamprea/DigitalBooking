@@ -327,7 +327,7 @@ public class ProductController {
     @CrossOrigin
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<?> findByCityFiltered(@RequestParam("city") String cityName,
+    public ResponseEntity<?> findByCityWithoutBooking(@RequestParam("city") String cityName,
                                                 @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                 @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;

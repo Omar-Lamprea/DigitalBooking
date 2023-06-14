@@ -1,5 +1,6 @@
 package com.pi.digitalbooking.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.entities.AppUser;
 import com.pi.digitalbooking.models.Product;
@@ -14,9 +15,8 @@ import java.time.LocalDate;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BookingDto {
+    private String code;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String status;
-    private AppUser user;
-    private Product product;
 }

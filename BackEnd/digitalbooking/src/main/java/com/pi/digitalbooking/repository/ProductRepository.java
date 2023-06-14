@@ -28,4 +28,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             @Param("checkOutDate") LocalDate checkOutDate,
             @Param("status") ProductStatus status);
 
+    Product getProductByCodeProductAndStatus(Integer code, ProductStatus status);
 }
