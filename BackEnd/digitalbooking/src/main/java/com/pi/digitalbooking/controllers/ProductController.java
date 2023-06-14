@@ -331,13 +331,13 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam("lat") Double longitude,
                                                       @RequestParam("lon") Double latitude,
-                                                      @RequestParam("within") Integer within,
+                                                      @RequestParam(value = "within", required = false) Integer within,
                                                       @RequestParam("city") String cityName,
                                                       @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                       @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;
         try {
-            List<Product> products = productService.getByCityAndDates(longitude, latitude, within, cityName, checkInDate, checkOutDate);
+            List<Product> products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
             response = ResponseEntity.ok(products);
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
