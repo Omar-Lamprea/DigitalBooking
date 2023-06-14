@@ -3,9 +3,10 @@ import './SearchBar.scss'
 import DatePicker from "react-multi-date-picker"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-
+import LocationPermission from '../LocationPermission/LocationPermission'
 
 const SearchBar = () => {
+  const [locationPermissionRequested, setLocationPermissionRequested] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
   const [searchProduct, setSearchProduct] = useState({
     city: "",
@@ -20,13 +21,17 @@ const SearchBar = () => {
       searchButton.disabled = true;
       searchButton.style.cursor = 'progress';
       
-      setTimeout(() => {
-        const jsonBody = templateNormalized(searchProduct)
-        console.log(jsonBody);
-        searchButton.disabled = false;
-        searchButton.style.cursor = 'auto';
+      if(!locationPermissionRequested){
+        setLocationPermissionRequested(true);
+      } else{
+      
+        setTimeout(() => {
+          const jsonBody = templateNormalized(searchProduct);
+          console.log(jsonBody);
+          searchButton.disabled = false;
+          searchButton.style.cursor = 'auto';
       }, 1000);
-
+    }
     }
   }
 
@@ -86,6 +91,7 @@ const SearchBar = () => {
               onChange={dates => setSearchProduct({...searchProduct, date: dates})}
             />
           </div>
+          {locationPermissionRequested && <LocationPermission />}
           <button className='search-button' name="searchButton">Buscar</button>
         </form>
       </div>
