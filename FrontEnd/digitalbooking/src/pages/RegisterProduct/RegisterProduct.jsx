@@ -17,9 +17,11 @@ const RegisterProduct = () => {
   const [errorsForm, setErrorsForm] = useState({})
   const [serverResponse, setServerResponse] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [cities, setCities] =useState(false)
+  const [countries, setCountries] =useState(false)
 
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value, type, files, checked } = e.target;
     const fieldValue = type === 'file' ? files : value;
 
@@ -38,8 +40,14 @@ const RegisterProduct = () => {
       setFormData(updatedFormData);
 
     } else {
+      if(name === "country"){
+        if(value !== ""){
+          getCities(value)
+        }
+      }
       const updatedFormData = {...formData, [name]: fieldValue}
       setFormData(updatedFormData);
+      
     }
   
     if (typeof fieldValue === 'object') {
@@ -59,8 +67,15 @@ const RegisterProduct = () => {
     if(isValid.ok){
       setIsLoading(true)
       const formToSend = new FormData();
-      const homeRulesArray = formData.homeRules.split(",").map((rule) => rule.trim())
-      const healthPoliticArray = formData.healthPolitic.split(",").map((rule) => rule.trim())
+      const homeRulesArray = formData.homeRules.split(",")
+        .map((rule) => ({
+          homeRuleDescription: rule.trim()
+        }))
+      const healthPoliticArray = formData.healthPolitic.split(",")
+        .map((rule) => ({
+          healthAndSecurityRuleDescription: rule.trim()
+        }))
+      
       const jsonBody = {
         codeProduct: parseInt(formData.codeProduct),
         name: formData.productName,
@@ -68,20 +83,20 @@ const RegisterProduct = () => {
         score: parseInt(formData.score),
         price: parseFloat(formData.price),
         locationUrl: formData.location,
-        country: formData.country,
-        city: formData.city,
+        city: parseInt(formData.city),
         category: parseInt(formData.category),
         amenities: formData.amenities,
-        // politic: {
-        //   homeRules: homeRulesArray,
-        //   healthPolitic: healthPoliticArray,
-        //   cancelationPolitic: formData.cancelationPolitic
-        // }
+        politic: {
+          homeRules: homeRulesArray,
+          healthAndSecurityRules: healthPoliticArray,
+          cancelationPolitic: formData.cancelationPolitic
+        }
       }
       console.log(jsonBody, formData.productImage);
       Array.from(formData.productImage).forEach(file => 
         formToSend.append('images', file))
       formToSend.append('stringProduct',JSON.stringify(jsonBody))
+      // setIsLoading(false)
       try {
         const response = await fetch(state.URL_API.urlBase + state.URL_API.product, {
           method: 'POST',
@@ -156,11 +171,54 @@ const RegisterProduct = () => {
     }
   }
 
+  const getCities = async (value) =>{
+    try {
+      const response = await fetch(state.URL_API.urlBase + state.URL_API.cityByCountry + value,{
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${state.user.token}`
+        }
+      })
+      const data = await response.json()
+      if(response.ok){
+        setCities(data)
+      }else{
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  
+
   useEffect(()=>{
+    const getCountries = async () =>{
+      try {
+        const response = await fetch(state.URL_API.urlBase + state.URL_API.countriesAll,{
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${state.user.token}`
+          }
+        })
+        const data = await response.json()
+        if(response.ok){
+          setCountries(data)
+        }else{
+          console.log(data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if(state.categories){
       setCategory(state.categories)
     }
-  },[state.categories])
+    getCountries()
+  },[state])
 
   return (
     <form className="form-register-product my-5" onSubmit={hanbleSubmit} ref={formRef}>
@@ -212,12 +270,29 @@ const RegisterProduct = () => {
           <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="country">País</label>
-              <input type="text" name="country" id="country" onChange={handleChange}/>
+              <select name="country" id="country" onChange={handleChange}>
+                <option value=""></option>
+                {countries && 
+                  countries.map(country =>
+                    <option key={country.countryId} value={country.name}>{country.name}</option>
+                  )
+                }
+              </select>
               {errorsForm && <span>{errorsForm.country}</span>}
             </div>
             <div className="form-row">
               <label htmlFor="city">Ciudad</label>
-              <input type="text" name="city" id="city" onChange={handleChange}/>
+              <select name="city" id="city" onChange={handleChange}>
+                <option value=""></option>
+                {cities &&  
+                  cities.map(city => 
+                    <option 
+                      key={city.cityId} 
+                      value={city.cityId}>
+                        {city.name}
+                    </option>)
+                }
+              </select>
               {errorsForm && <span>{errorsForm.city}</span>}
             </div>
           </div>
@@ -323,7 +398,6 @@ const RegisterProduct = () => {
           </div>
         </div>
       </div>
-
 
       <div className="form-column mt-3">
         <div className="form-row-container">

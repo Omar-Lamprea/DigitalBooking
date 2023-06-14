@@ -52,7 +52,7 @@ const DDescription = ({lodging}) => {
     <section className="info-container">
       <div className="description_container">
         <div className="description-text">
-          <h3>{lodging.name} - {lodging.city}</h3>
+          <h3>{lodging.name} - {lodging.city?.name}</h3>
           <hr />
           <p 
             className="mt-3 mt-lg-0 text-start w-100"

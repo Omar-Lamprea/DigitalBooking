@@ -28,7 +28,7 @@ const SuggestionCard = ({suggestion}) => {
                     </div>
                     <div className="suggestion-card__title">
                         <h4>{suggestion.name}</h4>
-                        <span>{suggestion.city}</span>
+                        <span>{suggestion.city?.name}</span>
                     </div>
                 </div>
                 <div className="suggestion-card__location">

@@ -17,7 +17,7 @@ const EditProductsCard = ({data}) => {
           <span>{data.name}</span>
         </p>
         <p>Ubicación: <br />
-          <span>{data.city} / {data.country}</span>
+          <span>{data?.city?.name} / {data?.city?.country?.name}</span>
         </p>
         <p>Precio: <br />
           <span>${priceFormated}</span>
