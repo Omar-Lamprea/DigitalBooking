@@ -43,7 +43,6 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-
     @Operation(summary = "Add a new category", description = "Adds a new category by uploading an image file and providing category information.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Category added successfully."),
