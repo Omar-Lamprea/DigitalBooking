@@ -1,6 +1,8 @@
 package com.pi.digitalbooking.services;
 
 import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
+import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.CategoryRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
@@ -77,11 +79,14 @@ public class ProductService {
         return productToSave;
     }
 
-
     public List<Product> getByCategory(int id) {
         return productRepository.findByCategoryCategoryId(id).stream()
                 .filter(product -> product.getStatus()
                         .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
 
+    }
+
+    public List<Product> getByCity(City city){
+        return productRepository.findByCityAndStatus(city, ProductStatus.ACTIVE);
     }
 }

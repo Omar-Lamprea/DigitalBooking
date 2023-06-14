@@ -26,5 +26,6 @@ public class Politic {
     @OneToMany(mappedBy = "politic", cascade = CascadeType.ALL)
     private List<HealthAndSecurityRule> healthAndSecurityRules;
 
+    @Column(length = 1000)
     private String cancelationPolitic;
 }
