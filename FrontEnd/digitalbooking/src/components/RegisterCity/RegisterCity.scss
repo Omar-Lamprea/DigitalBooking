@@ -1,57 +1,72 @@
-.prueba{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.form-register-city{
+.admin-cities {
+  margin-top: 2rem;
+  .form-container{
+    max-width: 1115px;
+    margin: auto;
+  }
+  .form-register-city {
+    
     .errorResponse {
       color: red;
     }
-      color: var(--main-bg-color);
-      .form-register-row{
+    color: var(--main-bg-color);
+    .form-register-row {
+      @include media-query(medium){
+        justify-content: start;
+        max-width: 50%;
+      }
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      gap: 1rem;
+      .form-row {
         width: 100%;
         display: flex;
-        .form-row{
-          display: flex;
-          flex-direction: column;
-          margin: .5rem ;
-          input, select, textarea{
-            background-color: var(--white-color);
-            border: none;
-            border-radius: var(--standard-border);
-            padding: .10rem;
-            box-shadow: 0px 0px 4px 0px #b7b7b7;
-            height: 40px;
-          }
-          span{
-            color: red;
-          }
+        flex-direction: column;
+        // margin: 0.5rem;
+        input,
+        select,
+        textarea {
+          background-color: var(--white-color);
+          border: none;
+          border-radius: var(--standard-border);
+          padding: 0.1rem;
+          box-shadow: 0px 0px 4px 0px #b7b7b7;
+          height: 40px;
         }
-      }
-  
-      .responseForm{
-        p{
-          max-width: 500px;
-          margin: auto;
-          margin-top: 1rem;
-        }
-        p.errorResponse{
+        span {
           color: red;
         }
       }
     }
-  .buttons{
-      background-color: var(--main-bg-color);
-      border:var(--main-bg-color)
+  
+    .responseForm {
+      p {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 1rem;
+      }
+      p.errorResponse {
+        color: red;
+      }
+    }
   }
-  .container-button{
+
+  .buttons {
+    background-color: var(--main-bg-color);
+    border: var(--main-bg-color);
+  }
+
+  .container-button {
     display: flex;
     justify-content: center;
   }
-  .add-category{
+
+  .add-category {
     background-color: var(--main-bg-color);
     color: var(--white-color);
-    padding: .5rem;
+    padding: 0.5rem;
     width: 100%;
     border-radius: var(--standard-border);
     // @include media-query(large){
@@ -60,12 +75,8 @@
     // @include media-query(medium){
     //   width:20%;
     // }
-  
   }
-  .add-category:hover{
+  .add-category:hover {
     background-color: var(--main-bg-color-hover);
   }
-    
-  
-  
-  
+}

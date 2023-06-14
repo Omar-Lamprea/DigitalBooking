@@ -13,10 +13,10 @@ const RegisterCity = () => {
     const getCityList = useCallback(async() => {
         try {
             const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.citiesAll, {
-                headers: {
+              headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${state.user.token}`
-                }
+              }
             });
             const cities = await res.json();
             if (res.ok) { 
@@ -47,14 +47,13 @@ const RegisterCity = () => {
       // const navigate = useNavigate()
     
       const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        const fieldValue = type === "file" ? files : value;
+        const { name, value} = e.target;
+        const fieldValue =  value;
         let updatedFormData;
         updatedFormData = {
           ...formData,
           [name]: fieldValue,
         };
-    
         setFormData(updatedFormData);
         setErrorsForm({ ...errorsForm, [name]: "" });
       };
@@ -65,20 +64,21 @@ const RegisterCity = () => {
         if (isValid.ok) {
           setIsLoading(true)
           setServerResponse(null)
-          const jsonBody = {
-            name: formData.city,
-            country: formData.country,
-          }
-    
+          const jsonBody = JSON.stringify(
+            {
+              name: formData.city,
+              country: formData.country
+            }
+          )
           try {
-            const response = await fetch(state.URL_API.urlBase + "/city",{
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${state.user.token}`,
-                },
-                body: JSON.stringify(jsonBody),
-              }
-            )
+            const response = await fetch( state.URL_API.urlBase + '/city',{
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${state.user.token}`
+              },
+              body: jsonBody
+            })
             const data = await response.json();
             if (!response.ok) {
               console.log("Response: ", [response, data]);
@@ -98,6 +98,7 @@ const RegisterCity = () => {
                 text: "Se ha registrado el producto con éxito!",
                 className: "",
               })
+              getCityList()
               setFormData(initialTemplate);
               setErrorsForm({});
               setIsLoading(false);
@@ -156,59 +157,66 @@ const RegisterCity = () => {
       },[state])
 
   return (
-    <div>
-        <div className="prueba">
-            <div>
-            <form className="form-register-city" onSubmit={hanbleSubmit}
-            ref={formRef}>
-                <div className="form-register-row">
-                        <div className="form-row">
-                            <label htmlFor="country">País</label>
-                            <select name="country" id="country" onChange={handleChange}>
-                                <option value=""></option>
-                                {countries && 
-                                countries.map(country =>
-                                    <option key={country.countryId} value={country.name}>{country.name}</option>
-                                )
-                                }
-                            </select>
-                            {errorsForm && <span>{errorsForm.country}</span>}
-                        </div>
-                        <div className="form-row">
-                            <label htmlFor="city">Ciudad*</label>
-                            <input type="text" name="city" id="city" onChange={handleChange}/>
-                            {errorsForm && <span>{errorsForm.city}</span>}
-                        </div>
-                        <div className="container-button text-center">
-                            <div>
-                                {!isLoading ? (
-                                <button className="add-category">Guardar Ciudad</button>
-                                ) : (
-                                <Loader />
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                {serverResponse && (
-                <p className={serverResponse.className + " text-center mt-2"}>
-                    {serverResponse.text}
-                </p>
-                )}
+    <div className="admin-cities">
+      <div className="form-container">
+        <form
+          className="form-register-city"
+          onSubmit={hanbleSubmit}
+          ref={formRef}
+        >
+          <div className="form-register-row">
+            <div className="form-row">
+              <label htmlFor="country">País</label>
+              <select name="country" id="country" onChange={handleChange}>
+                <option value=""></option>
+                {countries &&
+                  countries.map((country) => (
+                    <option key={country.countryId} value={country.countryId}>
+                      {country.name}
+                    </option>
+                  ))}
+              </select>
+              {errorsForm && <span>{errorsForm.country}</span>}
             </div>
-            <div className="container-city my-5">
-
-                {cities ? (
-                    cities.map((city, i) => (
-                    <CityCards data={city} key={city.cityId + '-' + i} />
-                    ))
+            <div className="form-row">
+              <label htmlFor="city">Ciudad*</label>
+              <input
+                type="text"
+                name="city"
+                id="city"
+                onChange={handleChange}
+                required
+              />
+              {errorsForm && <span>{errorsForm.city}</span>}
+            </div>
+            <div className="container-button text-center">
+              <div>
+                {!isLoading ? (
+                  <button className="add-category">Guardar</button>
                 ) : (
-                    <p>No existen ciudades aún</p>
+                  <Loader />
                 )}
+              </div>
             </div>
-        </div>
+          </div>
+        </form>
+        {serverResponse && (
+          <p className={serverResponse.className + " text-center text-md-start mt-2 "}>
+            {serverResponse.text}
+          </p>
+        )}
+      </div>
+      <div className="container-city my-5">
+        {cities ? (
+          cities.map((city, i) => (
+            <CityCards data={city} key={city.cityId + "-" + i} />
+          ))
+        ) : (
+          <p>No existen ciudades aún</p>
+        )}
+      </div>
     </div>
-  )
+  );
 }
 
 export default RegisterCity
