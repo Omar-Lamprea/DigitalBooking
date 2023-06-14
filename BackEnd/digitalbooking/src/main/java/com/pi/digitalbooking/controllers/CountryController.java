@@ -6,7 +6,6 @@ import com.pi.digitalbooking.DTO.CountryDTO;
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 import com.pi.digitalbooking.models.Country;
-import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.services.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -48,18 +47,9 @@ public class CountryController {
     @CrossOrigin
     @PostMapping()
     public ResponseEntity<String> createCountry(@RequestBody(description = "Country information as JSON string", required = true)
-                                                    @org.springframework.web.bind.annotation.RequestBody String stringCountry) throws IOException, IOException {
+                                                    @org.springframework.web.bind.annotation.RequestBody CountryDTO countryDTO) throws IOException, IOException {
 
         Map<String, String> response = new HashMap<>();
-        CountryDTO countryDTO = new CountryDTO();
-
-        try {
-            countryDTO = getCountryDTO(stringCountry);
-        } catch (JsonProcessingException exception) {
-            response.put("Error Message", "Error al procesar el objeto JSON del pais");
-            response.put("HttpStatusCode", String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-            return getStringResponseEntity(response);
-        }
 
         if (validatePropertiesCountry(countryDTO)) {
             response.put("ErrorMessage", "El pais no debe tener propiedades vacías.");
@@ -79,12 +69,6 @@ public class CountryController {
         response.put("Message", "Pais guardado con éxito");
         response.put("HttpStatusCode", String.valueOf(HttpStatus.CREATED.value()));
         return getStringResponseEntity(response);
-    }
-
-    private CountryDTO getCountryDTO(String stringCountry) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        CountryDTO countryDTO = objectMapper.readValue(stringCountry, CountryDTO.class);
-        return countryDTO;
     }
 
     private ResponseEntity<String> getStringResponseEntity(Map response) {

@@ -37,8 +37,8 @@ import java.util.*;
 @RestController
 @CrossOrigin
 @MultipartConfig(
-        maxFileSize = 1024 * 1024 * 5, // 5MB
-        maxRequestSize = 1024 * 1024 * 10 // 10MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 250 // 250MB
 )
 @RequestMapping("/product")
 @Tag(name = "Product", description = "Everything about your Products")
