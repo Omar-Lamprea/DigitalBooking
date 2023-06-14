@@ -23,6 +23,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.annotation.MultipartConfig;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -320,13 +322,22 @@ public class ProductController {
     }
 
 
-    @Operation(summary = "Search all products by city filtered", description = "Retrieves a list of all products  by city filtered.")
+    @Operation(summary = "Search all products by city and dates", description = "Retrieves a list of all products by city and dates.")
     @ApiResponse(responseCode = "200", description = "List of products by city filtered", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Product.class))))
     @CrossOrigin
-    @GetMapping("/productByCityFilter/{city}")
+    @GetMapping()
     @ResponseBody
-    public List<Product> findByCityFiltered( @PathVariable("city") String city,@RequestParam("date") String date) {
-        return productService.getByCityFiltered(city,date);
+    public ResponseEntity<?> findByCityFiltered(@RequestParam("city") String cityName,
+                                                @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
+        ResponseEntity<?> response;
+        try {
+            List<Product> products = productService.getByCityAndDates(cityName, checkInDate, checkOutDate);
+            response = ResponseEntity.ok(products);
+        } catch (Exception e) {
+            response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+        return response;
     }
 
 
