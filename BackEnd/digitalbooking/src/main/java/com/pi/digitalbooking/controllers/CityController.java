@@ -4,10 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.CityDTO;
 import com.pi.digitalbooking.enums.CityStatus;
+import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
+import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.services.CityService;
 import com.pi.digitalbooking.services.CountryService;
+import com.pi.digitalbooking.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -36,6 +40,8 @@ public class CityController {
 
     @Autowired
     private CityService cityService;
+    @Autowired
+    private ProductService productService;
 
     @Autowired
     private CountryService countryService;
@@ -50,18 +56,9 @@ public class CityController {
     @CrossOrigin
     @PostMapping()
     public ResponseEntity<String> createCity(@RequestBody(description = "City information as JSON string", required = true)
-                                                 @org.springframework.web.bind.annotation.RequestBody String stringCity) throws IOException, IOException {
+                                             @org.springframework.web.bind.annotation.RequestBody CityDTO cityDTO) throws IOException, IOException {
 
         Map<String, String> response = new HashMap<>();
-        CityDTO cityDTO = new CityDTO();
-
-        try {
-            cityDTO = getCityDTO(stringCity);
-        } catch (JsonProcessingException exception) {
-            response.put("Error Message", "Error al procesar el objeto JSON de la ciudad");
-            response.put("HttpStatusCode", String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-            return getStringResponseEntity(response);
-        }
 
         if (validatePropertiesCity(cityDTO)) {
             response.put("ErrorMessage", "La ciudad no debe tener propiedades vacías.");
@@ -81,12 +78,6 @@ public class CityController {
         response.put("Message", "Ciudad guardada con éxito");
         response.put("HttpStatusCode", String.valueOf(HttpStatus.CREATED.value()));
         return getStringResponseEntity(response);
-    }
-
-    private CityDTO getCityDTO(String stringCity) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        CityDTO cityDTO = objectMapper.readValue(stringCity, CityDTO.class);
-        return cityDTO;
     }
 
     private ResponseEntity<String> getStringResponseEntity(Map response) {
@@ -145,5 +136,21 @@ public class CityController {
     @ResponseBody
     public List<City> SearchAll(@Parameter(description = "Country name to get its cities.", required = true) @RequestParam String nameCountry) {
         return cityService.SearchCitiesByCountry(nameCountry);
+    }
+
+    @Operation(summary = "Delete city by ID", description = "Deletes a city by its ID.")
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void Delete(@Parameter(description = "ID of the city to delete", required = true) @PathVariable("id") Integer id) {
+
+        City city = cityService.SearchById(id);
+
+        List<Product> productsByCity = productService.getByCity(city);
+
+        if (productsByCity.size() != 0) {
+            throw new ProductNotFoundException("La ciudad no puede ser eliminada porque tiene productos asociados.");
+        }
+
+        cityService.DeleteById(id);
     }
 }
