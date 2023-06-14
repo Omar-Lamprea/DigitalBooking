@@ -93,30 +93,7 @@ public class ProductService {
         return productRepository.findByCityAndStatus(city, ProductStatus.ACTIVE);
     }
 
-    public List<Product> getByCityFiltered(String city, String date) {
-
-        String fechaString = date;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaResult = LocalDate.parse(fechaString, formatter);
-
-        List<Booking> reservations = Booking.getReservations();
-        reservations.stream().map(reservation ->{
-            log.info("La feccha reserva  es " + reservation.getStartDate());
-            log.info("La fechaResult es " + fechaResult);
-            List reservationsList = new ArrayList();
-            while
-        }).collect(Collectors.toList());
-
-        List<Product> productList = new ArrayList<>();
-        if (!reservations.isEmpty()) {
-            log.info(" Ingresa al if para setear product por ciudad y reservations es " + reservations);
-            productList=  productRepository.findByCityStartingWith(city).stream()
-                    .filter(product -> product.getStatus()
-                            .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
-        }
-
-        return productList;
+    public List<Product> getByCityAndDates(String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBooking(cityName, checkInDate, checkOutDate, ProductStatus.ACTIVE);
     }
-
-
 }
