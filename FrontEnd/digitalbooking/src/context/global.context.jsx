@@ -9,7 +9,7 @@ const initialState = {
     data: JSON.parse(localStorage.getItem('user'))?.data || false,
     token: JSON.parse(localStorage.getItem('user'))?.token || false,
   }, 
-  categories: [], 
+  categories: [],
   users: [],
   titleProducts: "Alojamientos recomendados"
 }
@@ -22,6 +22,8 @@ const reducer = (state, action) => {
       return  {...state, APIdata: [...state.APIdata, ...action.payload]}
     case 'deleteLodging':
       return {...state, APIdata: state.APIdata.filter(lodging => lodging.productId !== action.payload)}
+    case 'deleteLodgings':
+      return {...state, APIdata: state.APIdata.filter(lodgings => lodgings.cityId !== action.payload)}
     case 'setUser':
       localStorage.setItem('user', JSON.stringify(action.payload))
       return {...state, user: action.payload}
@@ -59,10 +61,10 @@ const ContextProvider = ({ children }) => {
       });
       const data = await res.json()
       if (res.ok) {
-        dispatch({ type: 'APIdata', payload: data })
+        // dispatch({ type: 'APIdata', payload: data })
       } else {
         console.log('Error: ', data)
-        dispatch({ type: 'APIdata', payload: res })
+        // dispatch({ type: 'APIdata', payload: res })
       }
     } catch (error) {
       console.log('Context error:', error)
@@ -84,6 +86,7 @@ const ContextProvider = ({ children }) => {
       console.log('Error');
     }
   }, []);
+
 
 
   // Get all users
