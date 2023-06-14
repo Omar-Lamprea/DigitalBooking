@@ -31,9 +31,7 @@ public class ProductDTO {
 
     private Politic politic;
 
-    private String country;
-
-    private String city;
+    private Integer city;
 
     private Integer category;
 }

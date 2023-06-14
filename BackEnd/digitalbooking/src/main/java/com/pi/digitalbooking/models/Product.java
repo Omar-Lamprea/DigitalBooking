@@ -46,11 +46,9 @@ public class Product {
     @Column(length = 1000)
     private String locationUrl;
 
-    @Column
-    private String country;
-
-    @Column
-    private String city;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

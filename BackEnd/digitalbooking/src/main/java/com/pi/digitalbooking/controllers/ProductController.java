@@ -61,6 +61,9 @@ public class ProductController {
     @Autowired
     private HealthAndSecurityService healthAndSecurityService;
 
+    @Autowired
+    private CityService cityService;
+
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Product added successfully."),
@@ -158,8 +161,6 @@ public class ProductController {
                 || productDTO.getDescription() == null || productDTO.getDescription().isEmpty()
                 || productDTO.getPrice() == null
                 || productDTO.getScore() == null
-                || productDTO.getCountry() == null || productDTO.getCountry().isEmpty()
-                || productDTO.getCity() == null || productDTO.getCity().isEmpty()
                 || productDTO.getCategory() == null;
     }
 
@@ -195,8 +196,9 @@ public class ProductController {
         product.setScore(productDTO.getScore());
         product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());
-        product.setCity(productDTO.getCity());
-        product.setCountry(productDTO.getCountry());
+
+        City city = cityService.SearchById(productDTO.getCity());
+        product.setCity(city);
 
         Politic politicSaved = getPolitic(productDTO);
         product.setPolitic(politicSaved);
