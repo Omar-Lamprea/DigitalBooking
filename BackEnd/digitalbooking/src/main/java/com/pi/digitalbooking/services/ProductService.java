@@ -93,7 +93,7 @@ public class ProductService {
         return productRepository.findByCityAndStatus(city, ProductStatus.ACTIVE);
     }
 
-    public List<Product> getByCityAndDates(String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
-        return productRepository.findActiveProductsWithoutBooking(cityName, checkInDate, checkOutDate, ProductStatus.ACTIVE);
+    public List<Product> getByCityAndDates(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistance(lat, lng, distance, cityName, checkInDate, checkOutDate, ProductStatus.ACTIVE);
     }
 }

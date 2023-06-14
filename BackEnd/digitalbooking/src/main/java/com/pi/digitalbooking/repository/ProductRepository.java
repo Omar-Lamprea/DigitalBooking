@@ -19,10 +19,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByCategoryCategoryId (int id);
     List<Product> findByCityAndStatus(City city, ProductStatus status);
 
-    @Query("SELECT p FROM Product p WHERE p.city.name = :city AND p.status = :status AND p NOT IN " +
+    String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) *" +
+            " cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
+
+    @Query("SELECT p FROM Product p WHERE p.city.name = :city AND " + HAVERSINE_FORMULA + " < :distance " +
+            "AND p.status = :status AND p NOT IN " +
             "(SELECT b.product FROM BookingEntity b WHERE b.checkInDate <= :checkOutDate " +
-            "AND b.checkOutDate >= :checkInDate AND b.status = :status)")
-    List<Product> findActiveProductsWithoutBooking(
+            "AND b.checkOutDate >= :checkInDate AND b.status = :status) ORDER BY "+ HAVERSINE_FORMULA + "DESC")
+    List<Product> findActiveProductsWithoutBookingAndWithInDistance(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("distance") double distanceWithInKM,
             @Param("city") String cityName,
             @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate,

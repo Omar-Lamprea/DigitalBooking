@@ -327,18 +327,19 @@ public class ProductController {
     @CrossOrigin
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<?> findByCityWithoutBooking(@RequestParam("city") String cityName,
-                                                @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
+    public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam("lat") Double longitude,
+                                                      @RequestParam("lon") Double latitude,
+                                                      @RequestParam("within") Integer within,
+                                                      @RequestParam("city") String cityName,
+                                                      @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                      @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;
         try {
-            List<Product> products = productService.getByCityAndDates(cityName, checkInDate, checkOutDate);
+            List<Product> products = productService.getByCityAndDates(longitude, latitude, within, cityName, checkInDate, checkOutDate);
             response = ResponseEntity.ok(products);
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
         return response;
     }
-
-
 }
