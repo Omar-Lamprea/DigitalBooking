@@ -198,6 +198,8 @@ public class ProductController {
         product.setScore(productDTO.getScore());
         product.setPrice(productDTO.getPrice());
         product.setLocationUrl(productDTO.getLocationUrl());
+        product.setLatitude(productDTO.getLatitude());
+        product.setLongitude(productDTO.getLongitude());
 
         City city = cityService.SearchById(productDTO.getCity());
         product.setCity(city);
