@@ -54,7 +54,7 @@ SuggestionCard.propTypes = {
         images: PropTypes.array.isRequired,
         productId: PropTypes.number.isRequired,
         description: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
+        city: PropTypes.object.isRequired,
         name: PropTypes.string.isRequired,
         score: PropTypes.number.isRequired,
         category: PropTypes.object.isRequired,

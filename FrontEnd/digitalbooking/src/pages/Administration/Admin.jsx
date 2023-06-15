@@ -56,6 +56,14 @@ const Admin = () => {
             onClick={toggleActionAdmin}>
               Roles y Usuarios
           </Link>
+
+          <Link 
+            to="/admin/ciudades" 
+            className="btn-action-admin"
+            value="ciudades"
+            onClick={toggleActionAdmin}>
+              Gestionar Ciudades
+          </Link>
         </div>
       </div>
       <Outlet />

@@ -17,6 +17,7 @@ export const GLOBAL_API = {
   //cities
   citiesAll: "/city/all",
   cityByCountry: "/city/searchbycountry?nameCountry=",
+  city: "/city",
 
   //Countries
   countriesAll: "/country/all"

@@ -8,7 +8,7 @@ const UserList = () => {
     const {state} = useContextGlobal();
     const [users, setUsers] = useState([]);
 
-    const getUsersLIst = useCallback(async() => {
+    const getUsersList = useCallback(async() => {
         try {
             const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.users, {
                 headers: {
@@ -29,8 +29,8 @@ const UserList = () => {
     }, [state.user.token]);
     
     useEffect( () => {
-        getUsersLIst();
-    }, [getUsersLIst]);
+        getUsersList();
+    }, [getUsersList]);
 
     return (
         <div className="users-list__container">
