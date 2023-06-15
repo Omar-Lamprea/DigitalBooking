@@ -2,6 +2,7 @@ package com.pi.digitalbooking.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.models.Amenity;
+import com.pi.digitalbooking.models.Politic;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,8 @@ public class ProductDTO {
     private String locationUrl;
 
     private List<Amenity> amenities;
+
+    private Politic politic;
 
     private String country;
 

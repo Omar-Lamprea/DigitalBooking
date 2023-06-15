@@ -8,6 +8,7 @@ import DContainerImages from "../../components/Details/DCarousel/DContainerImage
 import DDescription from "../../components/Details/DDescription/DDescription";
 import DBookings from "../../components/Details/DBookings/DBookings";
 import DPolitic from "../../components/Details/DPolitic/DPolitic";
+import MapContainer from "../../components/ProductMap/ProductMap";
 
 const Detalle = () => {
   const {id} = useParams()
@@ -49,6 +50,15 @@ const Detalle = () => {
           }/>
 
           <DBookings />
+
+          <MapContainer data={
+            {
+              lat: lodging.latitude,
+              lng: lodging.longitude,
+              draggable: false
+            }
+            
+          } />
 
           <DPolitic politic={lodging.politic || {}}/>
 
