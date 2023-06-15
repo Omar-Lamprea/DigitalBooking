@@ -104,12 +104,12 @@ const CreateAccount = () => {
 
         }
       } catch (error) {
-        console.log('Error conectando al servidor');
+        console.log('Error conectando al servidor', error.message);
         console.log(error);
         setIsLoading(false)
         setResponseForm({
           ok: true,
-          text: "Error conectando al servidor",
+          text: "Usuario con el correo electrónico ya existe.",
           class: "alert alert-danger"
         })
       }

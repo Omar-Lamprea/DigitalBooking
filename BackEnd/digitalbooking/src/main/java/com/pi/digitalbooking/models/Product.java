@@ -1,6 +1,8 @@
 package com.pi.digitalbooking.models;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;
@@ -55,6 +57,11 @@ public class Product {
     @Column
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Amenity> amenities; // Lista de objetos para indicar las comodidades
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "politic_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Politic politic; // Lista de objetos para indicar las comodidades
 
     @Override
     public String toString() {

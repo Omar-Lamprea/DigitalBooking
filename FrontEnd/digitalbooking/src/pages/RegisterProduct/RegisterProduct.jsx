@@ -7,6 +7,7 @@ import Default from '../../assets/images/default.png'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { initialTemplate } from './initialForm';
+import MapContainer from '../../components/ProductMap/ProductMap';
 
 
 const RegisterProduct = () => {
@@ -62,7 +63,7 @@ const RegisterProduct = () => {
 
   const hanbleSubmit = async (e) =>{
     e.preventDefault()
-    const isValid = validateForm(formData)
+    const isValid = validateForm(formData);
 
     if(isValid.ok){
       setIsLoading(true)
@@ -76,6 +77,8 @@ const RegisterProduct = () => {
           healthAndSecurityRuleDescription: rule.trim()
         }))
       
+      const {lat, lng} = JSON.parse(localStorage.getItem('prod Location'));
+      
       const jsonBody = {
         codeProduct: parseInt(formData.codeProduct),
         name: formData.productName,
@@ -86,6 +89,8 @@ const RegisterProduct = () => {
         city: parseInt(formData.city),
         category: parseInt(formData.category),
         amenities: formData.amenities,
+        latitude: lat,
+        longitude: lng,
         politic: {
           homeRules: homeRulesArray,
           healthAndSecurityRules: healthPoliticArray,
@@ -404,7 +409,7 @@ const RegisterProduct = () => {
           <h2 className='fs-5'>Ubicación del alojamiento</h2>
           <div className="form-register-row">
             <div className="form-row">
-              Map
+              <MapContainer data={{draggable: true}} />
             </div>
           </div>
 
