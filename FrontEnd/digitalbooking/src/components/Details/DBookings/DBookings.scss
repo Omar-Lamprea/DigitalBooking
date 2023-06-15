@@ -1,6 +1,7 @@
 .bookings{
   background-color: #EBEBEE;
   padding: 1rem;
+  margin-bottom: 3rem;
   .calendar-container{
     @include media-query(large){
       max-width: 1115px;
