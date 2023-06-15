@@ -2,16 +2,15 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import { useContextGlobal } from '../../context/global.context';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
-const ModalDeleteCity = ({id, cityName}) => {
-  const {state, dispatch} = useContextGlobal()
+const ModalDeleteCity = ({id, cityName, deleteId}) => {
+  
+  const {state} = useContextGlobal()
   const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
-  const navigate = useNavigate()
 
   const handleClose = (e) => {
     if(e && e.target.innerHTML === 'Eliminar'){
@@ -26,12 +25,10 @@ const ModalDeleteCity = ({id, cityName}) => {
         if (!response.ok) {
           throw new Error('Error al realizar la petición DELETE');
         }
-        dispatch({type: "deleteLodgings", payload: parseInt(id)})
         setShow(false)
         setError(false)
-        location.pathname !== "/admin"
-          ? navigate('/')
-          : false
+        deleteId(id)
+
       })
       .catch(error => {
         console.error('Error:', error)
@@ -78,4 +75,6 @@ export default ModalDeleteCity
 ModalDeleteCity.propTypes = {
   id: PropTypes.number.isRequired,
   cityName: PropTypes.string.isRequired,
+  deleteId: PropTypes.func.isRequired
+  
 };

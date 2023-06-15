@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
-    @include media-query(large){
+    @include media-query(small){
       flex-direction: row;
       justify-content: space-between;
     }

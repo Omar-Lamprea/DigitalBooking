@@ -132,6 +132,11 @@ const RegisterCity = () => {
         };
       };
 
+      const deleteCity = (id) =>{
+        const deleteCity = cities.filter(city => city.cityId !== id)
+        setCities(deleteCity)
+      }
+
       useEffect(()=>{
         const getCountries = async () =>{
           try {
@@ -208,7 +213,7 @@ const RegisterCity = () => {
       <div className="container-city my-5">
         {cities ? (
           cities.map((city, i) => (
-            <CityCards data={city} key={city.cityId + "-" + i} />
+            <CityCards data={city} key={city.cityId + "-" + i} deleteId={deleteCity} />
           ))
         ) : (
           <p>No existen ciudades aún</p>
