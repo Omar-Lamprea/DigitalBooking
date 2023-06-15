@@ -15,6 +15,7 @@ const Map = (props) => {
         latLng.lng = event.latLng.lng();
         console.log(latLng);
         localStorage.setItem('prod Location', JSON.stringify(latLng));
+        alert('¡Has selecionado la ubicación del producto!');
     };
 
     return (
