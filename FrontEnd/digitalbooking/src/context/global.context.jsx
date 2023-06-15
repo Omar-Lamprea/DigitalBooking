@@ -62,7 +62,7 @@ const ContextProvider = ({ children }) => {
         dispatch({ type: 'APIdata', payload: data })
       } else {
         console.log('Error: ', data)
-        dispatch({ type: 'APIdata', payload: res })
+        dispatch({ type: 'APIdata', payload: [] })
       }
     } catch (error) {
       console.log('Context error:', error)
