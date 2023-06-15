@@ -12,7 +12,7 @@ const Suggestions = () => {
   },[state]);
 
   return (
-    <section className="suggestions__container">
+    <section className="suggestions__container" id='suggestions-container'>
       <div className="suggestions__wrapper container">
         <h3>{state.titleProducts}</h3>
         <div className="suggestions__content">
