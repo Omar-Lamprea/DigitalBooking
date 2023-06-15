@@ -9,7 +9,7 @@ const EditProductsCard = ({data}) => {
     <section className='product'>
       <div className="product-img">
         <Link to={"../../producto/" + data.productId}>
-          <img src={data?.images[0].url} alt="product image" />
+          <img src={data?.images[0]?.url} alt="product image" />
         </Link>
       </div>
       <div className="product-data">
