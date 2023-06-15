@@ -3,19 +3,40 @@ import './SearchBar.scss'
 import DatePicker from "react-multi-date-picker"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import LocationPermission from '../LocationPermission/LocationPermission'
+
 
 const SearchBar = () => {
   const [locationPermissionRequested, setLocationPermissionRequested] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
   const [searchProduct, setSearchProduct] = useState({
     city: "",
-    date: []
+    date: [],
+    latitude: "",
+    longitude: ""
   })
 
+  const requestLocationPermission = () => {      
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        //setLocationData({ latitude, longitude });
+        console.log(latitude,longitude)
+        setSearchProduct({
+          ...searchProduct,latitude:latitude,longitude:longitude
+        })
+        // data =  {latitude: latitude,
+        // longitude: longitude}     
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+ 
 
   const handleSubmit = (e) =>{
     e.preventDefault()
+    requestLocationPermission();
     if(validateForm()){
       const searchButton = e.target.elements.searchButton;
       searchButton.disabled = true;
@@ -91,7 +112,6 @@ const SearchBar = () => {
               onChange={dates => setSearchProduct({...searchProduct, date: dates})}
             />
           </div>
-          {locationPermissionRequested && <LocationPermission />}
           <button className='search-button' name="searchButton">Buscar</button>
         </form>
       </div>
