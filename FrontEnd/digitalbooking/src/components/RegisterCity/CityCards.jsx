@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types';
 import ModalDeleteCity from '../Modals/ModalDeleteCity';
 
-const CityCards = ({data}) => {
+const CityCards = (props) => {
   return (
     <section className='city'>
       <div className="city-data">
         <p>Pais: <br />
-          <span>{data.country.name}</span>
+          <span>{props.data.country.name}</span>
         </p>
         <p>Ciudad: <br />
-          <span>{data.name}</span>
+          <span>{props.data.name}</span>
         </p>
       </div>
       <div className="city-actions">
         <div className="delete">
-          <ModalDeleteCity id={data.cityId} cityName={data.name}/>
+          <ModalDeleteCity deleteId={props.deleteId} id={props.data.cityId} cityName={props.data.name}/>
         </div>
       </div>
     </section>
@@ -26,4 +26,5 @@ export default CityCards
 
 CityCards.propTypes = {
   data: PropTypes.object.isRequired,
+  deleteId: PropTypes.func.isRequired
 };
