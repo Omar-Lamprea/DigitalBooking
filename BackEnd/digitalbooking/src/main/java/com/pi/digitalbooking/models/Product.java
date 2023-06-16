@@ -3,10 +3,7 @@ package com.pi.digitalbooking.models;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-<<<<<<< HEAD
-=======
 import com.pi.digitalbooking.entities.BookingEntity;
->>>>>>> dev
 import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;

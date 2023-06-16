@@ -62,12 +62,8 @@ public class ProductController {
     private HomeRuleService homeRuleService;
     @Autowired
     private HealthAndSecurityService healthAndSecurityService;
-<<<<<<< HEAD
-=======
-
     @Autowired
     private CityService cityService;
->>>>>>> dev
 
     @Operation(summary = "Add a new product", description = "Adds a new product by uploading an image file and providing product information.")
     @ApiResponses(value = {
@@ -206,9 +202,6 @@ public class ProductController {
 
         City city = cityService.SearchById(productDTO.getCity());
         product.setCity(city);
-
-        Politic politicSaved = getPolitic(productDTO);
-        product.setPolitic(politicSaved);
 
         Politic politicSaved = getPolitic(productDTO);
         product.setPolitic(politicSaved);
