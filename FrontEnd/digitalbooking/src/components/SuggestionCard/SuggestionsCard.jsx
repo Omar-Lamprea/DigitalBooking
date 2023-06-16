@@ -28,7 +28,7 @@ const SuggestionCard = ({suggestion}) => {
                     </div>
                     <div className="suggestion-card__title">
                         <h4>{suggestion.name}</h4>
-                        <span>{suggestion.city}</span>
+                        <span>{suggestion.city?.name}</span>
                     </div>
                 </div>
                 <div className="suggestion-card__location">
@@ -54,7 +54,7 @@ SuggestionCard.propTypes = {
         images: PropTypes.array.isRequired,
         productId: PropTypes.number.isRequired,
         description: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
+        city: PropTypes.object.isRequired,
         name: PropTypes.string.isRequired,
         score: PropTypes.number.isRequired,
         category: PropTypes.object.isRequired,

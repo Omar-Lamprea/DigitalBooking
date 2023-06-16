@@ -62,7 +62,6 @@ public class ProductController {
     private HomeRuleService homeRuleService;
     @Autowired
     private HealthAndSecurityService healthAndSecurityService;
-
     @Autowired
     private CityService cityService;
 

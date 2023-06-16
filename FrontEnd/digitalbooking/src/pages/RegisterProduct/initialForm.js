@@ -34,5 +34,8 @@ export const initialTemplate = {
       name: "parkingLot",
       available: false
     }
-  ]
+  ],
+  homeRules: "",
+  healthPolitic: "",
+  cancelationPolitic: ""
 }

@@ -1,0 +1,56 @@
+.politic{
+  padding: 1rem;
+  max-width: 1115px;
+  margin: auto;
+  @include media-query(large){
+    padding: 2rem 0;
+  }
+  &_container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    @include media-query(small){
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  &_title{
+    border-bottom: 1px solid var(--main-bg-color);
+    padding-bottom: .5rem;
+  }
+  &_acticle{
+    padding: 0.5rem;
+    @include media-query(large){
+      min-width: 300px;
+    }
+    h4{
+      color: var(--main-bg-color);
+      font-size: 20px;
+    }
+    &_list{
+      list-style: none;
+      padding: 0;
+      li{
+        margin: 1rem 0;
+        display: flex;
+        gap: .5rem;
+      }
+    }
+    &_list li:before{
+      display: block;
+      content: "\2691";
+      color: var(--second-bg-color);
+    }
+    &_list.cancelationPolitic{
+      list-style: none;
+      padding: 0;
+      li{
+        gap: 0;
+      }
+    }
+    &_list.cancelationPolitic li:before{
+      content: "";
+    }
+
+  }
+}

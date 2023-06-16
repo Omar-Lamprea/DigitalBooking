@@ -1,50 +1,65 @@
 .bookings{
   background-color: #EBEBEE;
   padding: 1rem;
-  // @include media-query(large){
-  //   max-width: 1115px;
-  //   margin: auto;
-  // }
+  margin-bottom: 3rem;
   .calendar-container{
-    margin-top: 1rem;
-    .mobile-calendar {
-      // width: 100%;
+    @include media-query(large){
+      max-width: 1115px;
       margin: auto;
-      .rmdp-day.rmdp-today span{
-        background-color: var( --second-bg-color);
+    }
+    .bookings_title{
+      display: flex;
+      align-self: start;
+      margin-bottom: 1rem;
+    }
+    .calendar_filtered{
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 1rem;
+      @include media-query(large){
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .mobile-calendar {
+        // width: 100%;
+        // margin: auto;
+        .rmdp-day.rmdp-today span{
+          background-color: var( --second-bg-color);
+        }
+      }
+      .bookings-action{
+        background: white;
+        border: 1px solid #cfd8e2;
+        margin: 1rem 0;
+        padding: 2rem;
+        border-radius: 5px;
+        text-align: center;
+        @include media-query(small){
+          min-width: 570px;
+        }
+        @include media-query(large){
+          min-width: auto;
+        }
+        button{
+          margin-top: .5rem;
+          width: 100%;
+        }
       }
     }
   }
 }
 
-.rmdp-range:has(.reserved) {
-  background-color: #8fb4f9;
-}
-
 .rmdp-range:has(.in-service) {
-  background-color: #cc0303;
+  background-color: inherit;
+  border: none;
+  box-shadow: inherit;
+  color: #c8c8c8;
+  span{
+    text-decoration: line-through;;
+  }
 }
 
-div.reserved {
-  background-color: #8fb4f9;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-}
 
-div.in-service {
-  background-color: #cc0303;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-}
-
-.un-availble {
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-}
-
-.un-availble p {
-  margin: 0;
-}

@@ -12,13 +12,17 @@ const Suggestions = () => {
   },[state]);
 
   return (
-    <section className="suggestions__container">
+    <section className="suggestions__container" id='suggestions-container'>
       <div className="suggestions__wrapper container">
         <h3>{state.titleProducts}</h3>
         <div className="suggestions__content">
-          {data && data.map((suggestion, index) => (
-            <SuggestionCard key={index} suggestion={suggestion} />
-          ))}
+          {data && data.length > 0
+            ? data.map((suggestion, index) => (
+              <SuggestionCard key={index} suggestion={suggestion} />
+            ))
+            : <p>Ops, no hemos encontrado resultados 🥲</p>
+          }
+          
         </div>
       </div>
     </section>

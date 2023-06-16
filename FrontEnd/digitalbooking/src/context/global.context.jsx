@@ -11,6 +11,7 @@ const initialState = {
   }, 
   categories: [], 
   users: [],
+  userToUpdate: {},
   titleProducts: "Alojamientos recomendados"
 }
 
@@ -38,6 +39,8 @@ const reducer = (state, action) => {
       return {...state, users: [...state.users, ...action.payload]}
     case 'titleProducts':
       return {...state, titleProducts: action.payload}
+    case 'userToUpdate':
+      return {...state, userToUpdate: action.payload}
       
     default:
         throw new Error('action type error')
@@ -62,7 +65,7 @@ const ContextProvider = ({ children }) => {
         dispatch({ type: 'APIdata', payload: data })
       } else {
         console.log('Error: ', data)
-        dispatch({ type: 'APIdata', payload: res })
+        dispatch({ type: 'APIdata', payload: [] })
       }
     } catch (error) {
       console.log('Context error:', error)
@@ -84,20 +87,6 @@ const ContextProvider = ({ children }) => {
       console.log('Error');
     }
   }, []);
-
-
-  // Get all users
-  // const getUsersList = useCallback(async () => {
-  //   const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.users, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${state.user.token}`
-  //     }
-  //   });
-  //   const users = await res.json();
-  //   if (res.ok) console.log('users', users);
-  // }, []);
-
 
   useEffect(() =>{
     getList();

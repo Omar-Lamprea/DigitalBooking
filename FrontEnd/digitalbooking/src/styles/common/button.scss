@@ -6,4 +6,10 @@
         background-color: var(--main-bg-color);
         color: var(--white-color);
     }
+
+    &__with-border {
+        border: 2px solid var(--blue-color);
+        background-color: var(--white-color);
+        color: var(--blue-color);
+    }
 }

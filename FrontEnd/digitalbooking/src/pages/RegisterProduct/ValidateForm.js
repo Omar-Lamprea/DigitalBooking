@@ -12,18 +12,18 @@ export const validateForm = (formData) => {
   
   if (formData.score.trim() === '') {
     newErrors.score = 'La calificación es requerida';
-  } else if (isNaN(formData.score) || formData.score < 0 || formData.score > 10) {
-    newErrors.score = 'La calificación debe ser un número entre 0 y 10';
+  } else if (isNaN(formData.score) || formData.score < 0 || formData.score > 5) {
+    newErrors.score = 'La calificación debe ser un número entre 0 y 5';
   }
 
   const price = parseFloat(formData.price);
   if (isNaN(price) || price <= 0) 
     newErrors.price = 'El precio debe ser un número mayor a 0';
 
-  if (!formData.country.trim())
+  if (!formData.country)
     newErrors.country = 'El país es requerido';
 
-  if (!formData.city.trim())
+  if (!formData.city)
     newErrors.city = 'La ciudad es requerida';
 
   if (!isValidUrl(formData.location))
@@ -34,6 +34,15 @@ export const validateForm = (formData) => {
 
   if (formData.productImage === null)
     newErrors.productImage = 'Debes agregar una foto del producto a registrar';
+
+  if(!formData.homeRules.trim())
+    newErrors.homeRules = 'Agrega como mínimo una norma de la casa'
+  
+  if(!formData.healthPolitic.trim())
+    newErrors.healthPolitic = 'Agrega como mínimo una política de salud y seguridad'
+
+  if(!formData.cancelationPolitic.trim())
+    newErrors.cancelationPolitic = 'La política de cancelación es requerida'
 
   return {
     ok: Object.keys(newErrors).length === 0,

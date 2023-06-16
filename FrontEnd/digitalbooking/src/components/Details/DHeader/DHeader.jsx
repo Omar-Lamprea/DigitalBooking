@@ -34,7 +34,7 @@ const DHeader = ({data}) => {
         <div className="col-header">
           <div className="location">
             <FontAwesomeIcon icon={faLocationDot} />
-            <span>{data.city}</span>
+            <span>{data.city?.name} / {data.city?.country?.name}</span>
           </div>
           <div className="score">
             <div className="stars">
