@@ -6,6 +6,7 @@ import com.pi.digitalbooking.security.AppUserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -21,7 +22,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody AppUserCreateDto user) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody AppUserCreateDto user) {
+        if(user.getRole() == null) return ResponseEntity.badRequest().body("El rol (role) es requerido.");
         AppUserDto newUser = null;
         try {
             newUser = appUserService.createUser(user);

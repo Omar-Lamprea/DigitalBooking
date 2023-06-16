@@ -1,10 +1,9 @@
 package com.pi.digitalbooking.models;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pi.digitalbooking.enums.CategoryStatus;
+
+import com.pi.digitalbooking.enums.CityStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,25 +13,22 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
-@Table(name = "categories")
-public class Category {
+@Table(name = "cities")
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer categoryId;
+    private Integer cityId;
 
     @Column(length = 250)
     private String name;
 
-    @Column(length = 5000)
-    private String description;
-
-    @Column(length = 500)
-    private String imageUrl;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id")
+    private Country country;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @JsonIgnore
-    private CategoryStatus status;
+    private CityStatus status;
 }

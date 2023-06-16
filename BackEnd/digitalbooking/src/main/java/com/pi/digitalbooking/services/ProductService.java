@@ -1,14 +1,19 @@
 package com.pi.digitalbooking.services;
 
 import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
+import com.pi.digitalbooking.models.City;
+import com.pi.digitalbooking.models.Booking;
 import com.pi.digitalbooking.models.Product;
-import com.pi.digitalbooking.repository.CategoryRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,15 +25,15 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> SearchAll() {
+    public List<Product> searchAll() {
         return productRepository.findAll();
     }
 
-    public List<Product> SearchAllByStatus() {
+    public List<Product> searchAllByStatus() {
         return productRepository.findAllByStatus(ProductStatus.ACTIVE);
     }
 
-    public Product SearchById(Integer id) {
+    public Product searchById(Integer id) {
 
         Optional<Product> product = productRepository.findById(id);
 
@@ -49,7 +54,7 @@ public class ProductService {
         return existingProduct != null;
     }
 
-    public void DeleteById(Integer productId) {
+    public void deleteById(Integer productId) {
 
         Product product = productRepository.findById(productId).orElse(null);
         if (product != null) {
@@ -58,7 +63,7 @@ public class ProductService {
         }
     }
 
-    public Product UpdateProduct(Product product) {
+    public Product updateProduct(Product product) {
 
         Optional<Product> product1 = productRepository.findById(product.getProductId());
 
@@ -70,18 +75,25 @@ public class ProductService {
         }
     }
 
-    public Product SaveProduct(Product product) {
+    public Product saveProduct(Product product) {
 
         Product productToSave = productRepository.save(product);
         log.info("Producto " + productToSave.toString() + " guardado con exito.");
         return productToSave;
     }
 
-
     public List<Product> getByCategory(int id) {
         return productRepository.findByCategoryCategoryId(id).stream()
                 .filter(product -> product.getStatus()
                         .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
 
+    }
+
+    public List<Product> getByCity(City city){
+        return productRepository.findByCityAndStatus(city, ProductStatus.ACTIVE);
+    }
+
+    public List<Product> getByCityAndDates(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistance(lat, lng, distance, cityName, checkInDate, checkOutDate, ProductStatus.ACTIVE);
     }
 }

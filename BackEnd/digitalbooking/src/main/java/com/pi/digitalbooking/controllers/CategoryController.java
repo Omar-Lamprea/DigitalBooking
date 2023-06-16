@@ -33,8 +33,8 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @MultipartConfig(
-        maxFileSize = 1024 * 1024 * 5, // 5MB
-        maxRequestSize = 1024 * 1024 * 10 // 10MB
+        maxFileSize = 1024 * 1024 * 50, // 50MB
+        maxRequestSize = 1024 * 1024 * 250 // 250MB
 )
 @RequestMapping("/category")
 @Tag(name = "Category", description = "Everything about your Categories")
@@ -42,7 +42,6 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
-
 
     @Operation(summary = "Add a new category", description = "Adds a new category by uploading an image file and providing category information.")
     @ApiResponses(value = {

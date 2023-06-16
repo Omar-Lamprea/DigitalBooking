@@ -30,10 +30,17 @@ public class ProductDTO {
     private List<Amenity> amenities;
 
     private Politic politic;
+<<<<<<< HEAD
 
     private String country;
+=======
+>>>>>>> dev
 
-    private String city;
+    private Integer city;
+
+    private double latitude;
+
+    private double longitude;
 
     private Integer category;
 }
