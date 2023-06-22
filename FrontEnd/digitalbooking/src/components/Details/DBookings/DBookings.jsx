@@ -55,8 +55,15 @@ const DBookings = () => {
             mapDays={({ date }) => {
               let className;
               const strDate = date.format();
+              const currentDate = new Date();
+
               if (isInService(strDate)) className = "in-service";
-              if (className) return { className };
+              if (className) return { className }
+              if (date < currentDate) 
+              return {
+                disabled: true,
+                style: { color: "#ccc" },
+              }
             }}
             readOnly
           />

@@ -179,12 +179,24 @@ const SearchBar = () => {
               <FontAwesomeIcon icon={faCalendarDays} />
             </label>
             {/* <input value={searchProduct.date} type="date" name="date" id="date" onChange={handleOnChange}/> */}
-            <DatePicker 
+            <DatePicker
               required
               name='date'
               range 
               dateSeparator=" - "
+              placeholder='Busca por fecha'
               numberOfMonths={isSmallScreen ? 1 : 2}
+              
+              mapDays={({ date }) => {
+                const currentDate = new Date();
+                
+                if (date < currentDate) 
+                return {
+                  disabled: true,
+                  style: { color: "#ccc" },
+                }
+              }}
+
               onChange={dates => setSearchProduct({...searchProduct, date: dates})}
             />
           </div>
