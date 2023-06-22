@@ -8,6 +8,7 @@ const Home = () => {
       <SearchBar />
       <Categories />
       <Suggestions />
+      hola
     </>
   )
 }
