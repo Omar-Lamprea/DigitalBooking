@@ -4,9 +4,10 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.entities.BookingEntity;
-import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.entities.ProductImageEntity;
 import javax.validation.constraints.NotNull;
+
+import com.pi.digitalbooking.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -59,7 +60,7 @@ public class Product {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ProductStatus status;
+    private Status status;
 
     @Column
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

@@ -2,7 +2,7 @@ package com.pi.digitalbooking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.pi.digitalbooking.enums.CityStatus;
+import com.pi.digitalbooking.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,5 +30,5 @@ public class City {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @JsonIgnore
-    private CityStatus status;
+    private Status status;
 }

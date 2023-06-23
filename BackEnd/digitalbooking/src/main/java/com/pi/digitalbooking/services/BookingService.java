@@ -6,13 +6,11 @@ import com.pi.digitalbooking.DTO.BookingCreateDto;
 import com.pi.digitalbooking.DTO.BookingDto;
 import com.pi.digitalbooking.entities.AppUser;
 import com.pi.digitalbooking.entities.BookingEntity;
-import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.BookingRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
 import com.pi.digitalbooking.repository.UserRepository;
-import com.pi.digitalbooking.security.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +48,7 @@ public class BookingService {
 
     public BookingDto createBooking(BookingCreateDto bookingDto) {
         BookingEntity booking = convertToEntity(bookingDto);
-        Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), ProductStatus.ACTIVE);
+        Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
         booking.setProduct(product);
         AppUser user = userRepository.findByEmail(bookingDto.getUser().getEmail());
         booking.setUser(user);
