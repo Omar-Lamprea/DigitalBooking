@@ -30,6 +30,8 @@ const reducer = (state, action) => {
       return  {...state, categories: [...state.categories, ...action.payload]}
     case 'setCategories':
       return {...state, categories: []}
+    case 'deleteCategory':
+      return {...state, categories: state.categories.filter(category => category.categoryId !== action.payload)}
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}

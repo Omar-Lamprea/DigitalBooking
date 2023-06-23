@@ -15,6 +15,7 @@ import { useEffect } from 'react'
 import UserList from './components/UsersList/UserList'
 import RegisterCity from './components/RegisterCity/RegisterCity'
 import Bookings from './pages/Bookings/Bookings'
+import SuccessBooking from './pages/Bookings/SuccessBooking'
 
 
 function App() {
@@ -38,23 +39,21 @@ function App() {
       <Route path='admin' element={
         <Guard condition={state.user?.data?.role === "ROLE_ADMIN"} redirect='/'>
           <Admin />
-        </Guard>
-      }>
-        <Route index element={<EditProducts />} />
-        <Route path='registrar' element={<RegisterProduct />} />
-        <Route path='usuarios' element={<UserList />} />
-        <Route path='categorias' element={<RegisterCategory />} />
-        <Route path='ciudades' element={<RegisterCity />} />
+        </Guard>}>
+          <Route index element={<EditProducts />} />
+          <Route path='registrar' element={<RegisterProduct />} />
+          <Route path='usuarios' element={<UserList />} />
+          <Route path='categorias' element={<RegisterCategory />} />
+          <Route path='ciudades' element={<RegisterCity />} />
       </Route>
 
       <Route path='producto/:id' element={<Detalle />} />
-
+      <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
       <Route path='producto/:id/reservas' element={
         <Guard condition={state.user?.data} redirect='/login'>
           <Bookings />
          </Guard>
-      } />
-
+      }/>
 
       <Route path='create-account' element={<CreateAccount />} />
       <Route path='login' element={<Login />} />
