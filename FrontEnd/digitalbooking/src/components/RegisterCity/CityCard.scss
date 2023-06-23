@@ -50,6 +50,10 @@
           span{
             font-weight: 500;
           }
+          input{
+            border: 1px solid rgb(115, 115, 115);
+            margin-top: .5rem;
+          }
         }
       }
       
@@ -61,6 +65,11 @@
         svg{
           font-size: 1.5rem;
           cursor: pointer;
+        }
+        .update{
+          svg{
+            color: var(--second-bg-color);
+          }
         }
         .delete {
           button{

@@ -4,6 +4,7 @@ import 'react-multi-date-picker/styles/layouts/mobile.css';
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css"
 import { useEffect, useState } from 'react';
 import { useContextGlobal } from '../../../context/global.context';
+import { Link } from 'react-router-dom';
 
 
 const DBookings = () => {
@@ -55,8 +56,15 @@ const DBookings = () => {
             mapDays={({ date }) => {
               let className;
               const strDate = date.format();
+              const currentDate = new Date();
+
               if (isInService(strDate)) className = "in-service";
-              if (className) return { className };
+              if (className) return { className }
+              if (date < currentDate) 
+              return {
+                disabled: true,
+                style: { color: "#ccc" },
+              }
             }}
             readOnly
           />
@@ -64,7 +72,9 @@ const DBookings = () => {
           {state?.user?.data && 
             <div className='bookings-action'>
               <p>¡Reserva tus fechas hospedaje para obtener los mejores precios!</p>
-              <button>¡Reserva ahora! </button>
+              <Link to={'./reservas'}>
+                <button>¡Reserva ahora! </button>
+              </Link>
             </div>
           }
         </div>

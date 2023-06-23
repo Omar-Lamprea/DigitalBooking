@@ -20,8 +20,12 @@
   }
   &_acticle{
     padding: 0.5rem;
+    @include media-query(small){
+      max-width: 420px;
+    }
     @include media-query(large){
       min-width: 300px;
+      max-width: inherit;
     }
     h4{
       color: var(--main-bg-color);
