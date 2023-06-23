@@ -1,6 +1,6 @@
 package com.pi.digitalbooking.services;
 
-import com.pi.digitalbooking.enums.CategoryStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.Category;
 import com.pi.digitalbooking.repository.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(categoryId).orElse(null);
 
         if (category != null) {
-            category.setStatus(CategoryStatus.DELETED);
+            category.setStatus(Status.DELETED);
             categoryRepository.save(category);
         }
     }
@@ -50,12 +50,12 @@ public class CategoryService {
     }
 
     public boolean isCategoryDuplicatedByName(String categoryName) {
-        Category existingCategory = categoryRepository.findByNameAndStatus(categoryName, CategoryStatus.ACTIVE);
+        Category existingCategory = categoryRepository.findByNameAndStatus(categoryName, Status.ACTIVE);
         return existingCategory != null;
     }
 
     public List<Category> SearchAllByStatus() {
-        return categoryRepository.findAllByStatus(CategoryStatus.ACTIVE);
+        return categoryRepository.findAllByStatus(Status.ACTIVE);
     }
 
 

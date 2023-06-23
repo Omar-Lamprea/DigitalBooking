@@ -3,8 +3,7 @@ package com.pi.digitalbooking.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.CityDTO;
-import com.pi.digitalbooking.enums.CityStatus;
-import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
@@ -28,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,7 +116,7 @@ public class CityController {
 
         Country country = countryService.SearchById(cityDTO.getCountry());
         city.setCountry(country);
-        city.setStatus(CityStatus.ACTIVE);
+        city.setStatus(Status.ACTIVE);
 
         return city;
     }
@@ -134,7 +135,7 @@ public class CityController {
     @CrossOrigin
     @GetMapping("/searchbycountry")
     @ResponseBody
-    public List<City> SearchAll(@Parameter(description = "Country name to get its cities.", required = true) @RequestParam String nameCountry) {
+    public List<City> SearchByCountry(@Parameter(description = "Country name to get its cities.", required = true) @RequestParam String nameCountry) {
         return cityService.SearchCitiesByCountry(nameCountry);
     }
 
@@ -152,5 +153,22 @@ public class CityController {
         }
 
         cityService.DeleteById(id);
+    }
+
+    @Operation(summary = "Update city by ID", description = "Updates a city by its ID.")
+    @CrossOrigin
+    @PutMapping()
+    public ResponseEntity<?> updateCity(@RequestParam Integer idCity, @RequestParam String nameToUpdate) {
+
+        try {
+            cityService.updateCity(idCity, nameToUpdate);
+        } catch (Exception e) {
+            switch (e.getMessage()) {
+                case "CITY_NOT_FOUND" -> {
+                    return ResponseEntity.badRequest().body("City was not found.");
+                }
+            }
+        }
+        return ResponseEntity.ok("City updated to " + nameToUpdate);
     }
 }

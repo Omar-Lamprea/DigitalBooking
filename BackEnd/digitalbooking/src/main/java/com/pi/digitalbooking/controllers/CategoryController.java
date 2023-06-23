@@ -4,10 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.CategoryDTO;
 import com.pi.digitalbooking.configurations.AWSService;
-import com.pi.digitalbooking.enums.CategoryStatus;
+import com.pi.digitalbooking.enums.Status;
+import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 import com.pi.digitalbooking.models.Category;
+import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.services.CategoryService;
+import com.pi.digitalbooking.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +46,8 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
 
     @Operation(summary = "Add a new category", description = "Adds a new category by uploading an image file and providing category information.")
     @ApiResponses(value = {
@@ -140,7 +146,7 @@ public class CategoryController {
         category.setName(categoryDTO.getName());
         category.setDescription(categoryDTO.getDescription());
         category.setImageUrl(imageURL);
-        category.setStatus(CategoryStatus.ACTIVE);
+        category.setStatus(Status.ACTIVE);
 
         return category;
     }
@@ -154,4 +160,16 @@ public class CategoryController {
         return categoryService.SearchAllByStatus();
     }
 
+    @Operation(summary = "Delete category by ID", description = "Deletes a category by its ID.")
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void Delete(@Parameter(description = "ID of the category to delete", required = true) @PathVariable("id") Integer id) {
+
+        List<Product> productsByCategory = productService.getByCategory(id);
+
+        if (productsByCategory.size() != 0) {
+            throw new ProductNotFoundException("La categoria no puede ser eliminada porque tiene productos asociados.");
+        }
+        categoryService.DeleteById(id);
+    }
 }

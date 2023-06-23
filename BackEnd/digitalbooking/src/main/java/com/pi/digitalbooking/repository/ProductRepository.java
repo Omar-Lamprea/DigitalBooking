@@ -1,6 +1,6 @@
 package com.pi.digitalbooking.repository;
 
-import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,11 +13,11 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
-    Product findByNameAndStatus(String name, ProductStatus status);
-    List<Product> findAllByStatus(ProductStatus status);
-    Product findByCodeProductAndStatus(Integer codeProduct, ProductStatus status);
+    Product findByNameAndStatus(String name, Status status);
+    List<Product> findAllByStatus(Status status);
+    Product findByCodeProductAndStatus(Integer codeProduct, Status status);
     List<Product> findByCategoryCategoryId (int id);
-    List<Product> findByCityAndStatus(City city, ProductStatus status);
+    List<Product> findByCityAndStatus(City city, Status status);
 
     String HAVERSINE_FORMULA = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) *" +
             " cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             @Param("city") String cityName,
             @Param("checkInDate") LocalDate checkInDate,
             @Param("checkOutDate") LocalDate checkOutDate,
-            @Param("status") ProductStatus status);
+            @Param("status") Status status);
 
-    Product getProductByCodeProductAndStatus(Integer code, ProductStatus status);
+    Product getProductByCodeProductAndStatus(Integer code, Status status);
 }

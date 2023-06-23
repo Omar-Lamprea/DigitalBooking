@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.configurations.AWSService;
-import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 
 import com.pi.digitalbooking.models.*;
@@ -209,7 +209,7 @@ public class ProductController {
         Category category = categoryService.SearchById(productDTO.getCategory());
 
         product.setCategory(category);
-        product.setStatus(ProductStatus.ACTIVE);
+        product.setStatus(Status.ACTIVE);
         return product;
     }
 
@@ -286,7 +286,7 @@ public class ProductController {
 
         Product productToGet = productService.searchById(id);
 
-        if (productToGet == null || productToGet.getStatus().equals(ProductStatus.DELETED)) {
+        if (productToGet == null || productToGet.getStatus().equals(Status.DELETED)) {
             throw new ProductNotFoundException("El producto no existe o ya fue elimnado.");
         }
 
