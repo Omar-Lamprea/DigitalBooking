@@ -2,6 +2,7 @@ package com.pi.digitalbooking.repository;
 
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
+import com.pi.digitalbooking.models.Country;
 import com.pi.digitalbooking.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

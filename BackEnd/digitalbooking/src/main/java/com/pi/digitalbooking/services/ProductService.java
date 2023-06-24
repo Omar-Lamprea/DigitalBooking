@@ -2,6 +2,7 @@ package com.pi.digitalbooking.services;
 
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
+import com.pi.digitalbooking.models.Country;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +85,7 @@ public class ProductService {
 
     }
 
-    public List<Product> getByCity(City city){
+    public List<Product> getByCity(City city) {
         return productRepository.findByCityAndStatus(city, Status.ACTIVE);
     }
 

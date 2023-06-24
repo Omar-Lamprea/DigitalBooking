@@ -5,8 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.CountryDTO;
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
+import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
+import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.services.CityService;
 import com.pi.digitalbooking.services.CountryService;
+import com.pi.digitalbooking.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -35,6 +39,10 @@ public class CountryController {
 
     @Autowired
     private CountryService countryService;
+    @Autowired
+    private CityService cityService;
+    @Autowired
+    private ProductService productService;
 
 
     @Operation(summary = "Add a new Country", description = "Adds a new country providing its information.")
@@ -131,5 +139,23 @@ public class CountryController {
         }
 
         return countryToGet;
+    }
+
+    @Operation(summary = "Delete couintry by ID", description = "Deletes a country by its ID.")
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void Delete(@Parameter(description = "ID of the country to delete", required = true) @PathVariable("id") Integer id) {
+
+        Country country = countryService.SearchById(id);
+        List<City> cities = cityService.SearchCitiesByCountry(country.getName());
+
+        for (City city: cities) {
+
+            List<Product> productsByCity = productService.getByCity(city);
+            if (productsByCity.size() != 0) {
+                throw new ProductNotFoundException("El pais no puede ser eliminado porque tiene productos asociados.");
+            }
+        }
+        countryService.DeleteById(id);
     }
 }
