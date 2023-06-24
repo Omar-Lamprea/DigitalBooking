@@ -2,9 +2,11 @@ import PropTypes from 'prop-types';
 import { ROLE_TYPE } from '../../utils/user.contants';
 import { useState } from 'react';
 import ModalUpdateUserRole from '../Modals/ModalUpdateUserRole';
+import { useContextGlobal } from '../../context/global.context';
 
 const UserListItem = ({user}) => {
 
+  const {state} = useContextGlobal();
   const [selectedRole, setSelectedRole] = useState();
   const [showUpdateModal, setShowUpdateModal] = useState();
   const [originalUser, setOriginalUser] = useState();
@@ -14,32 +16,26 @@ const UserListItem = ({user}) => {
   const handleOnChangeRole = (e) => {
     let initialUser = {...user};
     let currentUser = user;
-    console.log('event change', e.target.value);
+
+    if (!state.userToUpdate.updated) {
+      setSelectedRole(e.target.value);  
+    } else {
+      setSelectedRole(state.userToUpdate?.originalUser?.role);
+    }
+
     setSelectedRole(e.target.value);
-    console.log('user', user);
-    // initialUser = user;
     setOriginalUser(initialUser);
-    console.log('original', initialUser);
 
     currentUser.role = e.target.value;
-    console.log('updateUserRole', currentUser);
 
     const changedUsersRole = [];
 
     changedUsersRole.push(currentUser);
-    console.log('user modified', changedUsersRole);
 
     setToUpdateUser(user);
     setShowUpdateModal(true);
-    console.log('showUpdateModal', showUpdateModal);
-    // updateUserSelectedRole(user);
-
   };
 
-
-  // const updateUserSelectedRole  = (user) => {
-  //   setShowUpdateModal(true);
-  // };
 
   const handleCloseUpdateModal = () => {
     setShowUpdateModal(false);

@@ -11,7 +11,10 @@ const initialState = {
   }, 
   categories: [], 
   users: [],
-  userToUpdate: {},
+  userToUpdate: {
+    updated: false,
+    originalUser: {}
+  },
   titleProducts: "Alojamientos recomendados"
 }
 
