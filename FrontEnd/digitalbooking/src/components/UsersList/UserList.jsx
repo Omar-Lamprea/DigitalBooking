@@ -7,6 +7,7 @@ const UserList = () => {
 
     const {state} = useContextGlobal();
     const [users, setUsers] = useState([]);
+    const [showAlert, setShowAlert] = useState(true);
 
     const getUsersList = useCallback(async() => {
         try {
@@ -27,6 +28,10 @@ const UserList = () => {
 
 
     }, [state.user.token]);
+
+    setTimeout(() => {
+        setShowAlert(false);
+    }, 3000);
     
     useEffect( () => {
         getUsersList();
@@ -38,6 +43,7 @@ const UserList = () => {
                 {users.map((user, index) => (
                     <UserListItem key={index} user={user} />
                 ))}
+                {state.userToUpdate.updated && showAlert && <div className="alert alert-success success-msg">¡El rol del usuario se actualizo con exito.!</div>}
             </div>
         </div>
     )

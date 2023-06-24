@@ -6,7 +6,7 @@ import { GLOBAL_API } from '../../utils/constants';
 
 const ModalUpdateUserRole = (props) => {
 
-    const {state} = useContextGlobal();
+    const {state, dispatch} = useContextGlobal();
     const [show, setShow] = useState(props.show);
     const [error, setError] = useState();
     const [updatedRole, setUpdatedRole] = useState(false);
@@ -30,6 +30,8 @@ const ModalUpdateUserRole = (props) => {
           const data = await response.text();
           if (response.ok) {
             console.log('data', data);
+            dispatch({type: 'userToUpdate', payload: {updated: true, user: user}});
+            handleCloseTest();
             setUpdatedRole(true);
           }
         } catch (error) {
@@ -39,8 +41,13 @@ const ModalUpdateUserRole = (props) => {
       }
     };
 
+    const handleCloseTest = () => {
+      console.log('cerrar');
+      setShow(props.close);
+    };
+
     return (
-      <Modal show={props.show} onHide={props.close}>
+      <Modal show={show || props.show} onHide={props.close}>
         <Modal.Header closeButton>
           <Modal.Title>Actualizar ususario</Modal.Title>
         </Modal.Header>
