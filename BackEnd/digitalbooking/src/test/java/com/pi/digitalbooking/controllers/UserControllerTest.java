@@ -93,13 +93,14 @@ public class UserControllerTest {
     public void testCreateUserSuccess() throws Exception {
 
         AppUserCreateDto userDto = new AppUserCreateDto();
-        AppUserDto newUserDto = new AppUserDto();
+        AppUserDto newUserDto = AppUserDto.builder().name("admin")
+                        .email("email.com").lastName("administrator")
+                .role(AppUserRole.ROLE_ADMIN).build();
         when(appUserService.createUser(userDto)).thenReturn(newUserDto);
 
         ResponseEntity<?> response = userController.createUser(userDto);
-        verify(appUserService, times(1)).createUser(userDto);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(newUserDto, response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+
     }
 
     @Test

@@ -2,14 +2,12 @@ package com.pi.digitalbooking.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pi.digitalbooking.entities.AppUserRole;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUserDto {

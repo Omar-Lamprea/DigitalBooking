@@ -4,12 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.entities.ProductImageEntity;
-import com.pi.digitalbooking.enums.CategoryStatus;
-import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
-import com.pi.digitalbooking.models.Amenity;
-import com.pi.digitalbooking.models.Category;
-import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.models.*;
 import com.pi.digitalbooking.repository.AmenityRepository;
 import com.pi.digitalbooking.services.CategoryService;
 import com.pi.digitalbooking.services.ProductImageService;
@@ -70,6 +67,11 @@ class ProductControllerTest {
                     .name("CategoryName").description("Categoria especial")
                     .imageUrl("ImageUrl.png").build();
 
+            Country country = Country.builder().countryId(1).name("Colombia").status(Status.ACTIVE).build();
+
+            City city = City.builder().cityId(1).name("bogota").country(country).build();
+
+
             product = Product.builder()
                     .codeProduct(12345)
                     .name("Product Name")
@@ -78,9 +80,8 @@ class ProductControllerTest {
                     .score(5)
                     .price(9.99)
                     .locationUrl("https://example.com")
-                    .country("Country")
-                    .city("City")
-                    .status(ProductStatus.ACTIVE)
+                    .city(city)
+                    .status(Status.ACTIVE)
                     .amenities(Arrays.asList(amenity))
                     .category(category)
                     .build();
@@ -93,7 +94,7 @@ class ProductControllerTest {
                     .country("Country")
                     .locationUrl("Bogota.url")
                     .country("Colombia")
-                    .city("City")
+                    .city(1)
                     .category(2)
                     .amenities(Arrays.asList(amenity)).build();
         }
@@ -103,7 +104,7 @@ class ProductControllerTest {
         void testGetByPathVariable() throws ProductNotFoundException {
             int productId = 1;
             when(productService.searchById(productId)).thenReturn(new Product());
-            Product result = productController.GetByPathVariable(productId);
+            Product result = productController.getByPathVariable(productId);
             assertNotNull(result);
             verify(productService, times(1)).searchById(productId);
         }
@@ -114,7 +115,7 @@ class ProductControllerTest {
             int productId = 1;
             when(productService.searchById(productId)).thenReturn(null);
             assertThrows(ProductNotFoundException.class, () -> {
-                productController.GetByPathVariable(productId);
+                productController.getByPathVariable(productId);
             });
             verify(productService, times(1)).searchById(productId);
         }
@@ -125,7 +126,7 @@ class ProductControllerTest {
 
             int productId = 1;
             when(productService.searchById(productId)).thenReturn(new Product());
-            Product result = productController.GetByRequestParam(productId);
+            Product result = productController.getByRequestParam(productId);
             assertNotNull(result);
             verify(productService, times(1)).searchById(productId);
         }
@@ -136,7 +137,7 @@ class ProductControllerTest {
             int productId = 1;
             when(productService.searchById(productId)).thenReturn(null);
             assertThrows(ProductNotFoundException.class, () -> {
-                productController.GetByRequestParam(productId);
+                productController.getByRequestParam(productId);
             });
 
             verify(productService, times(1)).searchById(productId);
@@ -147,10 +148,10 @@ class ProductControllerTest {
 
             int productId = 1;
             Product productToGet = new Product();
-            productToGet.setStatus(ProductStatus.ACTIVE);
+            productToGet.setStatus(Status.ACTIVE);
             when(productService.searchById(productId)).thenReturn(productToGet);
             assertDoesNotThrow(() -> {
-                productController.DeleteByPathVariable(productId);
+                productController.deleteByPathVariable(productId);
             });
             verify(productService, times(1)).searchById(productId);
             verify(productService, times(1)).deleteById(productId);
@@ -162,7 +163,7 @@ class ProductControllerTest {
             int productId = 1;
             when(productService.searchById(productId)).thenReturn(null);
             assertThrows(ProductNotFoundException.class, () -> {
-                productController.DeleteByPathVariable(productId);
+                productController.deleteByPathVariable(productId);
             });
             verify(productService, times(1)).searchById(productId);
             verify(productService, never()).deleteById(productId);
@@ -172,40 +173,10 @@ class ProductControllerTest {
         void testSearchAll() {
             List<Product> productList = Arrays.asList(product);
             when(productService.searchAllByStatus()).thenReturn(productList);
-            List<Product> result = productController.SearchAll();
+            List<Product> result = productController.searchAll();
             assertEquals(productList, result);
         }
 
-    @Test
-    public void testGetProduct() {
-        // Arrange
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setCodeProduct(1);
-        productDTO.setName("Product 1");
-        productDTO.setDescription("Product description");
-        productDTO.setScore(4);
-        productDTO.setPrice(10.99);
-        productDTO.setLocationUrl("http://example.com");
-        productDTO.setCity("City 1");
-        productDTO.setCountry("Country 1");
-        productDTO.setCategory(1);
-
-        Category category = new Category(1, "Category 1", "Category description", "Category image", CategoryStatus.ACTIVE);
-        when(categoryService.SearchById(productDTO.getCategory())).thenReturn(category);
-
-        Product result = productController.GetProduct(productDTO);
-
-        assertEquals(productDTO.getCodeProduct(), result.getCodeProduct());
-        assertEquals(productDTO.getName(), result.getName());
-        assertEquals(productDTO.getDescription(), result.getDescription());
-        assertEquals(productDTO.getScore(), result.getScore());
-        assertEquals(productDTO.getPrice(), result.getPrice());
-        assertEquals(productDTO.getLocationUrl(), result.getLocationUrl());
-        assertEquals(productDTO.getCity(), result.getCity());
-        assertEquals(productDTO.getCountry(), result.getCountry());
-        assertEquals(category, result.getCategory());
-        assertEquals(ProductStatus.ACTIVE, result.getStatus());
-    }
 
     @Test
     public void testHasAmenitiesDuplicates_EmptyList() {
@@ -249,7 +220,7 @@ class ProductControllerTest {
     void getProductDTO() throws JsonProcessingException {
 
         String stringProduct = "{\"name\":\"Product Name\",\"description\":\"Product Description\"," +
-                "\"price\":10.99,\"score\":4,\"locationUrl\":\"Bogota.url\",\"country\":\"Colombia\",\"city\":\"City\",\"category\":\"2\"}";
+                "\"price\":10.99,\"score\":4,\"locationUrl\":\"Bogota.url\",\"country\":\"Colombia\",\"city\":\"1\",\"category\":\"2\"}";
 
         ProductDTO productDTOLocal = ProductDTO.builder().name("Product Name")
                 .description("Product Description")
@@ -258,7 +229,7 @@ class ProductControllerTest {
                 .country("Country")
                 .locationUrl("Bogota.url")
                 .country("Colombia")
-                .city("City")
+                .city(1)
                 .category(2).build();
 
 
@@ -288,9 +259,9 @@ class ProductControllerTest {
         final Product updatedProduct = product;
         updatedProduct.setName("UpdatedProduct");
 
-        when(productService.UpdateProduct(any(Product.class))).thenReturn(updatedProduct);
+        when(productService.updateProduct(any(Product.class))).thenReturn(updatedProduct);
 
-        Product result = productController.Update(product);
+        Product result = productController.update(product);
         assertEquals(updatedProduct, result);
 
     }

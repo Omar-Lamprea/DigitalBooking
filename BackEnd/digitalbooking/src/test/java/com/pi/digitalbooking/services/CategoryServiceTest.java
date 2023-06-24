@@ -1,6 +1,6 @@
 package com.pi.digitalbooking.services;
 
-import com.pi.digitalbooking.enums.CategoryStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.Category;
 import com.pi.digitalbooking.repository.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +38,7 @@ class CategoryServiceTest {
         category = Category.builder().categoryId(1)
                 .imageUrl("imageurl.png").name("categoria master")
                 .description("El mejor producto")
-                .status(CategoryStatus.ACTIVE).build();
+                .status(Status.ACTIVE).build();
     }
 
     @Test
@@ -77,7 +77,7 @@ class CategoryServiceTest {
         Category expectedCategory = category;
         when(categoryRepository.findById(categoryId)).thenReturn(Optional.of(expectedCategory));
         categoryService.DeleteById(categoryId);
-        assertEquals(CategoryStatus.DELETED, expectedCategory.getStatus());
+        assertEquals(Status.DELETED, expectedCategory.getStatus());
         Mockito.verify(categoryRepository, Mockito.times(1)).save(expectedCategory);
     }
 
@@ -104,7 +104,7 @@ class CategoryServiceTest {
 
         String categoryName = "Category 1";
         Category existingCategory = category;
-        when(categoryRepository.findByNameAndStatus(categoryName, CategoryStatus.ACTIVE)).thenReturn(existingCategory);
+        when(categoryRepository.findByNameAndStatus(categoryName, Status.ACTIVE)).thenReturn(existingCategory);
         boolean isDuplicated = categoryService.isCategoryDuplicatedByName(categoryName);
         assertTrue(isDuplicated);
     }

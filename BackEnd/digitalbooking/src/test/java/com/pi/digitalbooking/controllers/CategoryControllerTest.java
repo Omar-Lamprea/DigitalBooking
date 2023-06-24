@@ -3,24 +3,20 @@ package com.pi.digitalbooking.controllers;
 import com.pi.digitalbooking.DTO.CategoryDTO;
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.entities.ProductImageEntity;
-import com.pi.digitalbooking.enums.CategoryStatus;
-import com.pi.digitalbooking.enums.ProductStatus;
-import com.pi.digitalbooking.models.Amenity;
-import com.pi.digitalbooking.models.Category;
-import com.pi.digitalbooking.models.Product;
+import com.pi.digitalbooking.enums.Status;
+import com.pi.digitalbooking.models.*;
 import com.pi.digitalbooking.services.CategoryService;
-import io.jsonwebtoken.lang.Assert;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -64,6 +60,11 @@ class CategoryControllerTest {
                 .name("CategoryName").description("Categoria especial")
                 .imageUrl("ImageUrl.png").build();
 
+        Country country = Country.builder().countryId(1).name("Colombia").status(Status.ACTIVE).build();
+
+        City city = City.builder().cityId(1).name("bogota").country(country).build();
+
+
         product = Product.builder()
                 .codeProduct(12345)
                 .name("Product Name")
@@ -72,12 +73,12 @@ class CategoryControllerTest {
                 .score(5)
                 .price(9.99)
                 .locationUrl("https://example.com")
-                .country("Country")
-                .city("City")
-                .status(ProductStatus.ACTIVE)
+                .city(city)
+                .status(Status.ACTIVE)
                 .amenities(Arrays.asList(amenity))
                 .category(category)
                 .build();
+
         productList = Arrays.asList(product);
 
         productDTO = ProductDTO.builder().name("Product Name")
@@ -87,7 +88,7 @@ class CategoryControllerTest {
                 .country("Country")
                 .locationUrl("Bogota.url")
                 .country("Colombia")
-                .city("City")
+                .city(1)
                 .category(2)
                 .amenities(Arrays.asList(amenity)).build();
     }
@@ -118,7 +119,7 @@ class CategoryControllerTest {
         assertEquals(categoryDTO.getName(), result.getName());
         assertEquals(categoryDTO.getDescription(), result.getDescription());
         assertEquals(imageURL, result.getImageUrl());
-        assertEquals(CategoryStatus.ACTIVE, result.getStatus());
+        assertEquals(Status.ACTIVE, result.getStatus());
     }
 
     @Test
