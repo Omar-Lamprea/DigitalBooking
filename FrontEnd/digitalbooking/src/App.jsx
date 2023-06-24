@@ -16,6 +16,7 @@ import UserList from './components/UsersList/UserList'
 import RegisterCity from './components/RegisterCity/RegisterCity'
 import Bookings from './pages/Bookings/Bookings'
 import SuccessBooking from './pages/Bookings/SuccessBooking'
+import ContextProviderBookings from './context/bookings.context'
 
 
 function App() {
@@ -51,7 +52,9 @@ function App() {
       <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
       <Route path='producto/:id/reservas' element={
         <Guard condition={state.user?.data} redirect='/login'>
-          <Bookings />
+          <ContextProviderBookings>
+            <Bookings />
+          </ContextProviderBookings>
          </Guard>
       }/>
 
