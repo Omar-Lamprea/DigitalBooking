@@ -1,0 +1,17 @@
+.user-booking{
+  border-top: 1px solid rgb(196, 196, 196);
+  padding-top: .5rem;
+  &_row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .comments-title{
+    font-weight: 600;
+    margin-bottom: .2rem;
+  }
+  .comments-data{
+    color: #909090;
+    line-height: 18px;
+  }
+}

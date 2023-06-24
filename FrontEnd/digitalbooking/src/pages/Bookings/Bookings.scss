@@ -1,4 +1,24 @@
-.container-bookings{
-  max-width: 1115px;
-  margin: auto;
+.container-bookings-main{
+  background-color: #f9f9f9;
+  // 
+  .container-bookings{
+    max-width: 1115px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  
+    &_edit-components{
+      padding: 1rem;
+    }
+    @include media_query(large){
+      flex-direction: row;
+      &_edit-components{
+        width: 750px;
+      }
+      &_preview-booking{
+        width: 365px;
+        padding-top: 2.2rem;
+      }
+    }
+}
 }

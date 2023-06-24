@@ -107,6 +107,7 @@ const ContextProvider = ({ children }) => {
 }
 
 export default ContextProvider
+// eslint-disable-next-line react-refresh/only-export-components
 export const useContextGlobal = () => useContext(ContextGlobal)
 
 ContextProvider.propTypes = {
