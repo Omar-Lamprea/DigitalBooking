@@ -55,7 +55,8 @@ const Detalle = () => {
             {
               lat: lodging.latitude,
               lng: lodging.longitude,
-              draggable: false
+              draggable: false,
+              name: lodging.name
             }
             
           } />
