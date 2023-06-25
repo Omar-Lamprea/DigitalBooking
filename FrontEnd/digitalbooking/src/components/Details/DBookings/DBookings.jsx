@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 const DBookings = () => {
   const {state} = useContextGlobal()
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
-
+  console.log('dates to set calendar: ', state.bookingsDates);
 
   const inService = [
     [new DateObject().setDay(12).format(), new DateObject().setDay(13).format()],

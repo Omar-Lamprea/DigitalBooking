@@ -42,7 +42,9 @@ const BookingUserForm = () => {
           </div>
         </fieldset>
 
+        <label htmlFor="comments">Comentarios:</label>
         <textarea name="comments" id="comments" rows="2" placeholder="Commentarios" onChange={handleChange}></textarea>
+
 
       </form>
     </section>
