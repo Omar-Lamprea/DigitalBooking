@@ -15,5 +15,5 @@ public interface CityRepository extends JpaRepository<City, Integer> {
 
     List<City> findAllByStatus(Status status);
 
-    List<City> findByCountry(Country country);
+    List<City> findByCountryAndStatus(Country country, Status status);
 }

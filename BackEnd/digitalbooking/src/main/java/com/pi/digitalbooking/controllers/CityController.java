@@ -165,10 +165,13 @@ public class CityController {
         } catch (Exception e) {
             switch (e.getMessage()) {
                 case "CITY_NOT_FOUND" -> {
-                    return ResponseEntity.badRequest().body("City was not found.");
+                    return ResponseEntity.badRequest().body("No existe una ciudad con id: " + idCity + ".");
+                }
+                case "CITY_DUPLICATED" ->{
+                    return ResponseEntity.badRequest().body("El nombre de la ciudad " + nameToUpdate + " ya existe. Por favor, elige un nombre diferente para evitar duplicados.");
                 }
             }
         }
-        return ResponseEntity.ok("City updated to " + nameToUpdate);
+        return ResponseEntity.ok("El nombre de la ciudad fue actualizada a: " + nameToUpdate);
     }
 }

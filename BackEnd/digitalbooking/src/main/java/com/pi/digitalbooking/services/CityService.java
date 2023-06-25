@@ -67,22 +67,26 @@ public class CityService {
         return cityRepository.findAllByStatus(Status.ACTIVE);
     }
 
-    public List<City> SearchCitiesByCountry(String nameCountry){
+    public List<City> SearchCitiesByCountry(String nameCountry) {
         Country country = countryService.GetCountryByName(nameCountry);
-        return cityRepository.findByCountry(country);
+        return cityRepository.findByCountryAndStatus(country, Status.ACTIVE);
     }
 
-    public City updateCity(Integer idCity, String nameToUpdate) {
+    public City updateCity(Integer idCity, String nameToUpdate) throws Exception {
 
         Optional<City> existingCity = cityRepository.findById(idCity);
 
         if (existingCity.isPresent()) {
+
+            if (isCityDuplicatedByName(nameToUpdate)) {
+                throw new Exception("CITY_DUPLICATED");
+            }
             existingCity.get().setName(nameToUpdate);
             City cityToSave = existingCity.get();
             return cityRepository.save(cityToSave);
         } else {
             log.error("No existe ciudad con id: " + idCity.toString());
-            return null;
+            throw new Exception("CITY_NOT_FOUND");
         }
     }
 }
