@@ -23,9 +23,12 @@
         }
       }
     }
+    
+    label[for="comments"]{
+      margin-top: 1rem;
+    }
     textarea{
       border: 1px solid rgb(214, 214, 214);
-      margin-top: 1rem;
       width: 100%;
       border-radius: 5px;
       padding: .5rem;

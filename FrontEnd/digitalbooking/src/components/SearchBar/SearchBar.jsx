@@ -58,7 +58,8 @@ const SearchBar = () => {
             dispatch({type: "titleProducts", payload: `Alojamientos en ${jsonBody.city}`})
             dispatch({type: "setProducts"})
             dispatch({type: "APIdata", payload: data})
-
+            dispatch({type: "setBookingDates", payload: jsonBody.date})
+            
             const productListElement = document.getElementById('suggestions-container');
             if (productListElement) {
               const navbarHeight = 100;

@@ -46,6 +46,7 @@ const Bookings = () => {
               <div className="container-bookings_preview-booking">
                 <BookingPreview data={
                   {
+                    id: lodging.productId,
                     category: lodging.category.name, 
                     city: lodging.city,
                     name: lodging.name,
