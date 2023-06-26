@@ -157,7 +157,7 @@ public class ProductController {
         return false;
     }
 
-    private boolean validatePropertiesProduct(ProductDTO productDTO) {
+    public boolean validatePropertiesProduct(ProductDTO productDTO) {
         return productDTO.getName() == null || productDTO.getName().isEmpty()
                 || productDTO.getDescription() == null || productDTO.getDescription().isEmpty()
                 || productDTO.getPrice() == null
@@ -189,7 +189,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
     }
 
-    private Product getProduct(ProductDTO productDTO) {
+    public Product getProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
@@ -240,7 +240,7 @@ public class ProductController {
         return politicSaved;
     }
 
-    private ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
+    public ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ProductDTO productDTO = objectMapper.readValue(stringProduct, ProductDTO.class);
         return productDTO;

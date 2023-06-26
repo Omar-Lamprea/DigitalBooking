@@ -3,6 +3,7 @@ package com.pi.digitalbooking.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pi.digitalbooking.enums.Status;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "countries")
 public class Country {
 
