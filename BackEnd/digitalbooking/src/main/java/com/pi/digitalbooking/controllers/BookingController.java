@@ -42,6 +42,18 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/searchbyuser")
+    public ResponseEntity<?> getBookingByUser(@RequestParam String emailUser) throws Exception{
+
+        List<BookingDto> bookings = bookingService.getBookingByUser(emailUser);
+
+        if (bookings.size() > 0) {
+            return new ResponseEntity<>(bookings, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("No se encontraron reservas para el usario " + emailUser, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<BookingDto> createBooking(@RequestBody BookingCreateDto bookingDto) {
         BookingDto createdBooking = bookingService.createBooking(bookingDto);

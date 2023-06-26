@@ -46,8 +46,23 @@ public class BookingService {
         return optionalBooking.map(this::convertToDto).orElse(null);
     }
 
+    public List<BookingDto> getBookingByUser(String userEmail) throws Exception{
+
+        Optional<AppUser> optionalUser = Optional.ofNullable(userRepository.findByEmail(userEmail));
+
+        if(!optionalUser.isPresent()) {
+            throw new Exception("USER_NOT_FOUND");
+        }
+
+        List<BookingEntity> bookingEntities = bookingRepository.findBookingByUserAndStatus(optionalUser.get(), Status.ACTIVE);
+        return bookingEntities.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
     public BookingDto createBooking(BookingCreateDto bookingDto) {
         BookingEntity booking = convertToEntity(bookingDto);
+        booking.setStatus(Status.ACTIVE);
         Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
         booking.setProduct(product);
         AppUser user = userRepository.findByEmail(bookingDto.getUser().getEmail());
