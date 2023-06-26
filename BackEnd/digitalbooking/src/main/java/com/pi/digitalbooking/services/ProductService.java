@@ -90,6 +90,10 @@ public class ProductService {
     }
 
     public List<Product> getByCityAndDates(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
-        return productRepository.findActiveProductsWithoutBookingAndWithInDistance(lat, lng, distance, cityName, checkInDate, checkOutDate, Status.ACTIVE);
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByCity(lat, lng, distance, cityName, checkInDate, checkOutDate, Status.ACTIVE);
+    }
+
+    public List<Product> getByDates(Double lat, Double lng, int distance, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByDates(lat, lng, distance, checkInDate, checkOutDate, Status.ACTIVE);
     }
 }

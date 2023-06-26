@@ -26,8 +26,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.city.name = :city AND " + HAVERSINE_FORMULA + " < :distance " +
             "AND p.status = :status AND p NOT IN " +
             "(SELECT b.product FROM BookingEntity b WHERE b.checkInDate <= :checkOutDate " +
-            "AND b.checkOutDate >= :checkInDate AND b.status = :status) ORDER BY "+ HAVERSINE_FORMULA + "DESC")
-    List<Product> findActiveProductsWithoutBookingAndWithInDistance(
+            "AND b.checkOutDate >= :checkInDate AND b.status = :status) ORDER BY "+ HAVERSINE_FORMULA + "ASC")
+    List<Product> findActiveProductsWithoutBookingAndWithInDistanceByCity(
             @Param("latitude") double latitude,
             @Param("longitude") double longitude,
             @Param("distance") double distanceWithInKM,
@@ -37,4 +37,16 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             @Param("status") Status status);
 
     Product getProductByCodeProductAndStatus(Integer code, Status status);
+    @Query("SELECT p FROM Product p WHERE " + HAVERSINE_FORMULA + " < :distance " +
+            "AND p.status = :status AND p NOT IN " +
+            "(SELECT b.product FROM BookingEntity b WHERE b.checkInDate <= :checkOutDate " +
+            "AND b.checkOutDate >= :checkInDate AND b.status = :status) ORDER BY "+ HAVERSINE_FORMULA + "ASC")
+    List<Product> findActiveProductsWithoutBookingAndWithInDistanceByDates(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("distance") double distanceWithInKM,
+            @Param("checkInDate") LocalDate checkInDate,
+            @Param("checkOutDate") LocalDate checkOutDate,
+            @Param("status") Status status);
+
 }
