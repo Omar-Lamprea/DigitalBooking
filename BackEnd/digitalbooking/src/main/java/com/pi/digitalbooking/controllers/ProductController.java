@@ -328,15 +328,25 @@ public class ProductController {
     @CrossOrigin
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam("lat") Double longitude,
-                                                      @RequestParam("lon") Double latitude,
+    public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam(value = "lat", required = false) Double longitude,
+                                                      @RequestParam(value = "lon", required = false) Double latitude,
                                                       @RequestParam(value = "within", required = false) Integer within,
-                                                      @RequestParam("city") String cityName,
-                                                      @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                      @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
+                                                      @RequestParam(value = "city") String cityName,
+                                                      @RequestParam(value = "checkInDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                      @RequestParam(value = "checkOutDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;
+        List<Product> products;
         try {
-            List<Product> products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
+            if (latitude == null || longitude == null) {
+                //Coordenadas de Bogotá
+                latitude = 4.600173;
+                longitude = 74.067772;
+            }
+            if(cityName == null || cityName.isEmpty()) {
+                products = productService.getByDates(longitude, latitude, 100000000, checkInDate, checkOutDate);
+            } else {
+                products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
+            }
             response = ResponseEntity.ok(products);
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
