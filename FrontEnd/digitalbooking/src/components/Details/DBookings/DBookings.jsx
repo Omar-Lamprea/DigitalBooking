@@ -69,14 +69,13 @@ const DBookings = () => {
             readOnly
           />
 
-          {state?.user?.data && 
-            <div className='bookings-action'>
-              <p>¡Reserva tus fechas hospedaje para obtener los mejores precios!</p>
-              <Link to={'./reservas'}>
-                <button>¡Reserva ahora! </button>
-              </Link>
-            </div>
-          }
+          <div className='bookings-action'>
+            <p>¡Reserva tus fechas hospedaje para obtener los mejores precios!</p>
+            <Link to={'./reservas'}>
+              <button>¡Reserva ahora! </button>
+            </Link>
+          </div>
+        
         </div>
 
       </div>

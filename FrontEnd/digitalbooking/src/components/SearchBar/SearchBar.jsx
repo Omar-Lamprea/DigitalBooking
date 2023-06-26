@@ -51,7 +51,7 @@ const SearchBar = () => {
           const response = await fetch(
             state.URL_API.urlBase + 
             state.URL_API.product + 
-            `?lat=${jsonBody.latitude}&lon=${jsonBody.longitude}&city=${jsonBody.city}&checkInDate=${jsonBody.date[0]}&checkOutDate=${jsonBody.date[1]}`
+            `?lat=${jsonBody.latitude}&lon=${jsonBody.longitude}&city=${jsonBody.city}&checkInDate=${jsonBody.date[0] || ''}&checkOutDate=${jsonBody.date[1] || ''}`
           )
           const data = await response.json()
           if(response.ok){
@@ -95,15 +95,17 @@ const SearchBar = () => {
       latitude: location.latitude,
       longitude: location.longitude
     }
-    data.date.forEach((date) =>{
-      const originalDate = new Date(date)
-      const year = originalDate.getFullYear();
-      const month = (originalDate.getMonth() + 1).toString().padStart(2, '0'); 
-      const day = originalDate.getDate().toString().padStart(2, '0');
-      const formattedDate = `${year}-${month}-${day}`;
-
-      template.date.push(formattedDate)
-    })
+    if(data.date){
+      data.date.forEach((date) =>{
+        const originalDate = new Date(date)
+        const year = originalDate.getFullYear();
+        const month = (originalDate.getMonth() + 1).toString().padStart(2, '0'); 
+        const day = originalDate.getDate().toString().padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}`;
+  
+        template.date.push(formattedDate)
+      })
+    }
     return template
   }
 
@@ -181,7 +183,7 @@ const SearchBar = () => {
             </label>
             {/* <input value={searchProduct.date} type="date" name="date" id="date" onChange={handleOnChange}/> */}
             <DatePicker
-              required
+              
               name='date'
               range 
               dateSeparator=" - "

@@ -20,5 +20,9 @@ export const GLOBAL_API = {
   city: "/city",
 
   //Countries
-  countriesAll: "/country/all"
+  countriesAll: "/country/all",
+
+  //Bookings
+  bookings: "/bookings",
+  bookingsByUser: "/searchbyuser?emailUser="
 }

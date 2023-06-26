@@ -17,6 +17,7 @@ import RegisterCity from './components/RegisterCity/RegisterCity'
 import Bookings from './pages/Bookings/Bookings'
 import SuccessBooking from './pages/Bookings/SuccessBooking'
 import ContextProviderBookings from './context/bookings.context'
+import UserBookings from './pages/UserBookings/UserBookings'
 
 
 function App() {
@@ -51,13 +52,15 @@ function App() {
       <Route path='producto/:id' element={<Detalle />} />
       <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
       <Route path='producto/:id/reservas' element={
-        <Guard condition={state.user?.data} redirect='/login'>
+        <Guard condition={state.user?.data} redirect='/login?booking=true'>
           <ContextProviderBookings>
             <Bookings />
           </ContextProviderBookings>
          </Guard>
       }/>
 
+      <Route path='/tus-reservas' element={<UserBookings />} />
+      
       <Route path='create-account' element={<CreateAccount />} />
       <Route path='login' element={<Login />} />
       <Route path='*' element={<NotFound />} />
