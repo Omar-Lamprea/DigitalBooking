@@ -23,6 +23,8 @@ public class BookingEntity {
     private String code;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
     @JsonIgnore
     @ManyToOne
