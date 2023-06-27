@@ -331,7 +331,7 @@ public class ProductController {
     public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam(value = "lat", required = false) Double longitude,
                                                       @RequestParam(value = "lon", required = false) Double latitude,
                                                       @RequestParam(value = "within", required = false) Integer within,
-                                                      @RequestParam(value = "city") String cityName,
+                                                      @RequestParam(value = "city", required = false) String cityName,
                                                       @RequestParam(value = "checkInDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
                                                       @RequestParam(value = "checkOutDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;
@@ -342,10 +342,14 @@ public class ProductController {
                 latitude = 4.600173;
                 longitude = 74.067772;
             }
-            if(cityName == null || cityName.isEmpty()) {
-                products = productService.getByDates(longitude, latitude, 100000000, checkInDate, checkOutDate);
+            if((cityName == null || cityName.isEmpty()) & (checkInDate != null & checkOutDate != null)) {
+                products = productService.getByDatesAndDistance(longitude, latitude, 100000000, checkInDate, checkOutDate);
+            } else if ((checkInDate == null & checkOutDate == null) & !(cityName == null || cityName.isEmpty())) {
+                products = productService.getByCityAndDistance(longitude, latitude, 100000000, cityName);
+            } else if (!(cityName == null || cityName.isEmpty()) & (checkInDate != null & checkOutDate != null)){
+                products = productService.getByCityAndDatesAndDistance(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
             } else {
-                products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
+                products = productService.getByDistance(longitude, latitude, 100000000);
             }
             response = ResponseEntity.ok(products);
         } catch (Exception e) {
