@@ -26,7 +26,7 @@ const ContextProviderBookings = ({ children }) => {
       lastName: userData.lastName,
       comments: '',
       email: userData.email,
-      city: ''
+      phoneNumber: ''
     },
     estimatedTime: ''
   }

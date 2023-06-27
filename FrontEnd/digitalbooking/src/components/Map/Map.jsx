@@ -1,5 +1,6 @@
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 import { useMemo, useState } from "react";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 
 const Map = (props) => {
@@ -18,7 +19,13 @@ const Map = (props) => {
         latLng.lng = event.latLng.lng();
         console.log(latLng);
         localStorage.setItem('prod Location', JSON.stringify(latLng));
-        alert('¡Has selecionado la ubicación del producto!');
+        Swal.fire({
+            position: 'bottom-start',
+            icon: 'success',
+            title: 'Has selecionado la ubicación del producto!',
+            showConfirmButton: false,
+            timer: 1000
+        })
     };
 
     

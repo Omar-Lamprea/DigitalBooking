@@ -50,7 +50,7 @@ const UserBookings = () => {
             />)
         }
         {errorBooking &&
-          <p className='error-message'>{errorBooking}</p>
+          <p className=''>Aun no tienes reservas</p>
         }
       </div>
     </section>

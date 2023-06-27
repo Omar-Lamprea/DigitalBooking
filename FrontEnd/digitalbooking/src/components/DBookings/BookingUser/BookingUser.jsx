@@ -7,7 +7,7 @@ const BookingUser = ({user}) => {
       <aside className='user-booking_row'>
         <p>{user.name} {user.lastName}</p> <p>/</p>
         <p>{user.email}</p> <p>/</p>
-        <p>{user.city}</p>
+        <p>{user.phoneNumber}</p>
       </aside>
       {user.comments &&
         <aside>

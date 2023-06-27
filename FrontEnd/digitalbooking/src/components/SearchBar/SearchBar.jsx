@@ -4,6 +4,8 @@ import DatePicker from "react-multi-date-picker"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { useContextGlobal } from '../../context/global.context';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
 
 
 const SearchBar = () => {
@@ -38,52 +40,68 @@ const SearchBar = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const searchButton = e.target.elements.searchButton;
-      searchButton.disabled = true;
-      searchButton.style.cursor = 'progress';
-      
-      if (navigator.geolocation) {
-        const location = await requestLocationPermission();
-        const jsonBody = templateNormalized(searchProduct, location);
+    if(e.target.city.value || e.target.date.value){
+      try {
+        const searchButton = e.target.elements.searchButton;
+        searchButton.disabled = true;
+        searchButton.style.cursor = 'progress';
         
-        try {
-          const response = await fetch(
-            state.URL_API.urlBase + 
-            state.URL_API.product + 
-            `?lat=${jsonBody.latitude}&lon=${jsonBody.longitude}&city=${jsonBody.city}&checkInDate=${jsonBody.date[0] || ''}&checkOutDate=${jsonBody.date[1] || ''}`
-          )
-          const data = await response.json()
-          if(response.ok){
-            dispatch({type: "titleProducts", payload: `Alojamientos en ${jsonBody.city}`})
-            dispatch({type: "setProducts"})
-            dispatch({type: "APIdata", payload: data})
-            dispatch({type: "setBookingDates", payload: jsonBody.date})
-            
-            const productListElement = document.getElementById('suggestions-container');
-            if (productListElement) {
-              const navbarHeight = 100;
-              const elementPosition = productListElement.getBoundingClientRect().top;
-              const offsetPosition = elementPosition - navbarHeight;
-
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth',
-              });
+        if (navigator.geolocation) {
+          const location = await requestLocationPermission();
+          const jsonBody = templateNormalized(searchProduct, location);
+          
+          try {
+            const response = await fetch(
+              state.URL_API.urlBase + 
+              state.URL_API.product + 
+              `?lat=${jsonBody.latitude}&lon=${jsonBody.longitude}&city=${jsonBody.city}&checkInDate=${jsonBody.date[0] || ''}&checkOutDate=${jsonBody.date[1] || ''}`
+            )
+            const data = await response.json()
+            if(response.ok){
+              dispatch({type: "titleProducts", payload: `Alojamientos en ${jsonBody.city}`})
+              dispatch({type: "setProducts"})
+              dispatch({type: "APIdata", payload: data})
+              dispatch({type: "setBookingDates", payload: jsonBody.date})
+              
+              const productListElement = document.getElementById('suggestions-container');
+              if (productListElement) {
+                const navbarHeight = 100;
+                const elementPosition = productListElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition - navbarHeight;
+  
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth',
+                });
+              }
+  
             }
-
+          } catch (error) {
+            console.log('error en la búsqueda: ', error);
           }
-        } catch (error) {
-          console.log('error en la búsqueda: ', error);
+          
+          searchButton.disabled = false;
+          searchButton.style.cursor = 'auto';
+        }else{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'info',
+            title: 'Necesitamos permisos para acceder a tu ubicacion para realizar esta búsqueda',
+            showConfirmButton: false,
+            timer: 5000
+          })
         }
-        
-        searchButton.disabled = false;
-        searchButton.style.cursor = 'auto';
-      }else{
-        alert('Necesitamos permisos para acceder a tu ubicacion para realizar esta búsqueda')
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'info',
+        title: 'Completa el campo de ciudad o fecha para poder realizar busquedas',
+        showConfirmButton: false,
+        timer: 5000
+      })
     }
   };
 
@@ -150,7 +168,6 @@ const SearchBar = () => {
               <FontAwesomeIcon icon={faLocationDot} />
             </label>
             <input 
-              // value={searchProduct.city} 
               type="text" 
               name="city" 
               id="city"
@@ -159,7 +176,6 @@ const SearchBar = () => {
               onFocus={handleCities}
               onBlur={() => setTimeout(() => {setCityList(false)}, 100)}
               autoComplete="off"
-              required
             />
 
             {cityList && 
@@ -181,18 +197,14 @@ const SearchBar = () => {
             <label htmlFor="date">
               <FontAwesomeIcon icon={faCalendarDays} />
             </label>
-            {/* <input value={searchProduct.date} type="date" name="date" id="date" onChange={handleOnChange}/> */}
             <DatePicker
-              
               name='date'
               range 
               dateSeparator=" - "
               placeholder='Busca por fecha'
               numberOfMonths={isSmallScreen ? 1 : 2}
-              
               mapDays={({ date }) => {
                 const currentDate = new Date();
-                
                 if (date < currentDate) 
                 return {
                   disabled: true,

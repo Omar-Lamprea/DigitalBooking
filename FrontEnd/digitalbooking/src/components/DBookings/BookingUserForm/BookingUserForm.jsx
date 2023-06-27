@@ -8,14 +8,14 @@ const BookingUserForm = () => {
     lastName: stateBooking.user.lastName,
     comments: stateBooking.user.comments,
     email: stateBooking.user.email,
-    city: stateBooking.user.city
+    phoneNumber: stateBooking.user.phoneNumber
   }
   const handleChange = (e) =>{
-    if(e.target.name === 'city') template.city = e.target.value
+    if(e.target.name === 'phoneNumber') template.phoneNumber = e.target.value
     if(e.target.name === 'comments') template.comments = e.target.value
     dispatchBooking({type: 'userData', payload: template})
-
   }
+
   return (
     <section className="booking-user-form">
       <h3>Tus datos:</h3>
@@ -37,8 +37,8 @@ const BookingUserForm = () => {
             <input type="text" name="email" id="email" defaultValue={stateBooking.user.email} disabled/>
           </div>
           <div className="inputUser">
-            <label htmlFor="city">Ciudad:</label>
-            <input type="text" name="city" id="city" onChange={handleChange}/>
+            <label htmlFor="phoneNumber">Numero de teléfono:</label>
+            <input type="number" name="phoneNumber" id="phoneNumber" onChange={handleChange}/>
           </div>
         </fieldset>
 

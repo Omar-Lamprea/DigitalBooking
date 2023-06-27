@@ -20,7 +20,7 @@ const BookingPreview = ({data}) => {
       checkOutDate: state.bookingsDates[1],
       productId: data.id,
       comments: stateBooking.user.comments,
-      userCity: stateBooking.user.city,
+      userPhone: stateBooking.user.phoneNumber,
       userName: stateBooking.user.name + ' ' + stateBooking.user.lastName,
       email: stateBooking.user.email,
       estimatedTime: '10:00'
@@ -39,7 +39,7 @@ const BookingPreview = ({data}) => {
   const validateBooking = (template) => {
     for (const key in template) {
       if (Object.prototype.hasOwnProperty.call(template, key)) {
-        if (key !== 'userCity' && key !== 'comments' && !template[key]) {
+        if (key !== 'userPhone' && key !== 'comments' && !template[key]) {
           return false;
         }
       }
