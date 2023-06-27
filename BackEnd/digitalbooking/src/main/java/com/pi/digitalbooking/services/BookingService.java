@@ -14,6 +14,7 @@ import com.pi.digitalbooking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,8 +63,22 @@ public class BookingService {
 
     public BookingDto createBooking(BookingCreateDto bookingDto) {
         BookingEntity booking = convertToEntity(bookingDto);
+        if(bookingRepository.getByCode(bookingDto.getCode()) != null){
+            throw new RuntimeException("BOOKING_CODE_ALREADY_EXIST");
+        }
+        //checks if booking date is in the past
+        if(booking.getCheckInDate().isBefore(LocalDate.now())){
+            throw new RuntimeException("BOOKING_DATE_IN_THE_PAST");
+        }
         booking.setStatus(Status.ACTIVE);
         Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
+        //checks if product has a booking for that date range
+        List<BookingEntity> bookedEntitiesOnDates = product.getBookings().stream().filter(
+                bookingEntity -> !((bookingDto.getCheckInDate().isBefore(bookingEntity.getCheckInDate()) && bookingDto.getCheckOutDate().isBefore(bookingEntity.getCheckInDate()))
+                        || (bookingDto.getCheckInDate().isAfter(bookingEntity.getCheckOutDate()) && bookingDto.getCheckOutDate().isAfter(bookingEntity.getCheckOutDate())))).toList();
+        if(!bookedEntitiesOnDates.isEmpty()){
+            throw new RuntimeException("BOOKING_DATE_ALREADY_BOOKED");
+        }
         booking.setProduct(product);
         AppUser user = userRepository.findByEmail(bookingDto.getUser().getEmail());
         booking.setUser(user);
