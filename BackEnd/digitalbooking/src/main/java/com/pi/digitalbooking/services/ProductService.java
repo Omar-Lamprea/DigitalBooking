@@ -89,7 +89,19 @@ public class ProductService {
         return productRepository.findByCityAndStatus(city, Status.ACTIVE);
     }
 
-    public List<Product> getByCityAndDates(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
-        return productRepository.findActiveProductsWithoutBookingAndWithInDistance(lat, lng, distance, cityName, checkInDate, checkOutDate, Status.ACTIVE);
+    public List<Product> getByCityAndDatesAndDistance(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByCityAndDates(lat, lng, distance, cityName, checkInDate, checkOutDate, Status.ACTIVE);
+    }
+
+    public List<Product> getByDatesAndDistance(Double lat, Double lng, int distance, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByDates(lat, lng, distance, checkInDate, checkOutDate, Status.ACTIVE);
+    }
+
+    public List<Product> getByCityAndDistance(Double longitude, Double latitude, int distance, String cityName) {
+        return productRepository.findActiveProductsWithInDistanceByCity(longitude, latitude, distance, cityName, Status.ACTIVE);
+    }
+
+    public List<Product> getByDistance(Double longitude, Double latitude, int distance) {
+        return productRepository.findActiveProductsWithInDistance(longitude, latitude, distance, Status.ACTIVE);
     }
 }
