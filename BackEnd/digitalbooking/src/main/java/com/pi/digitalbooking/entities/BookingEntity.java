@@ -26,6 +26,8 @@ public class BookingEntity {
 
     @Column(length = 2000)
     private String comments;
+    @Column(length = 15)
+    private String phoneNumber;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;

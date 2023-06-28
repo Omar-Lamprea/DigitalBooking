@@ -19,4 +19,5 @@ public class BookingDto {
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private String comments;
+    private String phoneNumber;
 }
