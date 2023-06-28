@@ -1,6 +1,7 @@
 package com.pi.digitalbooking.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.pi.digitalbooking.DTO.AppUserCreateDto;
 import com.pi.digitalbooking.DTO.AppUserDto;
 import com.pi.digitalbooking.entities.AppUser;
@@ -70,14 +71,17 @@ public class AppUserService implements UserDetailsService {
 
 
     private AppUserCreateDto mapToCreateDto (AppUser user) {
+        mapper.registerModule(new JavaTimeModule());
         return mapper.convertValue(user, AppUserCreateDto.class);
     }
 
     private AppUserDto mapToDto (AppUser user) {
+        mapper.registerModule(new JavaTimeModule());
         return mapper.convertValue(user, AppUserDto.class);
     }
 
     private AppUser mapToEntity (AppUserCreateDto userCreateDto) {
+        mapper.registerModule(new JavaTimeModule());
         return mapper.convertValue(userCreateDto, AppUser.class);
     }
 }
