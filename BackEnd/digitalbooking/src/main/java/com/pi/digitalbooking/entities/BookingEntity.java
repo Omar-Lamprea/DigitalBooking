@@ -23,6 +23,9 @@ public class BookingEntity {
     private String code;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+
+    @Column(length = 2000)
+    private String comments;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;

@@ -63,6 +63,7 @@ public class BookingService {
     public BookingDto createBooking(BookingCreateDto bookingDto) {
         BookingEntity booking = convertToEntity(bookingDto);
         booking.setStatus(Status.ACTIVE);
+        booking.setComments(bookingDto.getComments());
         Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
         booking.setProduct(product);
         AppUser user = userRepository.findByEmail(bookingDto.getUser().getEmail());
