@@ -11,6 +11,7 @@ import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.BookingRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
 import com.pi.digitalbooking.repository.UserRepository;
+import com.pi.digitalbooking.utils.ProductCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +63,7 @@ public class BookingService {
     }
 
     public BookingDto createBooking(BookingCreateDto bookingDto) {
+        bookingDto.setCode(ProductCodeGenerator.generateProductCode());
         BookingEntity booking = convertToEntity(bookingDto);
         if(bookingRepository.getByCode(bookingDto.getCode()) != null){
             throw new RuntimeException("BOOKING_CODE_ALREADY_EXIST");
