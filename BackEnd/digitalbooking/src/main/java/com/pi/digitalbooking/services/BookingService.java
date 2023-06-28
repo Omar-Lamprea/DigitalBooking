@@ -71,6 +71,8 @@ public class BookingService {
             throw new RuntimeException("BOOKING_DATE_IN_THE_PAST");
         }
         booking.setStatus(Status.ACTIVE);
+        booking.setComments(bookingDto.getComments());
+        booking.setPhoneNumber(bookingDto.getPhoneNumber());
         Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
         //checks if product has a booking for that date range
         List<BookingEntity> bookedEntitiesOnDates = product.getBookings().stream().filter(
