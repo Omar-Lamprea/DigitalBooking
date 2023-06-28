@@ -14,7 +14,7 @@ const SuccessBooking = () => {
         <BsFillPatchCheckFill className='check-icon'/>
         <h3>¡Muchas gracias!</h3>
         <p>Su reserva se ha realizado con éxito</p>
-        <Link to={'/'}>
+        <Link to={'/tus-reservas'}>
         <button className="custom-button">Ok</button>
         </Link>
       </div>
