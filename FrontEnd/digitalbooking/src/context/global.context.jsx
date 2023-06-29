@@ -100,7 +100,7 @@ const ContextProvider = ({ children }) => {
   useEffect(() =>{
     getList();
     getCatetoryList();
-  },[getList, getCatetoryList, dispatch])
+  },[])
   
   
   return (

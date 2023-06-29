@@ -48,6 +48,10 @@
       &_dates{
         color: rgb(156, 156, 156);
       }
+      &_comments, &_tel{
+        line-height: 16px;
+        color: rgb(156, 156, 156);;
+      }
     }
   }
 }

@@ -17,7 +17,6 @@ const Bookings = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
   // const {stateBooking} = useContextBookings()
 
-
   useEffect(() =>{
     let lodgingFiltered;
     state.APIdata 

@@ -24,7 +24,7 @@ const UserBookings = () => {
           const data = await response.json()
           setBookings(data)
           setErrorBooking(false)
-
+          console.log(data);
         }else{
           const data = await response.text()
           setErrorBooking(data)
@@ -45,7 +45,7 @@ const UserBookings = () => {
         {bookings &&
           bookings.map(booking => 
             <BookingCard 
-              key={booking.id} 
+              key={booking.code} 
               data={booking}
             />)
         }

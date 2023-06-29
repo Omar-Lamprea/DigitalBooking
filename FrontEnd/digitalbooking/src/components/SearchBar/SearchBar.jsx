@@ -98,7 +98,7 @@ const SearchBar = () => {
       Swal.fire({
         position: 'top-end',
         icon: 'info',
-        title: 'Completa el campo de ciudad o fecha para poder realizar busquedas',
+        title: 'Completa el campo de ciudad o fecha para poder realizar búsquedas',
         showConfirmButton: false,
         timer: 5000
       })

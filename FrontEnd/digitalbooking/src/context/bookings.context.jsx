@@ -8,18 +8,21 @@ const reducer = (state, action) => {
   switch (action.type){
     case 'userData':
       return {...state, user: action.payload}
+    case 'setCheckIn':
+      return {...state, checkIn: action.payload}
+    case 'setCheckOut':
+      return {...state, checkOut: action.payload}
     default:
         throw new Error('action type error')
   }
 }
 
-
 const ContextProviderBookings = ({ children }) => {
   const {state} = useContextGlobal()
   const userData =  state.user.data
   const initialState = {
-    checkIn: '',
-    checkOut: '',
+    checkIn: state?.bookingsDates[0] || '',
+    checkOut: state?.bookingsDates[1] || '',
     product: '',
     user:{
       name: userData.name,
@@ -28,10 +31,8 @@ const ContextProviderBookings = ({ children }) => {
       email: userData.email,
       phoneNumber: ''
     },
-    estimatedTime: ''
   }
   const [stateBooking, dispatchBooking] = useReducer(reducer, initialState)
-
 
   useEffect(()=>{},[])
   
