@@ -19,8 +19,8 @@ const Detalle = () => {
     let lodgingFiltered;
     state.APIdata 
       ? lodgingFiltered = state.APIdata.find(lodgingId => lodgingId.productId === parseInt(id))
-      : lodgingFiltered = null
-    setLodging(lodgingFiltered)
+      : lodgingFiltered = null;
+    setLodging(lodgingFiltered);
   }, [state, id])
 
 
@@ -49,13 +49,14 @@ const Detalle = () => {
             }
           }/>
 
-          <DBookings />
+          <DBookings bookingsDates={lodging.bookings} lodgingFilteredCode={lodging.codeProduct}/>
 
           <MapContainer data={
             {
               lat: lodging.latitude,
               lng: lodging.longitude,
-              draggable: false
+              draggable: false,
+              name: lodging.name
             }
             
           } />

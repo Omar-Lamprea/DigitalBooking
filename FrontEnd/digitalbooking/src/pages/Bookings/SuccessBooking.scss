@@ -1,0 +1,56 @@
+.SuccesBooking{
+    display: flex;
+    height: calc(100vh - 141.14px);
+    justify-content: center;
+    align-items: center;
+    background-color: #ebe9e9;
+    .SuccesBooking-main{
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding-bottom: 40px;
+        border-radius: 10px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        @media (max-width: 768px) {
+            padding: 1rem;
+            width: 90%; /* Reducir el ancho del contenedor en dispositivos móviles */
+          }
+    }
+    
+    .custom-button{
+        margin-top: 35px;
+        margin-bottom: 35px;
+        padding: 10px 120px 10px 120px;
+        align-self: center;
+        background-color: #FBC02D;
+        color: #FFFFFF;
+        font-weight: 700;
+        border-radius: 10px;
+        box-shadow: 0px 2px 4px 0px #0000001F;
+        @media (max-width: 768px) {
+            width: 80%; /* Hacer que el botón ocupe el ancho completo en dispositivos móviles */
+        }
+    }
+    
+    .check-icon{
+        margin-top: 20px;
+        color: #14347C;
+        width: 78px;
+        height: 74px;
+    }
+    h3{
+        font-weight: 700;
+        color: #14347C;
+        padding-top: 15px;
+    }
+    
+    .SuccesBooking-main p{
+        padding-top: 5px;
+        color: #383B58;
+        font-size: 25px;
+        font-weight: 700;
+    }
+}

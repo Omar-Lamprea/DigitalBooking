@@ -9,8 +9,6 @@ const MapContainer = (props) => {
         googleMapsApiKey: 'AIzaSyDeDhnAquLlEEN_fDXFSCAIjNev8Z9L1Gw'
     });
 
-    console.log('data latLng', props.data);
-
     if(!isLoaded) return <div>Loading...</div>
     return (
         <>

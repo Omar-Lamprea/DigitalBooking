@@ -94,7 +94,7 @@ const RegisterCity = () => {
               }
             } else {
               setServerResponse({
-                text: "Se ha registrado el producto con éxito!",
+                text: "Se ha registrado la ciudad con éxito!",
                 className: "",
               })
               getCityList()

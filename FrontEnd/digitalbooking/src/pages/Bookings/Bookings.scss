@@ -1,0 +1,33 @@
+.container-bookings-main{
+  background-color: #f9f9f9;
+  // 
+  .container-bookings{
+    max-width: 1115px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  
+    &_edit-components{
+      padding: 1rem;
+
+      .rmdp-wrapper {
+        box-shadow: 1px 1px 4px 0px #9b9b9b;
+        width: 100%;
+      }
+
+      .rmdp-top-class {
+        justify-content: center;
+      }
+    }
+    @include media_query(large){
+      flex-direction: row;
+      &_edit-components{
+        width: 750px;
+      }
+      &_preview-booking{
+        width: 365px;
+        padding-top: 2.2rem;
+      }
+    }
+}
+}

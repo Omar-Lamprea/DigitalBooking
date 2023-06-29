@@ -7,6 +7,16 @@
   @include media-query(large){
     min-height: calc(100vh - (62px + 79.14px));
   }
+  &_booking{
+    max-width: 500px;
+    text-align: center;
+    background-color: #14347b;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    line-height: 20px;
+    margin-bottom: 2rem;
+  }
   background-color: var(--backgroud-grey);
   padding: 1rem;
   .login-title{

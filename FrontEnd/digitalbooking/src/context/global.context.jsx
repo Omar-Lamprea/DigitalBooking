@@ -11,8 +11,12 @@ const initialState = {
   }, 
   categories: [], 
   users: [],
-  userToUpdate: {},
-  titleProducts: "Alojamientos recomendados"
+  userToUpdate: {
+    updated: false,
+    originalUser: {}
+  },
+  titleProducts: "Alojamientos recomendados",
+  bookingsDates: []
 }
 
 const ContextGlobal = createContext('')
@@ -30,6 +34,8 @@ const reducer = (state, action) => {
       return  {...state, categories: [...state.categories, ...action.payload]}
     case 'setCategories':
       return {...state, categories: []}
+    case 'deleteCategory':
+      return {...state, categories: state.categories.filter(category => category.categoryId !== action.payload)}
     case 'logout':
       localStorage.removeItem('user')
       return {...state, user: false}
@@ -41,7 +47,10 @@ const reducer = (state, action) => {
       return {...state, titleProducts: action.payload}
     case 'userToUpdate':
       return {...state, userToUpdate: action.payload}
-      
+    case 'setBookingDates':
+      return {...state, bookingsDates: action.payload}
+    case 'lodgingFiltered':
+      return{...state, lodgingFilteredCode: action.payload}
     default:
         throw new Error('action type error')
   }
@@ -91,7 +100,7 @@ const ContextProvider = ({ children }) => {
   useEffect(() =>{
     getList();
     getCatetoryList();
-  },[getList, getCatetoryList, dispatch])
+  },[])
   
   
   return (
@@ -102,6 +111,7 @@ const ContextProvider = ({ children }) => {
 }
 
 export default ContextProvider
+// eslint-disable-next-line react-refresh/only-export-components
 export const useContextGlobal = () => useContext(ContextGlobal)
 
 ContextProvider.propTypes = {

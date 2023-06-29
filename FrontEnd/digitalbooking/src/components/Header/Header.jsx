@@ -57,8 +57,8 @@ const Header = () => {
             {user?.data?.role === "ROLE_ADMIN" && 
               <Link to="/admin" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Administrar página</Link>
             }
-            {/* <Link to="/cuenta" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Administrar cuenta</Link> */}
-            <Link to="" className='dropdown-item' onClick={handleLogOut}>Cerrar sesión</Link>
+            <Link to="/tus-reservas" className='dropdown-item'onClick={() =>{setDrodownHeaderIsOpen(false)}} >Tus reservas</Link>
+            <Link to="" className='dropdown-item' onClick={handleLogOut}>Cerrar sesión</Link> 
           </Dropdown.Menu>
         </Dropdown>
       </>

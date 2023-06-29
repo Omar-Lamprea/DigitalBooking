@@ -9,9 +9,13 @@
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
+    flex-wrap: wrap;
     @include media-query(small){
       flex-direction: row;
       justify-content: space-between;
+    }
+    @include media-query(large){
+      flex-wrap: nowrap;
     }
   }
   &_title{
@@ -20,8 +24,12 @@
   }
   &_acticle{
     padding: 0.5rem;
+    @include media-query(small){
+      min-width: 50%;
+    }
     @include media-query(large){
       min-width: 300px;
+      max-width: inherit;
     }
     h4{
       color: var(--main-bg-color);

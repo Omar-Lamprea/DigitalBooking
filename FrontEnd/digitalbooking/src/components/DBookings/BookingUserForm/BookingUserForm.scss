@@ -1,0 +1,37 @@
+.booking-user-form{
+  margin-bottom: 1.5rem;
+  h3{
+    font-size: 24px;
+    color: var(--main-bg-color);
+  }
+  form{
+    background-color: var(--white-color);
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px 0px #9b9b9b;
+    fieldset{
+      display: flex;
+      gap: .5rem;
+      .inputUser{
+        width: 100%;
+        input{
+          border: 1px solid rgb(214, 214, 214);
+          &:disabled{
+            border: none;
+            background-color: rgb(20 52 124 / 12%);
+          }
+        }
+      }
+    }
+    
+    label[for="comments"]{
+      margin-top: 1rem;
+    }
+    textarea{
+      border: 1px solid rgb(214, 214, 214);
+      width: 100%;
+      border-radius: 5px;
+      padding: .5rem;
+    }
+  }
+}

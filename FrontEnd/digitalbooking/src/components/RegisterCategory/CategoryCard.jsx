@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-// import ModalDeleteProduct from '../../components/Modals/ModalDeleteProduct';
+import ModalDeleteCategory from '../Modals/ModalDeleteCategory';
 
 const CategoryCard = ({data}) => {
   return (
@@ -22,7 +20,7 @@ const CategoryCard = ({data}) => {
           <FontAwesomeIcon icon={faPenToSquare} />
         </div> */}
         <div className="delete">
-          {/* <ModalDeleteProduct id={data.id}/> */}
+          <ModalDeleteCategory id={data.categoryId} categoryName={data.name}/>
         </div>
       </div>
     </section>

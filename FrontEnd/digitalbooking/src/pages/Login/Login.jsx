@@ -1,13 +1,19 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import Loader from "../../components/Loader/Loader"
 import { useContextGlobal } from "../../context/global.context"
 import parseJwt from "../../utils/decodeJWT"
 
 const Login = () => {
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const booking = searchParams.get('booking');
+
   const {state} = useContextGlobal();
+  const [bookingPage, setBookingPage] = useState(false)
   const initialState = {
     email: '',
     password: '',
@@ -91,8 +97,18 @@ const Login = () => {
     return Object.keys(errors).length === 0;
   };
 
+  
+  useEffect(()=>{
+    if(booking){
+      setBookingPage(true)
+    }
+  },[booking])
+
   return (
     <section className="login">
+      {bookingPage &&
+        <p className="login_booking">Recuerda que para realizar una reserva debes estar registrado y haber iniciado sesión en nuestro sistema.</p>
+      }
       <h4 className="login-title">Iniciar sesión</h4>
       <form className="login-form" onSubmit={handleSubmit}>
         <fieldset>
