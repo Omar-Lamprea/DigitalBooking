@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,9 +58,12 @@ public class BookingService {
         }
 
         List<BookingEntity> bookingEntities = bookingRepository.findBookingByUserAndStatus(optionalUser.get(), Status.ACTIVE);
-        return bookingEntities.stream()
+
+        List<BookingDto> bookingDtos = bookingEntities.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+        bookingDtos.sort(Comparator.comparing(BookingDto::getCheckInDate).reversed());
+        return bookingDtos;
     }
 
     public BookingDto createBooking(BookingCreateDto bookingDto) {
