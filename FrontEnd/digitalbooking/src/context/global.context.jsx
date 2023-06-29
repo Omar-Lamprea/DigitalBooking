@@ -49,7 +49,8 @@ const reducer = (state, action) => {
       return {...state, userToUpdate: action.payload}
     case 'setBookingDates':
       return {...state, bookingsDates: action.payload}
-      
+    case 'lodgingFiltered':
+      return{...state, lodgingFilteredCode: action.payload}
     default:
         throw new Error('action type error')
   }
