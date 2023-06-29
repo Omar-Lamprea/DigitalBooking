@@ -49,7 +49,7 @@ function App() {
           <Route path='ciudades' element={<RegisterCity />} />
       </Route>
 
-      <Route path='producto/:id' element={<Detalle />} />
+      <Route path='producto/:id' element={<Detalle/>} />
       <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
       <Route path='producto/:id/reservas' element={
         <Guard condition={state.user?.data} redirect='/login?booking=true'>
