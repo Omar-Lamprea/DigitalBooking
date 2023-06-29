@@ -15,7 +15,8 @@ public class BookingCreateDto {
     private String code;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private String status;
+    private String comments;
+    private String phoneNumber;
     private AppUserDto user;
     private ProductDTO product;
 }

@@ -1,6 +1,6 @@
 package com.pi.digitalbooking.repository;
 
-import com.pi.digitalbooking.enums.CityStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface CityRepository extends JpaRepository<City, Integer> {
 
-    City findByNameAndStatus(String name, CityStatus status);
+    City findByNameAndStatus(String name, Status status);
 
-    List<City> findAllByStatus(CityStatus status);
+    List<City> findAllByStatus(Status status);
 
-    List<City> findByCountry(Country country);
+    List<City> findByCountryAndStatus(Country country, Status status);
 }

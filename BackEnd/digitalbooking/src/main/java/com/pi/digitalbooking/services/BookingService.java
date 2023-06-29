@@ -6,16 +6,17 @@ import com.pi.digitalbooking.DTO.BookingCreateDto;
 import com.pi.digitalbooking.DTO.BookingDto;
 import com.pi.digitalbooking.entities.AppUser;
 import com.pi.digitalbooking.entities.BookingEntity;
-import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.BookingRepository;
 import com.pi.digitalbooking.repository.ProductRepository;
 import com.pi.digitalbooking.repository.UserRepository;
-import com.pi.digitalbooking.security.AppUserService;
+import com.pi.digitalbooking.utils.ProductCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,9 +49,44 @@ public class BookingService {
         return optionalBooking.map(this::convertToDto).orElse(null);
     }
 
+    public List<BookingDto> getBookingByUser(String userEmail) throws Exception{
+
+        Optional<AppUser> optionalUser = Optional.ofNullable(userRepository.findByEmail(userEmail));
+
+        if(!optionalUser.isPresent()) {
+            throw new Exception("USER_NOT_FOUND");
+        }
+
+        List<BookingEntity> bookingEntities = bookingRepository.findBookingByUserAndStatus(optionalUser.get(), Status.ACTIVE);
+
+        List<BookingDto> bookingDtos = bookingEntities.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+        bookingDtos.sort(Comparator.comparing(BookingDto::getCheckInDate).reversed());
+        return bookingDtos;
+    }
+
     public BookingDto createBooking(BookingCreateDto bookingDto) {
+        bookingDto.setCode(ProductCodeGenerator.generateProductCode());
         BookingEntity booking = convertToEntity(bookingDto);
-        Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), ProductStatus.ACTIVE);
+        if(bookingRepository.getByCode(bookingDto.getCode()) != null){
+            throw new RuntimeException("BOOKING_CODE_ALREADY_EXIST");
+        }
+        //checks if booking date is in the past
+        if(booking.getCheckInDate().isBefore(LocalDate.now())){
+            throw new RuntimeException("BOOKING_DATE_IN_THE_PAST");
+        }
+        booking.setStatus(Status.ACTIVE);
+        booking.setComments(bookingDto.getComments());
+        booking.setPhoneNumber(bookingDto.getPhoneNumber());
+        Product product = productRepository.getProductByCodeProductAndStatus(bookingDto.getProduct().getCodeProduct(), Status.ACTIVE);
+        //checks if product has a booking for that date range
+        List<BookingEntity> bookedEntitiesOnDates = product.getBookings().stream().filter(
+                bookingEntity -> !((bookingDto.getCheckInDate().isBefore(bookingEntity.getCheckInDate()) && bookingDto.getCheckOutDate().isBefore(bookingEntity.getCheckInDate()))
+                        || (bookingDto.getCheckInDate().isAfter(bookingEntity.getCheckOutDate()) && bookingDto.getCheckOutDate().isAfter(bookingEntity.getCheckOutDate())))).toList();
+        if(!bookedEntitiesOnDates.isEmpty()){
+            throw new RuntimeException("BOOKING_DATE_ALREADY_BOOKED");
+        }
         booking.setProduct(product);
         AppUser user = userRepository.findByEmail(bookingDto.getUser().getEmail());
         booking.setUser(user);
@@ -82,7 +118,14 @@ public class BookingService {
     }
 
     private BookingDto convertToDto(BookingEntity bookingEntity) {
-        return objectMapper.convertValue(bookingEntity, BookingDto.class);
+        BookingDto bookingDto = new BookingDto();
+        bookingDto.setIdProduct(bookingEntity.getProduct().getProductId());
+        bookingDto.setCode(bookingEntity.getCode());
+        bookingDto.setCheckInDate(bookingEntity.getCheckInDate());
+        bookingDto.setCheckOutDate(bookingEntity.getCheckOutDate());
+        bookingDto.setComments(bookingEntity.getComments());
+        bookingDto.setPhoneNumber(bookingEntity.getPhoneNumber());
+        return bookingDto;
     }
 
     private BookingEntity convertToEntity(BookingDto bookingDto) {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.pi.digitalbooking.DTO.ProductDTO;
 import com.pi.digitalbooking.configurations.AWSService;
-import com.pi.digitalbooking.enums.ProductStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.exceptions.ProductNotFoundException;
 
 import com.pi.digitalbooking.models.*;
@@ -157,7 +157,7 @@ public class ProductController {
         return false;
     }
 
-    private boolean validatePropertiesProduct(ProductDTO productDTO) {
+    public boolean validatePropertiesProduct(ProductDTO productDTO) {
         return productDTO.getName() == null || productDTO.getName().isEmpty()
                 || productDTO.getDescription() == null || productDTO.getDescription().isEmpty()
                 || productDTO.getPrice() == null
@@ -189,7 +189,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonBody);
     }
 
-    private Product getProduct(ProductDTO productDTO) {
+    public Product getProduct(ProductDTO productDTO) {
         Product product = new Product();
         product.setCodeProduct(productDTO.getCodeProduct());
         product.setName(productDTO.getName());
@@ -209,7 +209,7 @@ public class ProductController {
         Category category = categoryService.SearchById(productDTO.getCategory());
 
         product.setCategory(category);
-        product.setStatus(ProductStatus.ACTIVE);
+        product.setStatus(Status.ACTIVE);
         return product;
     }
 
@@ -240,7 +240,7 @@ public class ProductController {
         return politicSaved;
     }
 
-    private ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
+    public ProductDTO getProductDTO(String stringProduct) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ProductDTO productDTO = objectMapper.readValue(stringProduct, ProductDTO.class);
         return productDTO;
@@ -286,7 +286,7 @@ public class ProductController {
 
         Product productToGet = productService.searchById(id);
 
-        if (productToGet == null || productToGet.getStatus().equals(ProductStatus.DELETED)) {
+        if (productToGet == null || productToGet.getStatus().equals(Status.DELETED)) {
             throw new ProductNotFoundException("El producto no existe o ya fue elimnado.");
         }
 
@@ -328,15 +328,29 @@ public class ProductController {
     @CrossOrigin
     @GetMapping()
     @ResponseBody
-    public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam("lat") Double longitude,
-                                                      @RequestParam("lon") Double latitude,
+    public ResponseEntity<?> findByCityClosestToCoordinatesWithoutBooking(@RequestParam(value = "lat", required = false) Double longitude,
+                                                      @RequestParam(value = "lon", required = false) Double latitude,
                                                       @RequestParam(value = "within", required = false) Integer within,
-                                                      @RequestParam("city") String cityName,
-                                                      @RequestParam("checkInDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
-                                                      @RequestParam("checkOutDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
+                                                      @RequestParam(value = "city", required = false) String cityName,
+                                                      @RequestParam(value = "checkInDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkInDate,
+                                                      @RequestParam(value = "checkOutDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOutDate) {
         ResponseEntity<?> response;
+        List<Product> products;
         try {
-            List<Product> products = productService.getByCityAndDates(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
+            if (latitude == null || longitude == null) {
+                //Coordenadas de Bogotá
+                latitude = 4.600173;
+                longitude = 74.067772;
+            }
+            if((cityName == null || cityName.isEmpty()) & (checkInDate != null & checkOutDate != null)) {
+                products = productService.getByDatesAndDistance(longitude, latitude, 100000000, checkInDate, checkOutDate);
+            } else if ((checkInDate == null & checkOutDate == null) & !(cityName == null || cityName.isEmpty())) {
+                products = productService.getByCityAndDistance(longitude, latitude, 100000000, cityName);
+            } else if (!(cityName == null || cityName.isEmpty()) & (checkInDate != null & checkOutDate != null)){
+                products = productService.getByCityAndDatesAndDistance(longitude, latitude, 100000000, cityName, checkInDate, checkOutDate);
+            } else {
+                products = productService.getByDistance(longitude, latitude, 100000000);
+            }
             response = ResponseEntity.ok(products);
         } catch (Exception e) {
             response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

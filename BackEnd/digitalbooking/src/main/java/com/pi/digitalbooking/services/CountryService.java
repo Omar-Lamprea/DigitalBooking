@@ -1,8 +1,6 @@
 package com.pi.digitalbooking.services;
 
-import com.pi.digitalbooking.enums.CityStatus;
 import com.pi.digitalbooking.enums.Status;
-import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
 import com.pi.digitalbooking.repository.CountryRepository;
 import lombok.extern.slf4j.Slf4j;

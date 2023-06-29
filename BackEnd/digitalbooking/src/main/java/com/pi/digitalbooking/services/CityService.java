@@ -1,10 +1,9 @@
 package com.pi.digitalbooking.services;
 
-import com.pi.digitalbooking.enums.CityStatus;
+import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
 import com.pi.digitalbooking.models.Country;
 import com.pi.digitalbooking.repository.CityRepository;
-import com.pi.digitalbooking.repository.CountryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class CityService {
         City city = cityRepository.findById(cityId).orElse(null);
 
         if (city != null) {
-            city.setStatus(CityStatus.DELETED);
+            city.setStatus(Status.DELETED);
             cityRepository.save(city);
         }
     }
@@ -55,21 +54,39 @@ public class CityService {
     }
 
     public boolean isCityDuplicatedByName(String cityName) {
-        City existingCity = cityRepository.findByNameAndStatus(cityName, CityStatus.ACTIVE);
+        City existingCity = cityRepository.findByNameAndStatus(cityName, Status.ACTIVE);
         return existingCity != null;
     }
 
     public City findByName(String cityName) {
-        City existingCity = cityRepository.findByNameAndStatus(cityName, CityStatus.ACTIVE);
+        City existingCity = cityRepository.findByNameAndStatus(cityName, Status.ACTIVE);
         return existingCity;
     }
 
     public List<City> SearchAllByStatus() {
-        return cityRepository.findAllByStatus(CityStatus.ACTIVE);
+        return cityRepository.findAllByStatus(Status.ACTIVE);
     }
 
-    public List<City> SearchCitiesByCountry(String nameCountry){
+    public List<City> SearchCitiesByCountry(String nameCountry) {
         Country country = countryService.GetCountryByName(nameCountry);
-        return cityRepository.findByCountry(country);
+        return cityRepository.findByCountryAndStatus(country, Status.ACTIVE);
+    }
+
+    public City updateCity(Integer idCity, String nameToUpdate) throws Exception {
+
+        Optional<City> existingCity = cityRepository.findById(idCity);
+
+        if (existingCity.isPresent()) {
+
+            if (isCityDuplicatedByName(nameToUpdate)) {
+                throw new Exception("CITY_DUPLICATED");
+            }
+            existingCity.get().setName(nameToUpdate);
+            City cityToSave = existingCity.get();
+            return cityRepository.save(cityToSave);
+        } else {
+            log.error("No existe ciudad con id: " + idCity.toString());
+            throw new Exception("CITY_NOT_FOUND");
+        }
     }
 }

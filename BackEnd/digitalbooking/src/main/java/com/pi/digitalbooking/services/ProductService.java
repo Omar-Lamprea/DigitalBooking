@@ -1,9 +1,8 @@
 package com.pi.digitalbooking.services;
 
-import com.pi.digitalbooking.enums.ProductStatus;
 import com.pi.digitalbooking.enums.Status;
 import com.pi.digitalbooking.models.City;
-import com.pi.digitalbooking.models.Booking;
+import com.pi.digitalbooking.models.Country;
 import com.pi.digitalbooking.models.Product;
 import com.pi.digitalbooking.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,7 +26,7 @@ public class ProductService {
     }
 
     public List<Product> searchAllByStatus() {
-        return productRepository.findAllByStatus(ProductStatus.ACTIVE);
+        return productRepository.findAllByStatus(Status.ACTIVE);
     }
 
     public Product searchById(Integer id) {
@@ -45,12 +41,12 @@ public class ProductService {
     }
 
     public boolean isProductDuplicatedByName(String productName) {
-        Product existingProduct = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+        Product existingProduct = productRepository.findByNameAndStatus(productName, Status.ACTIVE);
         return existingProduct != null;
     }
 
     public boolean isProductDuplicatedByCodeProduct(Integer codeProduct) {
-        Product existingProduct = productRepository.findByCodeProductAndStatus(codeProduct, ProductStatus.ACTIVE);
+        Product existingProduct = productRepository.findByCodeProductAndStatus(codeProduct, Status.ACTIVE);
         return existingProduct != null;
     }
 
@@ -58,7 +54,7 @@ public class ProductService {
 
         Product product = productRepository.findById(productId).orElse(null);
         if (product != null) {
-            product.setStatus(ProductStatus.DELETED);
+            product.setStatus(Status.DELETED);
             productRepository.save(product);
         }
     }
@@ -85,15 +81,27 @@ public class ProductService {
     public List<Product> getByCategory(int id) {
         return productRepository.findByCategoryCategoryId(id).stream()
                 .filter(product -> product.getStatus()
-                        .equals(ProductStatus.ACTIVE)).collect(Collectors.toList());
+                        .equals(Status.ACTIVE)).collect(Collectors.toList());
 
     }
 
-    public List<Product> getByCity(City city){
-        return productRepository.findByCityAndStatus(city, ProductStatus.ACTIVE);
+    public List<Product> getByCity(City city) {
+        return productRepository.findByCityAndStatus(city, Status.ACTIVE);
     }
 
-    public List<Product> getByCityAndDates(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
-        return productRepository.findActiveProductsWithoutBookingAndWithInDistance(lat, lng, distance, cityName, checkInDate, checkOutDate, ProductStatus.ACTIVE);
+    public List<Product> getByCityAndDatesAndDistance(double lat, double lng, int distance, String cityName, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByCityAndDates(lat, lng, distance, cityName, checkInDate, checkOutDate, Status.ACTIVE);
+    }
+
+    public List<Product> getByDatesAndDistance(Double lat, Double lng, int distance, LocalDate checkInDate, LocalDate checkOutDate) {
+        return productRepository.findActiveProductsWithoutBookingAndWithInDistanceByDates(lat, lng, distance, checkInDate, checkOutDate, Status.ACTIVE);
+    }
+
+    public List<Product> getByCityAndDistance(Double longitude, Double latitude, int distance, String cityName) {
+        return productRepository.findActiveProductsWithInDistanceByCity(longitude, latitude, distance, cityName, Status.ACTIVE);
+    }
+
+    public List<Product> getByDistance(Double longitude, Double latitude, int distance) {
+        return productRepository.findActiveProductsWithInDistance(longitude, latitude, distance, Status.ACTIVE);
     }
 }
