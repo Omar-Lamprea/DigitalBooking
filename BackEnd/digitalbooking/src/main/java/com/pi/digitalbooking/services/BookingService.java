@@ -114,7 +114,14 @@ public class BookingService {
     }
 
     private BookingDto convertToDto(BookingEntity bookingEntity) {
-        return objectMapper.convertValue(bookingEntity, BookingDto.class);
+        BookingDto bookingDto = new BookingDto();
+        bookingDto.setIdProduct(bookingEntity.getProduct().getProductId());
+        bookingDto.setCode(bookingEntity.getCode());
+        bookingDto.setCheckInDate(bookingEntity.getCheckInDate());
+        bookingDto.setCheckOutDate(bookingEntity.getCheckOutDate());
+        bookingDto.setComments(bookingEntity.getComments());
+        bookingDto.setPhoneNumber(bookingEntity.getPhoneNumber());
+        return bookingDto;
     }
 
     private BookingEntity convertToEntity(BookingDto bookingDto) {

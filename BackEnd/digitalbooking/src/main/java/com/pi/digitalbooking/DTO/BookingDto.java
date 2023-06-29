@@ -20,4 +20,5 @@ public class BookingDto {
     private LocalDate checkOutDate;
     private String comments;
     private String phoneNumber;
+    private Integer idProduct;
 }
