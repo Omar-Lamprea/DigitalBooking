@@ -6,7 +6,7 @@ export const initialTemplate = {
   price: '',
   country: '',
   city: '',
-  location: '',
+  location: 'https://goo.gl/maps/TrwTQZHCNbmBJETc8',
   description: '',
   productImage: null,
   amenities: [
