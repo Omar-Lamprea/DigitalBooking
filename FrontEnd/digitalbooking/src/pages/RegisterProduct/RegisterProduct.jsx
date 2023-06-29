@@ -302,18 +302,18 @@ const RegisterProduct = () => {
             </div>
           </div>
 
-          <div className="form-register-row">
+          {/* <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="location">Url de la ubicación en google maps</label>
               <input type="text" name="location" id="location" onChange={handleChange}/>
               {errorsForm && <span>{errorsForm.location}</span>}
             </div>
-          </div>
+          </div> */}
 
           <div className="form-register-row">
             <div className="form-row">
               <label htmlFor="description">Descripción</label>
-              <textarea name="description" id="description" rows="3" onChange={handleChange}></textarea>
+              <textarea name="description" id="description" rows="7" onChange={handleChange}></textarea>
               {errorsForm && <span>{errorsForm.description}</span>}
             </div>
           </div>
