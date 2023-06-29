@@ -11,8 +11,6 @@ import PropTypes from 'prop-types';
 const DBookings = ({bookingsDates, lodgingFilteredCode}) => {
   const {state, dispatch} = useContextGlobal()
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 620);
-  console.log('dates to set calendar: ', state.bookingsDates);
-  console.log('lodgingFilteredCode', lodgingFilteredCode);
 
   useEffect(() => {
     const handleResize = () => {

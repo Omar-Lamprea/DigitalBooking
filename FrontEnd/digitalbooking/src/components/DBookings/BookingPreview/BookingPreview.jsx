@@ -14,8 +14,8 @@ import Swal from 'sweetalert2'
 
 const BookingPreview = ({data}) => {
   const navigate = useNavigate();
-  const {stateBooking} = useContextBookings()
-  const {state} = useContextGlobal()
+  const {stateBooking, dispatchBooking} = useContextBookings()
+  const {state, dispatch} = useContextGlobal()
   const [isLoading, setIsLoading] = useState(false);
   
   const handleSubmitBooking = ()=>{
@@ -50,7 +50,9 @@ const BookingPreview = ({data}) => {
     console.log('body', body);
     setIsLoading(true);
     try {
-      const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.bookings, {
+      const res = await fetch(
+        GLOBAL_API.urlBase + 
+        GLOBAL_API.bookings, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${state.user.token}`,
@@ -60,15 +62,51 @@ const BookingPreview = ({data}) => {
         
       });
       if (res.ok) {
+        dispatch({type: "setProducts"})
+        await getProducts()
         setIsLoading(false);
+        dispatch({type: "setBookingDates", payload: []})
+        dispatchBooking({type: "checkIn", payload: ""})
+        dispatchBooking({type: "checkOut", payload: ""})
         navigate('./exito');
+      }else{
+        const data = await res.json()
+        console.log(data);
+        setIsLoading(false);
+        Swal.fire({
+          titleText: 'Ocurrió un error, verifica que los datos sean correctos e intenta de nuevo',
+          confirmButtonColor: '#FBC02D',
+        })
       }
     } catch (error) {
       setIsLoading(false);
       console.error('Error para creacion reserva: ', error);
+      Swal.fire({
+        titleText: 'Ocurrió un error, verifica que los datos sean correctos e intenta de nuevo',
+        confirmButtonColor: '#FBC02D',
+      })
     }
 
   };
+
+  const getProducts = async () =>{
+    try {
+      const res = await fetch(GLOBAL_API.urlBase + GLOBAL_API.productsAll,{
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const data = await res.json()
+      if (res.ok) {
+        dispatch({ type: 'APIdata', payload: data })
+      } else {
+        console.log('Error: ', data)
+        dispatch({ type: 'APIdata', payload: [] })
+      }
+    } catch (error) {
+      console.log('Context error:', error)
+    }
+  }
 
   const validateBooking = (template) => {
     for (const key in template) {

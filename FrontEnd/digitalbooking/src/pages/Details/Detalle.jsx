@@ -13,14 +13,13 @@ import MapContainer from "../../components/ProductMap/ProductMap";
 const Detalle = () => {
   const {id} = useParams()
   const [lodging, setLodging] = useState(null)
-  const {state, dispatch} = useContextGlobal()
+  const {state} = useContextGlobal()
 
   useEffect(() =>{
     let lodgingFiltered;
     state.APIdata 
       ? lodgingFiltered = state.APIdata.find(lodgingId => lodgingId.productId === parseInt(id))
       : lodgingFiltered = null;
-      console.log('lodgingFiltered', lodgingFiltered);
     setLodging(lodgingFiltered);
   }, [state, id])
 

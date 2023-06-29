@@ -7,6 +7,8 @@ import { useContextBookings } from "../../context/bookings.context";
 
 
 const CalendarCommon = ({ calendarConfig }) => {
+
+  console.log(calendarConfig);
   const {dispatch} = useContextGlobal();
   const {dispatchBooking} = useContextBookings()
   const [initialSelectedDates, setInitialSelectedDates] = useState([]);
@@ -17,7 +19,10 @@ const CalendarCommon = ({ calendarConfig }) => {
       const startDate = new Date(date[0])
       const endtDate = new Date(date[1])
       
-      const datesFormated = [moment(startDate).format("YYYY-MM-DD"), moment(endtDate).format("YYYY-MM-DD")]
+      const datesFormated = [
+        moment(startDate).format("YYYY-MM-DD"), 
+        moment(endtDate).format("YYYY-MM-DD")
+      ]
       if(location.href.includes('/reservas')){
         dispatchBooking({type:'setCheckIn', payload: datesFormated[0]})
         dispatchBooking({type:'setCheckOut', payload: datesFormated[1]})
@@ -61,7 +66,7 @@ const CalendarCommon = ({ calendarConfig }) => {
           new DateObject()
             .setYear(checkOut.format('YYYY'))
             .setMonth(checkOut.format('MM'))
-            .setDay(checkOut.format('DD'))
+            .setDay(parseInt(checkOut.format('DD')) + 1)
             .format()
         ])
       })
