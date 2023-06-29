@@ -75,7 +75,7 @@
     &__title {
         h4 {
             font-weight: 700;
-            line-height: 0.8;
+            line-height: 1;
         }
         span {
             color: var(--grey-color);
@@ -97,7 +97,7 @@
     }
 
     &__ammenities {
-        display: flex;;
+        display: flex;
         flex-wrap: wrap;
     }
 

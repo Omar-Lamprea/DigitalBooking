@@ -27,6 +27,12 @@
       color: #7e7e7e;
     }
   }
+
+  &__submit-button-container {
+    display: flex;
+    justify-content: center;
+  }
+
   .btn-submit-booking{
     background-color: var(--second-bg-color);
     color: var(--white-color);

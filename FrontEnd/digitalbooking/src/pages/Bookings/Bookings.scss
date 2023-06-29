@@ -9,6 +9,15 @@
   
     &_edit-components{
       padding: 1rem;
+
+      .rmdp-wrapper {
+        box-shadow: 1px 1px 4px 0px #9b9b9b;
+        width: 100%;
+      }
+
+      .rmdp-top-class {
+        justify-content: center;
+      }
     }
     @include media_query(large){
       flex-direction: row;

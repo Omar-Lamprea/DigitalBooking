@@ -13,14 +13,15 @@ import MapContainer from "../../components/ProductMap/ProductMap";
 const Detalle = () => {
   const {id} = useParams()
   const [lodging, setLodging] = useState(null)
-  const {state} = useContextGlobal()
+  const {state, dispatch} = useContextGlobal()
 
   useEffect(() =>{
     let lodgingFiltered;
     state.APIdata 
       ? lodgingFiltered = state.APIdata.find(lodgingId => lodgingId.productId === parseInt(id))
-      : lodgingFiltered = null
-    setLodging(lodgingFiltered)
+      : lodgingFiltered = null;
+      console.log('lodgingFiltered', lodgingFiltered);
+    setLodging(lodgingFiltered);
   }, [state, id])
 
 
@@ -49,7 +50,7 @@ const Detalle = () => {
             }
           }/>
 
-          <DBookings />
+          <DBookings bookingsDates={lodging.bookings} lodgingFilteredCode={lodging.codeProduct}/>
 
           <MapContainer data={
             {
