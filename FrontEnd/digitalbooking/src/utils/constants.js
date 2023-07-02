@@ -1,6 +1,6 @@
 export const GLOBAL_API = {
   //products
-  urlBase: 'http://18.119.121.193:8080/digital-booking',
+  urlBase: 'https://api.digitalbooking.online/digital-booking',
   // urlBase: 'http://localhost:8080/digital-booking',
   productsAll: "/product/all",
   product: "/product",
