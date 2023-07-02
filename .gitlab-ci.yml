@@ -44,7 +44,7 @@ deploy-backend-job:      # This job runs in the deploy stage.
     - scp -o StrictHostKeyChecking=no -i key.pem -r "$CI_PROJECT_DIR"/FrontEnd/digitalbooking/dist/* ubuntu@18.119.121.193:/home/ubuntu/gitlab/frontend/
     - scp -o StrictHostKeyChecking=no -i key.pem "$CI_PROJECT_DIR"/BackEnd/digitalbooking/target/digitalbooking-0.0.1-SNAPSHOT.jar ec2-user@3.138.189.133:/home/ec2-user/gitlab/digitalbooking.jar
     - ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@3.138.189.133 "sudo chmod +x deploy.sh && ./deploy.sh"
-    - ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@18.119.121.193 "sudo chmod +x deploy.sh && ./deploy.sh"
+    - ssh -o StrictHostKeyChecking=no -i key.pem ubuntu@18.119.121.193 "sudo chmod +x deploy.sh && ./deploy.sh"
     - echo "Application successfully deployed. Wait a few minutes while it starts on the server."
   only: 
     - dev
