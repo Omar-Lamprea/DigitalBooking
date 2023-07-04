@@ -25,10 +25,10 @@ const ContextProviderBookings = ({ children }) => {
     checkOut: state?.bookingsDates[1] || '',
     product: '',
     user:{
-      name: userData.name,
-      lastName: userData.lastName,
+      name: userData?.name,
+      lastName: userData?.lastName,
       comments: '',
-      email: userData.email,
+      email: userData?.email,
       phoneNumber: ''
     },
   }
