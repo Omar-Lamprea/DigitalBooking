@@ -1,4 +1,4 @@
-import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements, useNavigate} from 'react-router-dom'
+import { Route, RouterProvider, createHashRouter, createRoutesFromElements, useNavigate} from 'react-router-dom'
 import './App.scss'
 import Layout from './components/Layout/Layout'
 import Home from './pages/Home'
@@ -33,43 +33,43 @@ function App() {
     return children;
   }
 
-  const router = createBrowserRouter(
+  const router = createHashRouter(
     createRoutesFromElements(
       <Route path='/' element={<Layout />}>
-      <Route index element={<Home />} />
+        <Route index element={<Home />} />
 
-      <Route path='admin' element={
-        <Guard condition={state.user?.data?.role === "ROLE_ADMIN"} redirect='/'>
-          <Admin />
-        </Guard>}>
-          <Route index element={<EditProducts />} />
-          <Route path='registrar' element={<RegisterProduct />} />
-          <Route path='usuarios' element={<UserList />} />
-          <Route path='categorias' element={<RegisterCategory />} />
-          <Route path='ciudades' element={<RegisterCity />} />
+        <Route path='admin' element={
+          <Guard condition={state.user?.data?.role === "ROLE_ADMIN"} redirect='/'>
+            <Admin />
+          </Guard>}>
+            <Route index element={<EditProducts />} />
+            <Route path='registrar' element={<RegisterProduct />} />
+            <Route path='usuarios' element={<UserList />} />
+            <Route path='categorias' element={<RegisterCategory />} />
+            <Route path='ciudades' element={<RegisterCity />} />
+        </Route>
+
+        <Route path='producto/:id' element={<Detalle/>} />
+        <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
+        <Route path='producto/:id/reservas' element={
+          <Guard condition={state.user?.data} redirect='/login?booking=true'>
+            <ContextProviderBookings>
+              <Bookings />
+            </ContextProviderBookings>
+          </Guard>
+        }/>
+
+        <Route path='/tus-reservas' element={<UserBookings />} />
+        
+        <Route path='create-account' element={<CreateAccount />} />
+        <Route path='login' element={<Login />} />
+        <Route path='*' element={<NotFound />} />
       </Route>
-
-      <Route path='producto/:id' element={<Detalle/>} />
-      <Route path='producto/:id/reservas/exito' element={<SuccessBooking />} />
-      <Route path='producto/:id/reservas' element={
-        <Guard condition={state.user?.data} redirect='/login?booking=true'>
-          <ContextProviderBookings>
-            <Bookings />
-          </ContextProviderBookings>
-         </Guard>
-      }/>
-
-      <Route path='/tus-reservas' element={<UserBookings />} />
-      
-      <Route path='create-account' element={<CreateAccount />} />
-      <Route path='login' element={<Login />} />
-      <Route path='*' element={<NotFound />} />
-    </Route>
     )
   )
   return (
-      <RouterProvider router={router} />
-  );
+    <RouterProvider router={router} />
+  )
 }
 
 export default App
