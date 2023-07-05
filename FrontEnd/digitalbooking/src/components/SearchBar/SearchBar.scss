@@ -28,6 +28,10 @@
         margin: 1rem 0;
         align-items: end;
         position: relative;
+        label{
+          display: flex;
+          margin-right: -1px;
+        }
         .cityList{
           position: absolute;
           background-color: #f4f4f4;
